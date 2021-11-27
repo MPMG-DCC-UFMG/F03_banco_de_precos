@@ -7,9 +7,7 @@ import Buscador from './CxBusca'
 import Filtro from './Filtro'
 import './CxBusca.css'
 import DatatablePage from './TabelaResultado'
-import Regioes from './Regioes'
 import Form from 'react-bootstrap/Form'
-import RadioB from './RadioButton'
 
 import { styled } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
@@ -29,7 +27,7 @@ import TabelaResultado from './TabelaResultado'
 import Agrupamento from './RadioButtonAgrupamento'
 import Faixa from './Faixa'
 import Instituicao from './Instituicao'
-import Licitante from "./Licitante"
+import Licitante from './Licitante'
 
 const useStyles = makeStyles({
     content: {
@@ -71,20 +69,6 @@ const AppAutoComplete = () => {
                                     </Box>
                                 </Item>
                             </Grid>
-                            <Grid item xs={4}>
-                                <Item>
-                                    {' '}
-                                    <RadioB></RadioB>
-                                </Item>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Item>
-                                    <h5 className="buscadorField">
-                                        Limite territorial
-                                    </h5>
-                                    <Regioes></Regioes>
-                                </Item>
-                            </Grid>
                         </Grid>
                         <div>
                             <Accordion>
@@ -101,8 +85,8 @@ const AppAutoComplete = () => {
                                 <AccordionDetails>
                                     <Typography>
                                         <Faixa></Faixa>
-                                        <Instituicao></Instituicao>
-                                        <Licitante></Licitante>
+                                        
+                                        
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>

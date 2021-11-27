@@ -1,4 +1,3 @@
-
 .form-inline {
     width: 100%;
 }
@@ -50,18 +49,22 @@ span.input-group-addon {
 }
 
 .MuiPaper-elevation1 {
-  /*width: 300px;*/
-  
+    /*width: 300px;*/
 }
-.button.css-1r4vtzz{  
-  width: 100%;
+.button.css-1r4vtzz {
+    width: 100%;
 }
-
 
 h1 {
-    /* text-align: center; */
-    margin-left: 43%;
- 
+    text-align: center;
+    /* margin-left: 43%;*/
+    font-size: 2vw;
+    font-family: 'Roboto', sans-serif;
+
+}
+h3{
+      font-size: 1vw;
+  
 }
 
 .btnBuscar {
@@ -72,8 +75,8 @@ h1 {
 .WithStyles\(ForwardRef\(Paper\)\)-root-245 {
     text-align: left;
 }
-.WithStyles\(ForwardRef\(Paper\)\)-root-325{
-  text-align: left;
+.WithStyles\(ForwardRef\(Paper\)\)-root-325 {
+    text-align: left;
 }
 
 h5.buscadorField {
@@ -99,20 +102,17 @@ h5.buscadorField {
     width: 210px;
 }
 
-
-
 .input-container {
     margin-top: 20px;
     text-align: initial;
 }
 
-.calendario{
+.calendario {
     width: 200px;
     text-align: left;
 }
 
-
-.accordionBusca{
+.accordionBusca {
     text-align: center;
 }
 
@@ -122,6 +122,29 @@ h5.buscadorField {
     justify-content: center;
 }
 
-.MuiInputLabel-shrink{
+.MuiInputLabel-shrink {
     color: black;
 }
+
+
+
+
+fieldset {
+  margin: 20px;
+  padding: 0 10px 10px;
+  border-radius: 10px;
+  padding-top: 10px;
+}
+legend {
+  padding: 2px 4px;
+  background: #fff;
+  /* For better legibility against the box-shadow */
+}
+fieldset > legend {
+  float: left;
+  margin-top: -20px;
+}
+fieldset > legend + * {
+  clear: both;
+}
+

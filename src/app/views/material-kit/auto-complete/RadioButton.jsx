@@ -1,70 +1,35 @@
-import React from 'react'
-import ReactMultiSelectCheckboxes from './CheckMeses'
-import DateForm from './DateForm'
+import * as React from 'react'
+import { styled } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+//import Autocomplete from '@material-ui/lab/Autocomplete'
+import Regioes from './Regioes'
 
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
-import './CxBusca.css'
 
-export default function RadioB() {
-    const [currentRadioValue, setCurrentValue] = React.useState('on')
+const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}))
 
-    const handleRadioChange = (value) => {
-        setCurrentValue(value)
-    }
+export default function AutoGrid() {
     return (
-        <div className="buscadorField">
-            <FormControl component="fieldset">
-                <FormLabel component="legend"></FormLabel>
-                <RadioGroup
-                    row
-                    aria-label="period"
-                    className="row-radio-buttons-group"
-                >
-                    <FormControlLabel
-                        value="on"
-                        control={<Radio />}
-                        label="Exercício"
-                        onChange={(e) => setCurrentValue(e.target.value)}
-                        defaultChecked={currentRadioValue === 'on'}
-                    />
-                    <FormControlLabel
-                        value="off"
-                        control={<Radio />}
-                        label="Período"
-                        onChange={(e) => setCurrentValue(e.target.value)}
-                        defaultChecked={currentRadioValue === 'off'}
-                    />
-                </RadioGroup>
-            </FormControl>
-            {currentRadioValue === 'on' && (
-                <div className="buscadorField">
-                    <h5 className="buscadorField">
-                        Exercício
-                    </h5>
-                    <input
-                        placeholder="2021"
-                        type="number"
-                        min={2000}
-                        max={2030}
-                    />
-                    <h5 className="buscadorField">
-                        {' '}
-                        Mês 
-                    </h5>
-                    <ReactMultiSelectCheckboxes className=""></ReactMultiSelectCheckboxes>
-                </div>
-            )}
-
-            {currentRadioValue === 'off' && (
-                <div>
-                    {' '}
-                    <DateForm></DateForm>
-                </div>
-            )}
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={3}>
+                <Grid item xs>
+                    <Item>xs</Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>
+                        <Regioes></Regioes>
+                    </Item>
+                </Grid>
+                <Grid item xs>
+                    <Item>xs</Item>
+                </Grid>
+            </Grid>
+        </Box>
     )
 }

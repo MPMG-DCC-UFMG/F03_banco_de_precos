@@ -10,7 +10,7 @@ const userList = [
         role: 'SA',
         name: 'Johnatan Oliveira',
         username: 'johnatan-si',
-        email: 'johnatan-si@dcc.ufmg.br',
+        email: 'johnatan-si@teste.com.br',
         avatar: '/assets/images/johnatan.jpg',
         age: 30,
     },
