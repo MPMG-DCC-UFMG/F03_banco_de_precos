@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
+import { makeStyles } from '@material-ui/core/styles'
 
 import './CxBusca.css'
 
@@ -13,6 +14,15 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(0.2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+}))
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiFormLabel-root': {
+            color: 'darkgray', // or black
+            fontSize: '3ch',
+        },
+    },
 }))
 
 export default function AutoGrid() {
@@ -25,6 +35,7 @@ export default function AutoGrid() {
         options: Tipo,
         getOptionLabel: (option) => option.title,
     }
+    const classes = useStyles()
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -45,10 +56,10 @@ export default function AutoGrid() {
                                 <TextField
                                     label="Quantidade Comprada (min)"
                                     type="number"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
+                                    InputLabelProps={{ shrink: true }}
                                     inputProps={{ min: '1', step: '1' }}
+                                    inputProps={{ className: 'test' }}
+                                    className={classes.root}
                                 />
                                 <TextField
                                     label="Quantidade Comprada (máx)"
@@ -57,6 +68,7 @@ export default function AutoGrid() {
                                         shrink: true,
                                     }}
                                     inputProps={{ min: '1', step: '1' }}
+                                    className={classes.root}
                                 />
                                 <TextField label="CNPJ" />
                                 <TextField
@@ -66,6 +78,7 @@ export default function AutoGrid() {
                                         shrink: true,
                                     }}
                                     inputProps={{ min: '1', step: '1' }}
+                                    className={classes.root}
                                 />
                                 <TextField
                                     label="Preço Unitário (máx)"
@@ -74,6 +87,7 @@ export default function AutoGrid() {
                                         shrink: true,
                                     }}
                                     inputProps={{ min: '1', step: '1' }}
+                                    className={classes.root}
                                 />
                             </Box>
                         </fieldset>
@@ -100,7 +114,56 @@ export default function AutoGrid() {
                                             {...params}
                                             label="Nome"
                                             variant="standard"
-                                            className="razaoSocial"
+                                            className={classes.root}
+                                        />
+                                    )}
+                                />
+                                <Autocomplete
+                                    disablePortal
+                                    {...tipoProps}
+                                    id="disable-clo/se-on-select"
+                                    // getOptionLabel={(option) => option.title}
+                                    // style={{ width: 400 }}
+                                    noOptionsText={'Sem opções'}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Tipo"
+                                            variant="standard"
+                                            inputProps={{
+                                                ...params.inputProps,
+                                                style: { fontSize: '1rem' },
+                                            }}
+                                            className={classes.root}
+                                        />
+                                    )}
+                                />
+                            </Box>
+                        </fieldset>
+                    </Item>
+                </Grid>
+                <Grid item xs>
+                    <Item>
+                        <fieldset>
+                            <legend>Órgão/instituição</legend>
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 1, width: '100%' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                <Autocomplete
+                                    disablePortal
+                                    {...razaoSocial}
+                                    id="disable-clo/se-on-select"
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Nome"
+                                            variant="standard"
+                                            className={classes.root}
                                         />
                                     )}
                                 />
@@ -120,16 +183,13 @@ export default function AutoGrid() {
                                                 ...params.inputProps,
                                                 style: { fontSize: '1rem' },
                                             }}
-                                            className="Tipo"
+                                            className={classes.root}
                                         />
                                     )}
                                 />
                             </Box>
                         </fieldset>
                     </Item>
-                </Grid>
-                <Grid item xs>
-                    <Item>xs</Item>
                 </Grid>
             </Grid>
         </Box>

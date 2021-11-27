@@ -79,7 +79,7 @@ const AppAutoComplete = () => {
                                     classes={{ content: classes.content }}
                                 >
                                     <Typography>
-                                        <b>Busca Avançada</b>
+                                        <h3>Busca Avançada</h3>
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -98,7 +98,7 @@ const AppAutoComplete = () => {
                                     classes={{ content: classes.content }} // <-- Add this line
                                 >
                                     <Typography>
-                                        <b>Agrupamento</b>
+                                        <h3>Agrupamento</h3>
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
