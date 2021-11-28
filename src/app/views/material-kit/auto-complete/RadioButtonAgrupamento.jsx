@@ -8,7 +8,6 @@ import FormLabel from '@material-ui/core/FormLabel'
 export default function FormControlLabelPosition() {
     return (
         <FormControl component="fieldset">
-            <FormLabel component="legend"></FormLabel>
             <FormGroup aria-label="position" row>
                 <FormControlLabel
                     value="descricao"

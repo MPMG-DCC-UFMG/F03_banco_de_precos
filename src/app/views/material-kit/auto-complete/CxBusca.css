@@ -93,13 +93,17 @@ legend {
     padding: 2px 4px;
     background: #fff;
     /* For better legibility against the box-shadow */
+    font-size: large;
 }
 fieldset > legend {
     float: left;
-    margin-top: -28px;
+    margin-top: -25px;
+    color: rgb(83, 83, 83);
 }
 fieldset > legend + * {
     clear: both;
+    font-size: small;
+
 }
 
 .WithStyles\(ForwardRef\(Paper\)\)-root-267 {
@@ -113,7 +117,6 @@ fieldset > legend + * {
     letter-spacing: 0.01071em;
 }
 
-
-.textfield__label{
-color: green !important;
+.MuiFormGroup-root.MuiFormGroup-row {
+    font-size: large !important;
 }
