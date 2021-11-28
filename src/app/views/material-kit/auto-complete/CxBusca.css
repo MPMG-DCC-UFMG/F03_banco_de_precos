@@ -1,4 +1,3 @@
-
 .bancoPreco {
     padding-left: 350px;
     padding-top: 10px;
@@ -24,8 +23,6 @@
     text-align: left;
 }
 
-
-
 h1 {
     text-align: center;
     /* margin-left: 43%;*/
@@ -45,8 +42,6 @@ h5.buscadorField {
     padding-top: 25px;
     max-width: 100%;
 }
-
-
 
 .row-radio-buttons-group {
     position: absolute;
@@ -103,7 +98,6 @@ fieldset > legend {
 fieldset > legend + * {
     clear: both;
     font-size: small;
-
 }
 
 .WithStyles\(ForwardRef\(Paper\)\)-root-267 {
@@ -119,4 +113,24 @@ fieldset > legend + * {
 
 .MuiFormGroup-root.MuiFormGroup-row {
     font-size: large !important;
+}
+
+.arredondado {
+    width: 100px;
+    height: 30px;
+    border-width: 0.1px;
+    border-radius: 10px 20px;
+    border-color: lightgray;
+}
+button.css-1r4vtzz {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px 20px;
+}
+input[type='text'] {
+    width: 150px;
+    height: 30px;
+    border-width: 0.1px;
+    border-radius: 10px 20px;
+    border-color: lightgray;
 }

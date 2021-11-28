@@ -3,10 +3,7 @@ import { Breadcrumb, SimpleCard } from 'app/components'
 
 import Button from 'react-bootstrap/Button'
 
-import Buscador from './CxBusca'
-import Filtro from './Filtro'
 import './CxBusca.css'
-import DatatablePage from './TabelaResultado'
 import Form from 'react-bootstrap/Form'
 
 import { styled } from '@material-ui/core/styles'
@@ -26,8 +23,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import TabelaResultado from './TabelaResultado'
 import Agrupamento from './RadioButtonAgrupamento'
 import Faixa from './Faixa'
-import Instituicao from './Instituicao'
-import Licitante from './Licitante'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import FormLabel from '@material-ui/core/FormLabel'
+import DateForm from './DateForm'
+import Meses from './CheckMeses'
 
 const useStyles = makeStyles({
     content: {
@@ -45,6 +47,12 @@ const Item = styled(Paper)(({ theme }) => ({
 const AppAutoComplete = () => {
     const [show, setShow] = useState(false)
     const classes = useStyles()
+
+    const [currentRadioValue, setCurrentValue] = React.useState('on')
+
+    const handleRadioChange = (value) => {
+        setCurrentValue(value)
+    }
 
     return (
         <div className="analytics m-sm-30 mt-6">
@@ -70,6 +78,82 @@ const AppAutoComplete = () => {
                                 </Item>
                             </Grid>
                         </Grid>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Item>
+                                    <Box
+                                        sx={{ width: '100%', maxWidth: '100%' }}
+                                    >
+                                        <div className="buscadorField">
+                                            <FormControl component="fieldset">
+                                                <FormLabel component="legend"></FormLabel>
+                                                <RadioGroup
+                                                    row
+                                                    aria-label="period"
+                                                    className="row-radio-buttons-group"
+                                                >
+                                                    <FormControlLabel
+                                                        value="on"
+                                                        control={<Radio />}
+                                                        label="Exercício"
+                                                        onChange={(e) =>
+                                                            setCurrentValue(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        defaultChecked={
+                                                            currentRadioValue ===
+                                                            'on'
+                                                        }
+                                                    />
+                                                    <FormControlLabel
+                                                        value="off"
+                                                        control={<Radio />}
+                                                        label="Período"
+                                                        onChange={(e) =>
+                                                            setCurrentValue(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        defaultChecked={
+                                                            currentRadioValue ===
+                                                            'off'
+                                                        }
+                                                    />
+                                                </RadioGroup>
+                                            </FormControl>
+                                            {currentRadioValue === 'on' && (
+                                                <div className="buscadorField">
+                                                    <h5 className="buscadorField">
+                                                        Exercício
+                                                    </h5>
+                                                    <input
+                                                        placeholder="2021"
+                                                        type="number"
+                                                        min={2000}
+                                                        max={2030}
+                                                        className="arredondado"
+                                                    />
+                                                    <h5 className="buscadorField">
+                                                        {' '}
+                                                        Mês
+                                                    </h5>
+                                                    <Meses></Meses>
+                                                </div>
+                                            )}
+
+                                            {currentRadioValue === 'off' && (
+                                                <div>
+                                                    {' '}
+                                                    <DateForm></DateForm>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Box>
+                                </Item>
+                            </Grid>
+                        </Grid>
+
                         <div>
                             <Accordion>
                                 <AccordionSummary
@@ -85,8 +169,6 @@ const AppAutoComplete = () => {
                                 <AccordionDetails>
                                     <Typography>
                                         <Faixa></Faixa>
-                                        
-                                        
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
