@@ -29,7 +29,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import DateForm from './DateForm'
-import Meses from './CheckMeses'
+import ExercicioMes from './ExercicioMes.jsx'
 
 const useStyles = makeStyles({
     content: {
@@ -91,6 +91,7 @@ const AppAutoComplete = () => {
                                                     row
                                                     aria-label="period"
                                                     className="row-radio-buttons-group"
+                                                    defaultValue="on"
                                                 >
                                                     <FormControlLabel
                                                         value="on"
@@ -100,10 +101,6 @@ const AppAutoComplete = () => {
                                                             setCurrentValue(
                                                                 e.target.value
                                                             )
-                                                        }
-                                                        defaultChecked={
-                                                            currentRadioValue ===
-                                                            'on'
                                                         }
                                                     />
                                                     <FormControlLabel
@@ -115,31 +112,11 @@ const AppAutoComplete = () => {
                                                                 e.target.value
                                                             )
                                                         }
-                                                        defaultChecked={
-                                                            currentRadioValue ===
-                                                            'off'
-                                                        }
                                                     />
                                                 </RadioGroup>
                                             </FormControl>
                                             {currentRadioValue === 'on' && (
-                                                <div className="buscadorField">
-                                                    <h5 className="buscadorField">
-                                                        Exercício
-                                                    </h5>
-                                                    <input
-                                                        placeholder="2021"
-                                                        type="number"
-                                                        min={2000}
-                                                        max={2030}
-                                                        className="arredondado"
-                                                    />
-                                                    <h5 className="buscadorField">
-                                                        {' '}
-                                                        Mês
-                                                    </h5>
-                                                    <Meses></Meses>
-                                                </div>
+                                                <ExercicioMes></ExercicioMes>
                                             )}
 
                                             {currentRadioValue === 'off' && (

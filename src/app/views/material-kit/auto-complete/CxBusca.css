@@ -26,7 +26,7 @@
 h1 {
     text-align: center;
     /* margin-left: 43%;*/
-    font-size: 8ch;
+    font-size: 6ch;
     font-family: 'Roboto', sans-serif;
 }
 h3 {
@@ -115,17 +115,19 @@ fieldset > legend + * {
     font-size: large !important;
 }
 
-.arredondado {
+.arredondado,.css-48ayfv,.css-1jllj6i-control {
     width: 100px;
     height: 30px;
-    border-width: 0.1px;
-    border-radius: 10px 20px;
-    border-color: lightgray;
+    border-width: 0.1px !important;
+    border-radius: 10px 20px !important;
+    border-color: lightgray !important;
+    text-align: center !important;
 }
 button.css-1r4vtzz {
     width: 100px;
     height: 30px;
     border-radius: 10px 20px;
+    text-align: center;
 }
 input[type='text'] {
     width: 150px;
@@ -133,4 +135,49 @@ input[type='text'] {
     border-width: 0.1px;
     border-radius: 10px 20px;
     border-color: lightgray;
+    text-align: center;
+}
+
+.css-11unzgr {
+    /* max-height: 300px; */
+    /* overflow-y: auto; */
+    padding-bottom: 4px;
+    padding-top: 4px;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.css-12nt7tp {
+    max-height: 322px;
+    overflow-y: auto;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    width: fit-content !important;
+    text-align: left !important;
+}
+
+
+
+.container {
+  width: 50%;
+  height: 200px;
+  margin: auto;
+  padding: 10px;
+}
+
+.one {
+  width: 50%;
+  height: 200px;
+  float: left;
+}
+
+.two {
+  margin-left: 15%;
+  height: 200px;
+  
 }
