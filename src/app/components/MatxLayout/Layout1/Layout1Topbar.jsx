@@ -8,14 +8,11 @@ import {
     Hidden,
 } from '@material-ui/core'
 import { MatxMenu, MatxSearchBox } from 'app/components'
-import NotificationBar from '../../NotificationBar/NotificationBar'
-import { Link } from 'react-router-dom'
-import ShoppingCart from '../../ShoppingCart/ShoppingCart'
+
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import useAuth from 'app/hooks/useAuth'
 import useSettings from 'app/hooks/useSettings'
-import { NotificationProvider } from 'app/contexts/NotificationContext'
 import './LayoutBarra.css'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
@@ -101,7 +98,7 @@ const Layout1Topbar = () => {
     return (
         <div className={classes.topbar}>
             <div className={clsx({ 'topbar-hold': false, fixed: fixed })}>
-                <div className="flex justify-between items-center h-full">
+                <div className="">
                     {/* barra superior */}
                     <div className="over">
                         <img
@@ -113,11 +110,12 @@ const Layout1Topbar = () => {
                             className="child"
                         />
                     </div>
-                    <div className="flex">
+                    {/* botão para maximixar e minimizar a barra lateral */}
+                    {/* <div className="flex">
                         <IconButton onClick={handleSidebarToggle}>
                             <Icon>menu</Icon>
                         </IconButton>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

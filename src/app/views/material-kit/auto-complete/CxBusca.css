@@ -20,7 +20,10 @@
 
 .buscadorField {
     color: black;
-    text-align: left;
+    text-align: center;
+}
+.exercicioPeriodo {
+    /* text-align: center; */
 }
 
 h1 {
@@ -54,8 +57,12 @@ h5.buscadorField {
 }
 
 .input-container {
-    margin-top: 20px;
-    text-align: initial;
+    height: 130px;
+    position: relative;
+
+    margin: 0;
+    top: 30px;
+    left: 1150px;
 }
 
 .calendario {
@@ -115,7 +122,9 @@ fieldset > legend + * {
     font-size: large !important;
 }
 
-.arredondado,.css-48ayfv,.css-1jllj6i-control {
+.arredondado,
+.css-48ayfv,
+.css-1jllj6i-control {
     width: 100px;
     height: 30px;
     border-width: 0.1px !important;
@@ -161,23 +170,26 @@ input[type='text'] {
     text-align: left !important;
 }
 
-
-
 .container {
-  width: 50%;
-  height: 200px;
-  margin: auto;
-  padding: 10px;
+    width: 50%;
+    height: 200px;
+    margin: auto;
+    padding: 10px;
 }
 
 .one {
-  width: 50%;
-  height: 200px;
-  float: left;
+    width: 50%;
+    height: 200px;
+    float: left;
 }
 
 .two {
-  margin-left: 15%;
-  height: 200px;
-  
+    margin-left: 15%;
+    height: 200px;
 }
+
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
+    margin-left: 1000px;
+}
+

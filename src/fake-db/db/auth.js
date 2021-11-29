@@ -11,7 +11,7 @@ const userList = [
         name: 'Johnatan Oliveira',
         username: 'johnatan-si',
         email: 'johnatan-si@teste.com.br',
-        avatar: '/assets/images/johnatan.jpg',
+        avatar: '/assets/images/.jpg',
         age: 30,
     },
 ]

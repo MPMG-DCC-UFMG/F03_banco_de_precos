@@ -89,32 +89,58 @@ const AppAutoComplete = () => {
                                 </Item>
                             </Grid>
                         </Grid>
-                        <Grid>
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Item>
-                                    <FormControl component="fieldset">
-                                        <RadioGroup
-                                            row
-                                            aria-label="gender"
-                                            name="row-radio-buttons-group"
-                                        >
-                                            <FormControlLabel
-                                                value="female"
-                                                control={<Radio />}
-                                                label="Exercício"
-                                            />
-                                            <FormControlLabel
-                                                value="male"
-                                                control={<Radio />}
-                                                label="Período"
-                                            />
-                                        </RadioGroup>
-                                    </FormControl>
-                                    <ExercicioMes></ExercicioMes>
-                                    <h5 className="buscadorField">
-                                        Limite territorial
-                                    </h5>
-                                    <Regioes></Regioes>
+                                    <Box
+                                        sx={{ width: '100%', maxWidth: '100%' }}
+                                    >
+                                       
+                                        <div className="exercicioPeriodo">
+                                            <FormControl component="fieldset">
+                                                <FormLabel component="legend"></FormLabel>
+                                                <RadioGroup
+                                                    row
+                                                    aria-label="period"
+                                                    className="row-radio-buttons-group"
+                                                    defaultValue="on"
+                                                >
+                                                    <FormControlLabel
+                                                        value="on"
+                                                        control={<Radio />}
+                                                        label="Exercício"
+                                                        onChange={(e) =>
+                                                            setCurrentValue(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                    <FormControlLabel
+                                                        value="off"
+                                                        control={<Radio />}
+                                                        label="Período"
+                                                        onChange={(e) =>
+                                                            setCurrentValue(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </RadioGroup>
+                                            </FormControl>
+                                            {currentRadioValue === 'on' && (
+                                                <ExercicioMes></ExercicioMes>
+                                            )}
+
+                                            {currentRadioValue === 'off' && (
+                                                <div>
+                                                    <DateForm></DateForm>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <Grid item xs={2}>
+                                            <Item></Item>
+                                        </Grid>
+                                    </Box>
                                 </Item>
                             </Grid>
                         </Grid>

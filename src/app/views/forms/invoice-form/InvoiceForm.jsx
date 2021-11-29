@@ -246,7 +246,7 @@ const InvoiceForm = () => {
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Card
-                                            className="bg-default p-4"
+                                            className="bg-default p-"
                                             elevation={0}
                                         >
                                             <Grid

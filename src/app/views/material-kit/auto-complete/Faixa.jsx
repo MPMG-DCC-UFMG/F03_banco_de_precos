@@ -85,10 +85,7 @@ export default function AutoGrid() {
                                     inputProps={{ min: '1', step: '1' }}
                                     className={classes.root}
                                 />
-                                <TextField
-                                    label="CNPJ"
-                                    className={classes.root}
-                                />
+                               
                                 <TextField
                                     label="Preço Unitário (min)"
                                     type="number"
@@ -184,7 +181,7 @@ export default function AutoGrid() {
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
-                                                label="Razão Social"
+                                                label="Nome"
                                                 variant="standard"
                                                 inputProps={{
                                                     ...params.inputProps,

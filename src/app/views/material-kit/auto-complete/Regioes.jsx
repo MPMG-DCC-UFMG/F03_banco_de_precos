@@ -24,7 +24,7 @@ const options = [
 ]
 function Cidades() {
     return (
-        <div>
+        <div class="cidades">
             <MultiLevelSelect options={options} />
         </div>
     )

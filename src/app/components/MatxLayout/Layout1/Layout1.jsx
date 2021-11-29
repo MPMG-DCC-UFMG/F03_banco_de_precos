@@ -20,10 +20,6 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
         return {
             verticalAlign: 'top',
             marginLeft: width,
-            transition: 'all 0.3s ease',
-            // [theme.breakpoints.up("sm")]: {
-            marginRight: secondarySidebar.open ? 50 : 0,
-            // },
         }
     },
     topbar: {
@@ -61,7 +57,9 @@ const Layout1 = () => {
     const ref = useRef({ isMdScreen, settings })
 
     const topbarTheme = settings.themes[layout1Settings.topbar.theme]
-    const layoutClasses = `theme-${theme.palette.type} flex`
+    const layoutClasses = `theme-${theme.palette.type} lex`  
+    // modificado     const layoutClasses = `theme-${theme.palette.type} flex`  
+
 
     useEffect(() => {
         let { settings } = ref.current
@@ -76,18 +74,13 @@ const Layout1 = () => {
     return (
         <div className={clsx('bg-default', layoutClasses)}>
             {/* barra lateral  */}
-            {showSidenav && sidenavMode !== 'close' && (
+            {/* {showSidenav && sidenavMode !== 'close' && (
                 <SidenavTheme>
                     <Layout1Sidenav />
                 </SidenavTheme>
-            )}
+            )} */}
 
-            <div
-                className={clsx(
-                    'flex-grow flex-column relative overflow-hidden h-full-screen',
-                    classes.contentWrap
-                )}
-            >
+            <div>
                 {layout1Settings.topbar.show && layout1Settings.topbar.fixed && (
                     <ThemeProvider theme={topbarTheme}>
                         <Layout1Topbar fixed={true} className="elevation-z8" />

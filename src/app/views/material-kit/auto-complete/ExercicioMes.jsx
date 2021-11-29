@@ -24,8 +24,10 @@ export default function App() {
     return (
         <div className={classes.root}>
             <form className={classes.form}>
+                
                 <FormControl
                     className={classNames(classes.formControl, classes.text)}
+                    
                 >
                     <Typography variant="body1" className={classes.type}>
                         Exercício
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop:'15px',
     },
     form: {
         width: 800,
@@ -67,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     container: {
         display: 'flex',
@@ -85,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '100%',
             marginRight: theme.spacing(0),
             marginBottom: theme.spacing(1),
+            marginTop:theme.spacing(3),
         },
     },
     input: {
@@ -96,9 +101,5 @@ const useStyles = makeStyles((theme) => ({
     search: {
         maxWidth: 180,
     },
-    submitBtn: {
-        [theme.breakpoints.down('xs')]: {
-            width: '100%',
-        },
-    },
+    
 }))
