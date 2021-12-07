@@ -139,12 +139,17 @@ button.css-1r4vtzz {
     text-align: center;
 }
 input[type='text'] {
-    width: 150px;
+    /* width: 150px; */
     height: 30px;
     border-width: 0.1px;
     border-radius: 10px 20px;
     border-color: lightgray;
     text-align: center;
+}
+
+.MuiOutlinedInput-root{
+        border-radius: 40px;
+
 }
 
 .css-11unzgr {

@@ -16,7 +16,7 @@ import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
-function App(props) {
+function App() {
     const tableIcons = {
         DetailPanel: forwardRef((props, ref) => (
             <ChevronRight {...props} ref={ref} />
@@ -40,16 +40,11 @@ function App(props) {
             <ArrowDownward {...props} ref={ref} />
         )),
     }
-    const buscar = props.buscar
+
     const [data, setData] = useState([])
 
     const columns = [
-        {
-            title: 'Descrição',
-            field: 'original',
-            align: 'justify',
-            cellStyle: { width: '600px' },
-        },
+        {title: 'Descrição',field: 'original',align: 'justify',cellStyle: { width: '600px'},},
         { title: 'Data', field: 'data', align: 'center' }, //, width: '100%'
         { title: 'Und Medida', field: 'dsc_unidade_medida', align: 'center' },
         { title: 'Grupo', field: 'grupo', align: 'center' },
@@ -61,16 +56,14 @@ function App(props) {
         { title: 'Município', field: 'municipio', align: 'center' },
         { title: 'Nome Vencedor', field: 'nome_vencedor', align: 'center' },
     ]
-
+    
     useEffect(() => {
-        if (buscar) {
-            fetch(`http://127.0.0.1:8000/api/items/?description=${buscar}`)
-                .then((resp) => resp.json())
-                .then((resp) => {
-                    setData(resp)
-                })
-        }
-    }, [buscar])
+        fetch('http://127.0.0.1:8000/api/items/?description=carro')
+            .then((resp) => resp.json())
+            .then((resp) => {
+                setData(resp)
+            })
+    }, [])
 
     return (
         <div className="">
@@ -114,6 +107,8 @@ function App(props) {
                 }}
                 title=""
             />
+
+            
         </div>
     )
 }

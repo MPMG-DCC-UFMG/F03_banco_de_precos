@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
 
 import Button from 'react-bootstrap/Button'
@@ -30,13 +30,14 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import DateForm from './DateForm'
 import ExercicioMes from './ExercicioMes.jsx'
-import axios from 'axios'
-
-import Regioes from './Regioes'
 
 const useStyles = makeStyles({
     content: {
         justifyContent: 'center',
+    },
+    TextField: {
+        borderRadius: '100px',
+        width: '100%',
     },
 })
 
@@ -55,6 +56,16 @@ const AppAutoComplete = () => {
 
     const handleRadioChange = (value) => {
         setCurrentValue(value)
+    }
+
+    const [value, setValue] = useState('')
+    const handleChange = (e) => {
+        setValue(e.target.value)
+    }
+    const [temp, setTemp] = useState('')
+
+    const handleSearch = (e) => {
+        setTemp(value)
     }
 
     return (
@@ -76,15 +87,22 @@ const AppAutoComplete = () => {
                                     <h3 className="buscadorField">
                                         Digite uma descrição
                                     </h3>
-                                    <Box sx={{ width: 500, maxWidth: '100%' }}>
+                                    <Box
+                                        sx={{
+                                            width: 500,
+                                            maxWidth: '100%',
+                                        }}
+                                    >
                                         <TextField
-                                            fullWidth
-                                            label=""
-                                            id="fullWidth"
+                                            className={classes.TextField}
+                                            placeholder=""
+                                            variant="outlined"
+                                            size="small"
                                             inputProps={{
-                                                min: 0,
-                                                style: { textAlign: 'center' },
-                                            }} // the change is here
+                                                style: { fontSize: 40 },
+                                            }}
+                                            value={value}
+                                            onChange={handleChange}
                                         />
                                     </Box>
                                 </Item>
@@ -115,7 +133,6 @@ const AppAutoComplete = () => {
                                     <h5 className="buscadorField">
                                         Limite territorial
                                     </h5>
-                                    <Regioes></Regioes>
                                 </Item>
                             </Grid>
                         </Grid>
@@ -163,16 +180,11 @@ const AppAutoComplete = () => {
                             variant="contained"
                             color="primary"
                             className="btnBuscar"
-                            onClick={() => setShow(!show)}
+                            onClick={handleSearch}
                         >
                             Buscar
                         </Button>
-                        <p> {show}</p>
-                        {show ? (
-                            <p>
-                                <TabelaResultado></TabelaResultado>
-                            </p>
-                        ) : null}
+                        <TabelaResultado buscar={temp}></TabelaResultado>
                     </div>
                 </SimpleCard>
             </Form>
