@@ -13,29 +13,16 @@ import {
 
 import Meses from './CheckMeses'
 
-
 export default function App() {
     const classes = useStyles()
 
-    const fields = ['FirstName', 'LastName', 'PostCode', 'Gender']
-    const [searcBy, setSearchBy] = useState('FirstName')
-    const [searchText, setSearchText] = useState('')
-
     return (
-        <div className={classes.root}>
-            <form className={classes.form}>
-                
-                <FormControl
-                    className={classNames(classes.formControl, classes.text)}
-                    
-                >
-                    <Typography variant="body1" className={classes.type}>
-                        Exercício
-                    </Typography>
+        <div>
+            <form>
+                <FormControl>
+                    <Typography variant="body1"></Typography>
                 </FormControl>
-                <FormControl
-                    className={classNames(classes.formControl, classes.select)}
-                >
+                <FormControl>
                     <input
                         placeholder="2021"
                         type="number"
@@ -44,12 +31,8 @@ export default function App() {
                         className="arredondado"
                     />
                 </FormControl>
-                <Typography variant="body1" className={classes.type}>
-                    Mês
-                </Typography>
-                <FormControl
-                    className={classNames(classes.formControl, classes.select)}
-                >
+                <Typography variant="body1">Mês</Typography>
+                <FormControl>
                     <Meses></Meses>
                 </FormControl>
             </form>
@@ -62,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:'15px',
+        marginTop: '15px',
     },
     form: {
         width: 800,
@@ -70,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
-        
     },
     container: {
         display: 'flex',
@@ -89,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '100%',
             marginRight: theme.spacing(0),
             marginBottom: theme.spacing(1),
-            marginTop:theme.spacing(3),
+            marginTop: theme.spacing(3),
         },
     },
     input: {
@@ -101,5 +83,4 @@ const useStyles = makeStyles((theme) => ({
     search: {
         maxWidth: 180,
     },
-    
 }))

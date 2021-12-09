@@ -48,20 +48,15 @@ function App(props) {
     const columns = [
         {
             title: 'Descrição',
-            field: 'original',
+            field: 'original_dsc',
             align: 'justify',
-            cellStyle: { width: '600px' },
         },
-        { title: 'Data', field: 'data', align: 'center' }, //, width: '100%'
+        { title: 'Ano', field: 'ano', align: 'center' }, //, width: '100%'
         { title: 'Und Medida', field: 'dsc_unidade_medida', align: 'center' },
-        { title: 'Grupo', field: 'grupo', align: 'center' },
-        { title: 'Orgão', field: 'orgao', align: 'center' },
-        { title: 'Qtd Item', field: 'qtde_item', align: 'center' },
-        { title: 'Modalidade', field: 'modalidade', align: 'center' },
-        { title: 'Preço', field: 'preco', align: 'center' },
-        { title: 'Tipo Licitação', field: 'tipo_licitacao', align: 'center' },
-        { title: 'Município', field: 'municipio', align: 'center' },
-        { title: 'Nome Vencedor', field: 'nome_vencedor', align: 'center' },
+        { title: 'Média', field: 'mean', align: 'center' },
+        { title: 'Mínimo', field: 'min', align: 'center' },
+        { title: 'Máximo', field: 'max', align: 'center' },
+        { title: 'Contagem', field: 'count', align: 'center' },
     ]
 
     useEffect(() => {

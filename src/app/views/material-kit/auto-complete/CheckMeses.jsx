@@ -7,12 +7,12 @@ const MultiSelectAll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
 
     useEffect(() => {
-        setSelectedOptions([{ label: 'Todos', value: '*' }, ...options])
+        setSelectedOptions([{ label: 'Meses', value: '*' }, ...options])
     }, [])
 
     function getDropdownButtonLabel({ placeholderButtonLabel, value }) {
         if (value && value.some((o) => o.value === '*')) {
-            return `${placeholderButtonLabel} Todos`
+            return `${placeholderButtonLabel} Meses`
         } else {
             return `${placeholderButtonLabel} ${value.length} selected`
         }

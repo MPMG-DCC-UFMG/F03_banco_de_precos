@@ -26,6 +26,14 @@
     /* text-align: center; */
 }
 
+.fieldsetOrgao {
+    height: 150px;
+}
+
+.MuiInputBase-input {
+    width: 250px;
+}
+
 h1 {
     text-align: center;
     /* margin-left: 43%;*/
@@ -39,6 +47,7 @@ h3 {
 .btnBuscar {
     margin-left: 47%;
     display: inline-block;
+    border-radius: 10px 20px;
 }
 
 h5.buscadorField {
@@ -126,17 +135,19 @@ fieldset > legend + * {
 .css-48ayfv,
 .css-1jllj6i-control {
     width: 100px;
-    height: 30px;
+    height: 20px;
     border-width: 0.1px !important;
     border-radius: 10px 20px !important;
     border-color: lightgray !important;
     text-align: center !important;
+    margin-top: 10px;
 }
 button.css-1r4vtzz {
     width: 100px;
-    height: 30px;
+    height: 18px;
     border-radius: 10px 20px;
     text-align: center;
+    margin-top: 10px;
 }
 input[type='text'] {
     /* width: 150px; */
@@ -144,23 +155,31 @@ input[type='text'] {
     border-width: 0.1px;
     border-radius: 10px 20px;
     border-color: lightgray;
-    text-align: center;
+    text-align: left;
 }
 
-.MuiOutlinedInput-root{
-        border-radius: 40px;
-
+.MuiOutlinedInput-root {
+    border-radius: 40px;
 }
 
 .css-11unzgr {
-    /* max-height: 300px; */
-    /* overflow-y: auto; */
+    max-height: 150px;
+    overflow-y: auto;
     padding-bottom: 4px;
     padding-top: 4px;
     position: relative;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch !important;
     box-sizing: border-box;
-    width: 100%;
+    width: 300px;
+    text-align: left;
+}
+
+.css-cnd76u-MuiPaper-root,
+.MuiPaper-elevation1 {
+    color: black !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .css-12nt7tp {
@@ -193,8 +212,6 @@ input[type='text'] {
     height: 200px;
 }
 
-
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     margin-left: 1000px;
 }
-

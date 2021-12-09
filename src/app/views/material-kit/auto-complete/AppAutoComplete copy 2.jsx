@@ -1,31 +1,34 @@
-import Paper from '@mui/material/Paper'
-import Stack from '@mui/material/Stack'
-import { styled } from '@mui/material/styles'
-import Meses from './CheckMeses'
-
 import React, { useState, useRef, useEffect } from 'react'
-import { SimpleCard } from 'app/components'
+import { Breadcrumb, SimpleCard } from 'app/components'
+
 import Button from 'react-bootstrap/Button'
+
 import './CxBusca.css'
 import Form from 'react-bootstrap/Form'
+
+import { styled } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
+import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
+
 import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+//import Typography from '@mui/material/Typography';
 import Typography from '@material-ui/core/Typography'
+
 import { makeStyles } from '@material-ui/core/styles'
 import TabelaResultado from './TabelaResultado'
-import Agrupamento from './CheckBoxAgrupamento'
+import Agrupamento from './CHeckBoxAgrupamento'
 import Faixa from './Faixa'
-import RadioBExercicioPeriodo from './RadioBExercicioPeriodo'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
+import DateForm from './DateForm'
 import ExercicioMes from './ExercicioMes.jsx'
 
 const useStyles = makeStyles({
@@ -37,6 +40,7 @@ const useStyles = makeStyles({
         width: '100%',
     },
 })
+
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -44,15 +48,9 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }))
 
-export default function ResponsiveStack() {
+const AppAutoComplete = () => {
     const [show, setShow] = useState(false)
     const classes = useStyles()
-
-    const [currentRadioValue, setCurrentValue] = React.useState('on')
-
-    const handleRadioChange = (value) => {
-        setCurrentValue(value)
-    }
 
     const [valueTextDescricao, setTextDescricao] = useState('')
     const handleChange = (e) => {
@@ -66,6 +64,7 @@ export default function ResponsiveStack() {
             setTextoDes(valueTextDescricao)
         }
     }
+
     return (
         <div className="analytics m-sm-30 mt-6">
             <h1>Banco de Preços</h1>
@@ -107,51 +106,34 @@ export default function ResponsiveStack() {
                                 </Item>
                             </Grid>
                         </Grid>
-                        <Stack gap={1}>
-                            <Stack
-                                spacing={1}
-                                direction="row"
-                                justifyContent="center"
-                                className={classes.TextField}
-                            >
+                        <Grid>
+                            <Grid item xs={12}>
                                 <Item>
-                                    <FormControlLabel
-                                        value="on"
-                                        control={<Radio />}
-                                        label="Exercício"
-                                        onChange={(e) =>
-                                            setCurrentValue(e.target.value)
-                                        }
-                                    />
+                                    <FormControl component="fieldset">
+                                        <RadioGroup
+                                            row
+                                            name="datas"
+                                            defaultValue="exercicio"
+                                        >
+                                            <FormControlLabel
+                                                value="exercicio"
+                                                control={<Radio />}
+                                                label="Exercício"
+                                            />
+                                            <FormControlLabel
+                                                value="periodo"
+                                                control={<Radio />}
+                                                label="Período"
+                                            />
+                                        </RadioGroup>
+                                    </FormControl>
+                                    <ExercicioMes></ExercicioMes>
+                                    <h5 className="buscadorField">
+                                        {/* Limite territorial */}
+                                    </h5>
                                 </Item>
-                                <Item>
-                                    {' '}
-                                    <FormControlLabel
-                                        value="off"
-                                        control={<Radio />}
-                                        label="Período"
-                                        onChange={(e) =>
-                                            setCurrentValue(e.target.value)
-                                        }
-                                    />
-                                </Item>
-                                <Item>
-                                    {' '}
-                                    {currentRadioValue === 'on' && (
-                                        <input
-                                            placeholder="2021"
-                                            type="number"
-                                            min={2000}
-                                            max={2030}
-                                            className="arredondado"
-                                        />
-                                    )}
-                                </Item>
-                                <Item>
-                                    <Meses></Meses>
-                                </Item>
-                            </Stack>
-                        </Stack>
+                            </Grid>
+                        </Grid>
 
                         <div>
                             <Accordion>
@@ -207,3 +189,5 @@ export default function ResponsiveStack() {
         </div>
     )
 }
+
+export default AppAutoComplete
