@@ -2,7 +2,7 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import { styled } from '@mui/material/styles'
 import Meses from './CheckMeses'
-
+import { withStyles } from "@material-ui/core/styles";
 import React, { useState, useRef, useEffect } from 'react'
 import { SimpleCard } from 'app/components'
 import Button from 'react-bootstrap/Button'
@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Accordion from '@material-ui/core/Accordion'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
+import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
@@ -27,6 +27,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import ExercicioMes from './ExercicioMes.jsx'
+import AgrupamentoFiltro from './CheckBoxAgrupamento'
+import TabelaResultadoAgrupamento from './TabelaResultadoAgrupamento'
 
 const useStyles = makeStyles({
     content: {
@@ -44,7 +46,32 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }))
 
+const styles = (theme) => ({
+  root: {
+    width: "100%"
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular
+  }
+});
+
+const AccordionSummary = withStyles({
+  root: {
+    flexDirection: "column"
+  },
+  content: {
+    marginBottom: 0
+  },
+  expandIcon: {
+    marginRight: 0,
+    paddingTop: 0
+  }
+})(MuiAccordionSummary);
+
 export default function ResponsiveStack() {
+    
+    
     const [show, setShow] = useState(false)
     const classes = useStyles()
 
@@ -62,6 +89,7 @@ export default function ResponsiveStack() {
 
     const handleSearchBotaoBusca = (e) => {
         if (valueTextDescricao.length < 3) {
+            
         } else {
             setTextoDes(valueTextDescricao)
         }
@@ -83,7 +111,7 @@ export default function ResponsiveStack() {
                             <Grid item xs={3}>
                                 <Item>
                                     <h3 className="buscadorField">
-                                        Digite uma descrição
+                                        
                                     </h3>
                                     <Box
                                         sx={{
@@ -93,7 +121,7 @@ export default function ResponsiveStack() {
                                     >
                                         <TextField
                                             className={classes.TextField}
-                                            placeholder=""
+                                            placeholder="Digite uma descrição"
                                             variant="outlined"
                                             autoFocus={true}
                                             size="small"
@@ -116,8 +144,9 @@ export default function ResponsiveStack() {
                             >
                                 <Item>
                                     <FormControlLabel
-                                        value="on"
-                                        control={<Radio />}
+                                        control={
+                                            <Radio defaultChecked={true} />
+                                        }
                                         label="Exercício"
                                         onChange={(e) =>
                                             setCurrentValue(e.target.value)
@@ -125,7 +154,7 @@ export default function ResponsiveStack() {
                                     />
                                 </Item>
                                 <Item>
-                                    {' '}
+                                   
                                     <FormControlLabel
                                         value="off"
                                         control={<Radio />}
@@ -201,6 +230,7 @@ export default function ResponsiveStack() {
                             Buscar
                         </Button>
                         <TabelaResultado buscar={textoDes}></TabelaResultado>
+                        {/*<TabelaResultadoAgrupamento buscar={textoDes}></TabelaResultadoAgrupamento>*/}
                     </div>
                 </SimpleCard>
             </Form>

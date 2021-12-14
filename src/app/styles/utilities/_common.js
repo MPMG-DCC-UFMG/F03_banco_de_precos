@@ -38,7 +38,7 @@ export const commonStyles = makeStyles(({ palette, ...theme }) => ({
             width: '32px !important',
         },
         '.circle-32 .MuiFab-root': { minHeight: '32px !important' },
-        '.circle-32 .MuiIcon-root': { fontSize: '13px !important' },
+        
         '.show-on-mobile': { display: 'none !important' },
         '.invisible-on-pc': { visibility: 'hidden' },
         '.highlight-js pre': { whiteSpace: 'pre-line' },

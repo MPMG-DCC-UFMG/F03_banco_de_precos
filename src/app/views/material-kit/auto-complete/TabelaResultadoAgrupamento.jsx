@@ -61,7 +61,7 @@ function App(props) {
 
     useEffect(() => {
         if (buscar) {
-            fetch(`http://127.0.0.1:8000/api/items/?description=${buscar}`)
+            fetch(`http://127.0.0.1:8000/api/items/sample/?limit=10&offset=0&order=desc&description=${buscar}`)
                 .then((resp) => resp.json())
                 .then((resp) => {
                     setData(resp)

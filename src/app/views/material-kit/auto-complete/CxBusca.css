@@ -45,7 +45,7 @@ h3 {
 }
 
 .btnBuscar {
-    margin-left: 47%;
+    margin-left: 48%;
     display: inline-block;
     border-radius: 10px 20px;
 }
@@ -215,3 +215,4 @@ input[type='text'] {
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     margin-left: 1000px;
 }
+

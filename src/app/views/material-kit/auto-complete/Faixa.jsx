@@ -85,6 +85,14 @@ export default function RowAndColumnSpacing() {
                                             className={classes.TextField}
                                         />
                                     </Item>
+                                    </Stack>
+                                    </Stack>
+                                    <Stack gap={1}>
+                                <Stack
+                                    spacing={1}
+                                    direction="row"
+                                    justifyContent="left"
+                                >
                              
                                     <Item>
                                         <TextField
