@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 import Stack from '@mui/material/Stack'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import './CxBusca.css'
+import './AdvancedSearch.css'
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -63,12 +63,13 @@ export default function RowAndColumnSpacing() {
                                 <Stack
                                     spacing={1}
                                     direction="row"
-                                    justifyContent="left"
+                                    justifyContent="center"
                                 >
                                     <Item>
                                         <TextField
-                                            label="Quantidade Comprada (min)"
+                                            label="Quantidade Comprada"
                                             type="number"
+                                            placeholder="min"
                                             InputLabelProps={{ shrink: true }}
                                             inputProps={{ min: '1', step: '1' }}
                                             className={classes.TextField}
@@ -76,7 +77,8 @@ export default function RowAndColumnSpacing() {
                                     </Item>
                                     <Item>
                                         <TextField
-                                            label="Quantidade Comprada (máx)"
+                                            label=" "
+                                            placeholder="max"
                                             type="number"
                                             InputLabelProps={{
                                                 shrink: true,
@@ -85,18 +87,18 @@ export default function RowAndColumnSpacing() {
                                             className={classes.TextField}
                                         />
                                     </Item>
-                                    </Stack>
-                                    </Stack>
-                                    <Stack gap={1}>
+                                </Stack>
+                            </Stack>
+                            <Stack gap={1}>
                                 <Stack
                                     spacing={1}
                                     direction="row"
-                                    justifyContent="left"
+                                    justifyContent="center"
                                 >
-                             
                                     <Item>
                                         <TextField
-                                            label="Preço Unitário (min)"
+                                            label="Preço Unitário"
+                                            placeholder="min"
                                             type="number"
                                             InputLabelProps={{
                                                 shrink: true,
@@ -107,8 +109,9 @@ export default function RowAndColumnSpacing() {
                                     </Item>
                                     <Item>
                                         <TextField
-                                            label="Preço Unitário (máx)"
+                                            label=" "
                                             type="number"
+                                            placeholder="max"
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
@@ -124,157 +127,66 @@ export default function RowAndColumnSpacing() {
                 <Grid item xs={6}>
                     <Item>
                         <fieldset className="fieldsetOrgao">
-                            <legend>Órgão/instituição</legend>
+                            <legend>Faixas</legend>
+
                             <Stack gap={1}>
                                 <Stack
-                                    spacing={3}
+                                    spacing={1}
                                     direction="row"
-                                    justifyContent="left"
+                                    justifyContent="center"
                                 >
-                                    <Item>
-                                        <Autocomplete
-                                            disablePortal
-                                            {...razaoSocial}
-                                            id="disable-clo/se-on-select"
-                                            style={{ width: 250 }}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Nome"
-                                                    variant="standard"
-                                                    className={
-                                                        classes.TextField
-                                                    }
-                                                />
-                                            )}
-                                        />
-                                    </Item>
-                                    <Item>
-                                        <Autocomplete
-                                            disablePortal
-                                            {...tipoProps}
-                                            id="disable-clo/se-on-select"
-                                            // getOptionLabel={(option) => option.title}
-                                            style={{ width: 200 }}
-                                            noOptionsText={'Sem opções'}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Tipo"
-                                                    variant="standard"
-                                                    inputProps={{
-                                                        ...params.inputProps,
-                                                        style: {
-                                                            fontSize: '1rem',
-                                                        },
-                                                    }}
-                                                    className={
-                                                        classes.TextField
-                                                    }
-                                                />
-                                            )}
-                                        />
-                                    </Item>
-                                </Stack>
-                            </Stack>
-                        </fieldset>
-                    </Item>
-                </Grid>
-                <Grid item xs={6}>
-                    <Item>
-                        <fieldset className="fieldsetOrgao">
-                            <legend>Licitação</legend>
-                            <Stack gap={1}>
-                                <Stack
-                                    spacing={3}
-                                    direction="row"
-                                    justifyContent="left"
-                                >
-                                    <Item>
-                                        <Autocomplete
-                                            disablePortal
-                                            id="disable-clo/se-on-select"
-                                            style={{ width: 200 }}
-                                            getOptionLabel={(option) =>
-                                                option.title
-                                            }
-                                            noOptionsText={'Sem opções'}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Nome Vencedor"
-                                                    variant="standard"
-                                                    inputProps={{
-                                                        ...params.inputProps,
-                                                        style: {
-                                                            fontSize: '1rem',
-                                                        },
-                                                    }}
-                                                    className={
-                                                        classes.TextField
-                                                    }
-                                                />
-                                            )}
-                                        />
-                                    </Item>
-                                    <Item>
-                                        <Autocomplete
-                                            disablePortal
-                                            {...tipoProps}
-                                            id="disable-clo/se-on-select"
-                                            // getOptionLabel={(option) => option.title}
-                                            style={{ width: 200 }}
-                                            noOptionsText={'Sem opções'}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Tipo"
-                                                    variant="standard"
-                                                    inputProps={{
-                                                        ...params.inputProps,
-                                                        style: {
-                                                            fontSize: '1rem',
-                                                        },
-                                                    }}
-                                                    className={
-                                                        classes.TextField
-                                                    }
-                                                />
-                                            )}
-                                        />
-                                    </Item>
                                     <Item>
                                         <TextField
-                                            label="CNPJ"
+                                            label="Quantidade Comprada"
+                                            type="number"
+                                            placeholder="min"
+                                            InputLabelProps={{ shrink: true }}
+                                            inputProps={{ min: '1', step: '1' }}
                                             className={classes.TextField}
                                         />
                                     </Item>
                                     <Item>
-                                        <Autocomplete
-                                            disablePortal
-                                            {...TipoLicitacaoProps}
-                                            id="disable-clo/se-on-select"
-                                            style={{ width: 150 }}
-                                            getOptionLabel={(option) =>
-                                                option.title
-                                            }
-                                            noOptionsText={'Sem opções'}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Modalidade"
-                                                    variant="standard"
-                                                    inputProps={{
-                                                        ...params.inputProps,
-                                                        style: {
-                                                            fontSize: '1rem',
-                                                        },
-                                                    }}
-                                                    className={
-                                                        classes.TextField
-                                                    }
-                                                />
-                                            )}
+                                        <TextField
+                                            label=" "
+                                            placeholder="max"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                </Stack>
+                            </Stack>
+                            <Stack gap={1}>
+                                <Stack
+                                    spacing={1}
+                                    direction="row"
+                                    justifyContent="center"
+                                >
+                                    <Item>
+                                        <TextField
+                                            label="Preço Unitário"
+                                            placeholder="min"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <TextField
+                                            label=" "
+                                            type="number"
+                                            placeholder="max"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
                                         />
                                     </Item>
                                 </Stack>
@@ -285,41 +197,138 @@ export default function RowAndColumnSpacing() {
                 <Grid item xs={6}>
                     <Item>
                         <fieldset className="fieldsetOrgao">
-                            <legend>Natureza do Objeto</legend>
+                            <legend>Faixas</legend>
+
                             <Stack gap={1}>
                                 <Stack
-                                    spacing={3}
+                                    spacing={1}
                                     direction="row"
-                                    justifyContent="left"
+                                    justifyContent="center"
                                 >
                                     <Item>
-                                        <Autocomplete
-                                            disablePortal
-                                            id="disable-clo/se-on-select"
-                                            style={{ width: 200 }}
-                                            getOptionLabel={(option) =>
-                                                option.title
-                                            }
-                                            noOptionsText={'Sem opções'}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label=""
-                                                    variant="standard"
-                                                    inputProps={{
-                                                        ...params.inputProps,
-                                                        style: {
-                                                            fontSize: '1rem',
-                                                        },
-                                                    }}
-                                                    className={
-                                                        classes.TextField
-                                                    }
-                                                />
-                                            )}
+                                        <TextField
+                                            label="Quantidade Comprada"
+                                            type="number"
+                                            placeholder="min"
+                                            InputLabelProps={{ shrink: true }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
                                         />
                                     </Item>
-                                   
+                                    <Item>
+                                        <TextField
+                                            label=" "
+                                            placeholder="max"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                </Stack>
+                            </Stack>
+                            <Stack gap={1}>
+                                <Stack
+                                    spacing={1}
+                                    direction="row"
+                                    justifyContent="center"
+                                >
+                                    <Item>
+                                        <TextField
+                                            label="Preço Unitário"
+                                            placeholder="min"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <TextField
+                                            label=" "
+                                            type="number"
+                                            placeholder="max"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                </Stack>
+                            </Stack>
+                        </fieldset>
+                    </Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>
+                        <fieldset className="fieldsetOrgao">
+                            <legend>Faixas</legend>
+
+                            <Stack gap={1}>
+                                <Stack
+                                    spacing={1}
+                                    direction="row"
+                                    justifyContent="center"
+                                >
+                                    <Item>
+                                        <TextField
+                                            label="Quantidade Comprada"
+                                            type="number"
+                                            placeholder="min"
+                                            InputLabelProps={{ shrink: true }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <TextField
+                                            label=" "
+                                            placeholder="max"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                </Stack>
+                            </Stack>
+                            <Stack gap={1}>
+                                <Stack
+                                    spacing={1}
+                                    direction="row"
+                                    justifyContent="center"
+                                >
+                                    <Item>
+                                        <TextField
+                                            label="Preço Unitário"
+                                            placeholder="min"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <TextField
+                                            label=" "
+                                            type="number"
+                                            placeholder="max"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{ min: '1', step: '1' }}
+                                            className={classes.TextField}
+                                        />
+                                    </Item>
                                 </Stack>
                             </Stack>
                         </fieldset>
