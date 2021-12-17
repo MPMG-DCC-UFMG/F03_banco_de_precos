@@ -1,2 +1,19 @@
 # F03_banco_de_precos
 Banco de Preços (F03)
+
+## Para executar a aplicação: 
+1) Faça o clone do projeto 
+2) Via terminal, acesse a pasta do projeto F03_banco_de_precos
+3) Execute o comando abaixo para instalar as dependências do projeto
+### `npm install`
+4) Aguarde a instalação do projeto
+        
+
+
+5) Execute a API seguindo as orientações: [Orientações](https://docs.google.com/document/d/1yK661WzOiNZikoLPNWyFublavfrAUN6xZo4Q8IappNk/edit?usp=sharing).
+6) Execute o comando:
+### `npm start`
+
+7) Abra http://localhost:3000 para visualizar no navegador.
+
+
