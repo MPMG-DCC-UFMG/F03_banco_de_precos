@@ -10,7 +10,7 @@ Banco de Preços (F03)
         
 
 
-5) Execute a API seguindo as orientações: [Orientações](https://docs.google.com/document/d/1yK661WzOiNZikoLPNWyFublavfrAUN6xZo4Q8IappNk/edit?usp=sharing).
+5) Execute a API seguindo as orientações: [Orientações](https://docs.google.com/document/d/1cOJn4DiqG4yRSPXRB2-HJDRo33OWjoWeqEGHvjV9eHg/edit).
 6) Execute o comando:
 ### `npm start`
 
