@@ -1,43 +1,21 @@
-#### ArchitectUI Bootstrap 4 ReactJS Theme FREE
-#### Made with love by DashboardPack.com
+# F03_banco_de_precos
+Banco de Preços (F03)
 
-## PRO Version Available at - https://dashboardpack.com/theme-details/architectui-dashboard-react-pro
+## Faça a instalação  do NPM 
 
-### Installation
-Download and uncompress the theme package archive in your desired folder location.
+npm install --global npm@latest
 
-Download and install Node.js from nodejs.org/en/download/
-
-Install the latest version of npm. This will be useful when running all the build commands. Run the following in a command line, either your IDE's Terminal window or in a Windows Command Prompt.
-
-                                                            
-    npm install --global npm@latest
-                                                            
-                                                        
-Install the app dependencies by running the following command in the command line inside the folder root where you have unzipped the theme package archive.
+## Para executar a aplicação: 
+1) Faça o clone do projeto 
+2) Via terminal, acesse a pasta do projeto F03_banco_de_precos
+3) Execute o comando abaixo para instalar as dependências do projeto
+### `npm install`
+4) Aguarde a instalação do projeto
+        
 
 
-    npm install
-                                                        
-After npm finishes installing the modules from package.json you can go ahead and start the application. To do so, run the command below.
+5) Execute a API seguindo as orientações: [Orientações](https://docs.google.com/document/d/1cOJn4DiqG4yRSPXRB2-HJDRo33OWjoWeqEGHvjV9eHg/edit).
+6) Execute o comando:
+### `npm run start`
 
-You can also use yarn to install dependencies instead of npm.
-
-
-    npm run start
-                                                        
-After the comand finished, you should see a Compiled successfully! message in your terminal window. Also, a web server service will be started so you can view your app in the browser: http://localhost:3000
-
-### Production Build
-
-To create a production optimised build run the command below:
-
-
-    npm run build
-                                                        
-This created another folder in the root of your project named build. You'll have an option to start a local web server to view your newly created production build.
-
-
-    serve -s build -l 4000
-                                                        
-This will start a local web server on port 4000, on which the production folder (/build/) will be available in your browser.
+7) Abra http://localhost:3000 para visualizar no navegador.
