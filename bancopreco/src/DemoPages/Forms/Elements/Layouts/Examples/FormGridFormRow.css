@@ -162,3 +162,6 @@ div#rdts1 {
   height: 30px !important;
   vertical-align: super !important;
 }
+.MuiPaper-root.MuiPaper-elevation2.MuiPaper-rounded {
+  margin-top: 100px;
+}

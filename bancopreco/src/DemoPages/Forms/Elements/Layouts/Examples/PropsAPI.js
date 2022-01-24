@@ -46,7 +46,6 @@ const Retornoapi = ({ droplets }) => {
       title: "Descrição",
       field: "original",
       align: "justify",
-      cellStyle: { width: "600px" },
     },
     { title: "Data", field: "data", align: "center" }, //, width: '100%'
     { title: "Und Medida", field: "dsc_unidade_medida", align: "center" },
@@ -100,6 +99,7 @@ const Retornoapi = ({ droplets }) => {
           toolbar: {
             exportCSVName: "Exportar para CSV",
             exportPDFName: "Exportar para PDF",
+            searchTooltip: "Pesquisar",
           },
           body: {
             emptyDataSourceMessage: (
@@ -111,6 +111,19 @@ const Retornoapi = ({ droplets }) => {
                 Sem dados para apresentar
               </h3>
             ),
+          },
+          grouping:{
+            placeholder:"Arraste uma coluna para ser agrupada",
+
+          },
+
+          pagination: {
+            labelRowsSelect: "linhas",
+            labelDisplayedRows: "{count} de {from}-{to}",
+            firstTooltip: "Primeira página",
+            previousTooltip: "Página anterior",
+            nextTooltip: "Próxima página",
+            lastTooltip: "Última página",
           },
         }}
         title=""
