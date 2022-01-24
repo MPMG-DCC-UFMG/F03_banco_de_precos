@@ -99,7 +99,7 @@ const Retornoapi = ({ droplets }) => {
           toolbar: {
             exportCSVName: "Exportar para CSV",
             exportPDFName: "Exportar para PDF",
-            searchTooltip: "Pesquisar",
+            searchPlaceholder: "Pesquisar na tabela",
           },
           body: {
             emptyDataSourceMessage: (
@@ -114,6 +114,7 @@ const Retornoapi = ({ droplets }) => {
           },
           grouping:{
             placeholder:"Arraste uma coluna para ser agrupada",
+            groupedBy:"Agrupado por:"
 
           },
 
