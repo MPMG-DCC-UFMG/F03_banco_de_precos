@@ -18,6 +18,6 @@ npm install --global npm@latest
 6) Execute o comando:
 ### `npm run start`
 
-7) Abra http://localhost:3000 para visualizar no navegador.
+7) Abra http://localhost:3000 para visualizar no navegador
 
 
