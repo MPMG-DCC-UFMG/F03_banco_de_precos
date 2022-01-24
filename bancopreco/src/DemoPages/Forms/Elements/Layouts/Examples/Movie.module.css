@@ -1,0 +1,125 @@
+.bancoPreco {
+  width: 100%;
+  text-align: center;
+}
+
+.campoBuscar {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 40%;
+
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+input.form-control-lg.form-control {
+  border-radius: 50px;
+}
+
+.elementosCheck {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: medium;
+}
+
+input[type="radio"] {
+  /* remove standard background appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom radiobutton appearance */
+  width: 25px;
+  height: 25px;
+  padding: 6px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 2px solid #bbbbbb;
+  background-color: coral;
+  border-radius: 50%;
+}
+
+input[type="radio" i] {
+  background-color: coral;
+  cursor: default;
+  appearance: auto;
+  box-sizing: border-box;
+  margin: 3px 3px 0px 5px;
+  padding: initial;
+  border: initial;
+}
+
+button.acordion.btn.btn-success {
+  margin: 0;
+  margin-top: 20px;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+button.btnBuscar.btn.btn-primary {
+  margin-top: 95px;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 180px;
+}
+
+.arredondado,
+.selectMeses,
+button.css-1r4vtzz {
+  border-radius: 10px 20px !important;
+  text-align: left !important;
+  height: 30px;
+  vertical-align: super !important;
+}
+
+.tabelaResultado {
+  margin-top: 180px;
+}
+
+.agrupamento {
+  font-size: medium;
+}
+
+input.form-check-input {
+  width: 20px;
+  height: 20px;
+}
+
+h5.card-title {
+  font-size: x-large;
+}
+
+.card-header,
+.card-title {
+  color: rgb(86 81 81 / 70%);
+}
+
+label.form-check-label{
+font-size: x-large;
+}

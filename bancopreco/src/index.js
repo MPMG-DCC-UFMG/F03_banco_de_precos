@@ -1,17 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
+import { HashRouter } from 'react-router-dom';
+import './assets/base.css';
+import Main from './DemoPages/Main';
+import configureStore from './config/configureStore';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const store = configureStore();
+const rootElement = document.getElementById('root');
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const renderApp = Component => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <HashRouter>
+        <Component />
+      </HashRouter>
+    </Provider>,
+    rootElement
+  );
+};
+
+renderApp(Main);
+
+if (module.hot) {
+  module.hot.accept('./DemoPages/Forms/', () => {
+    const NextApp = require('./DemoPages/Forms/').default;
+    renderApp(NextApp);
+  });
+}
+unregister();
+
+// registerServiceWorker()
