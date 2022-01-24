@@ -9,7 +9,7 @@ npm install --global npm@latest
 
 ## Para executar a aplicação: 
 1) Faça o clone do projeto 
-2) Via terminal, acesse a pasta do projeto F03_banco_de_precos
+2) Via terminal, acesse a pasta do projeto `bancopreco`
 3) Execute o comando abaixo para instalar as dependências do projeto
 ### `npm install`
 4) Aguarde a instalação do projeto
