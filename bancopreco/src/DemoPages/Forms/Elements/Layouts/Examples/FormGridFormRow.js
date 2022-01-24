@@ -25,7 +25,7 @@ import PropsAPI from "./PropsAPI.js";
 import "./FormGridFormRow.css";
 import Meses from "./SelectMeses";
 import Cidades from "./SelectCidades";
-import MaskCnpj from "./Mask"
+import MaskCnpj from "./Mask";
 import ReactSpinner from "react-bootstrap-spinner";
 
 import { ActivityIndicator } from "react-native";
@@ -126,7 +126,7 @@ export default class FormGridFormRow extends React.Component {
                   <FormGroup check inline>
                     <Cidades></Cidades>
                   </FormGroup>
-                  
+
                   <FormGroup check inline>
                     <div>
                       <Button color="gray" onClick={this.toggleT}>
@@ -242,7 +242,7 @@ export default class FormGridFormRow extends React.Component {
                                   <Col md={4}>
                                     <FormGroup>
                                       <Label for="exampleState"></Label>
-                                      <MaskCnpj/>
+                                      <MaskCnpj />
                                       {/* <Input
                                         type="text"
                                         name="state"
@@ -345,13 +345,11 @@ export default class FormGridFormRow extends React.Component {
               </div>
             </div>
           </Fragment>
-        </Form>
-        <div>
-          {this.renderDadosApi}
           <Button color="primary" className="btnBuscar" type="submit">
             Buscar
-          </Button>{" "}
-        </div>
+          </Button>
+        </Form>
+        <div>{this.renderDadosApi}</div>
       </div>
     );
   }
