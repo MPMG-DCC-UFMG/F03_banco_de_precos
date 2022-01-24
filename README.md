@@ -16,7 +16,7 @@ npm install --global npm@latest
 
 5) Execute a API seguindo as orientações: [Orientações](https://docs.google.com/document/d/1cOJn4DiqG4yRSPXRB2-HJDRo33OWjoWeqEGHvjV9eHg/edit).
 6) Execute o comando:
-### `npm start`
+### `npm run start`
 
 7) Abra http://localhost:3000 para visualizar no navegador.
 
