@@ -1,6 +1,10 @@
 # F03_banco_de_precos
 Banco de Preços (F03)
 
+## Faça a instalação  do NPM 
+
+npm install --global npm@latest
+
 ## Para executar a aplicação: 
 1) Faça o clone do projeto 
 2) Via terminal, acesse a pasta do projeto F03_banco_de_precos
