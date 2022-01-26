@@ -165,3 +165,19 @@ div#rdts1 {
 .MuiPaper-root.MuiPaper-elevation2.MuiPaper-rounded {
   margin-top: 100px;
 }
+
+
+
+.sugestoes {
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.sugestoes:hover{
+  background-color: silver;
+}

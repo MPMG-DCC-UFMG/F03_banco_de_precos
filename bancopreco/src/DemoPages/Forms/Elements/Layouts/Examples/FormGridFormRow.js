@@ -21,6 +21,8 @@ import { GrFilter } from "react-icons/gr";
 // https://react-icons.github.io/react-icons/search?q=filter
 
 import { search } from "./Utils";
+import { autocomplete } from "./Utils";
+
 import PropsAPI from "./PropsAPI.js";
 import "./FormGridFormRow.css";
 import Meses from "./SelectMeses";
@@ -46,6 +48,7 @@ export default class FormGridFormRow extends React.Component {
     buscar: "",
     modal: false,
   };
+
   search = async (val) => {
     this.setState({ loading: true });
     const results = await search(
@@ -81,6 +84,10 @@ export default class FormGridFormRow extends React.Component {
 
     return dadosApi;
   }
+  onSuggestHandler = async (e) => {
+    this.setState({ buscar: e });
+    this.setState({ dadosApiDes: "" });
+  };
 
   toggle() {
     this.setState({ collapse: !this.state.collapse });
@@ -125,7 +132,13 @@ export default class FormGridFormRow extends React.Component {
                 />
                 {this.state.dadosApiDes &&
                   this.state.dadosApiDes.map((dadosApiDes, i) => (
-                    <div key={i}>{dadosApiDes.desc}</div>
+                    <div
+                      key={i}
+                      className="sugestoes"
+                      onClick={(e) => this.onSuggestHandler(dadosApiDes.desc)}
+                    >
+                      {dadosApiDes.desc}
+                    </div>
                   ))}
               </div>
               <div className="elementosCheck">
@@ -348,7 +361,7 @@ export default class FormGridFormRow extends React.Component {
                           </Card>
                         </ModalBody>
                         <ModalFooter>
-                          <Button color="primary" onClick={this.toggleT}>
+                          <Button color="primary"  onClick={this.toggleT} type="submit">
                             Buscar
                           </Button>
                           {"  "}
