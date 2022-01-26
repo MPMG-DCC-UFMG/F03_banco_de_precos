@@ -41,6 +41,7 @@ export default class FormGridFormRow extends React.Component {
   }
   state = {
     dadosApi: null,
+    dadosApiDes: null,
     loading: false,
     buscar: "",
     modal: false,
@@ -55,8 +56,19 @@ export default class FormGridFormRow extends React.Component {
     this.setState({ dadosApi, loading: false });
   };
 
+  // função para autocomplete da descrição
+  autocomplete = async (desc) => {
+    const retdesc = await search(
+      `http://localhost:8000/api/items/autocomplete/?desc=${desc}`
+    );
+    const dadosApiDes = retdesc;
+
+    this.setState({ dadosApiDes });
+  };
+
   onChangeHandler = async (e) => {
-    this.search(e.target.value);
+    //alert(e.target.value);
+    this.autocomplete(e.target.value);
     this.setState({ value: e.target.value });
   };
 
@@ -106,8 +118,15 @@ export default class FormGridFormRow extends React.Component {
                   bsSize="lg"
                   placeholder="Digite uma descrição"
                   value={this.state.buscar}
-                  onChange={(e) => this.setState({ buscar: e.target.value })}
+                  onChange={(e) => {
+                    this.setState({ buscar: e.target.value });
+                    this.onChangeHandler(e);
+                  }}
                 />
+                {this.state.dadosApiDes &&
+                  this.state.dadosApiDes.map((dadosApiDes, i) => (
+                    <div key={i}>{dadosApiDes.desc}</div>
+                  ))}
               </div>
               <div className="elementosCheck">
                 <Form>
