@@ -15,6 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalBody,
+  Alert,
 } from "reactstrap";
 
 import { GrFilter } from "react-icons/gr";
@@ -37,6 +38,13 @@ export default class FormGridFormRow extends React.Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = { collapse: false };
+    // para iniciar como falso
+    this.state = {
+      chkDescricao: false,
+      chkUniMedida: false,
+      chkAno: false,
+      chkGrupo: false,
+    };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.toggleT = this.toggleT.bind(this);
@@ -47,15 +55,31 @@ export default class FormGridFormRow extends React.Component {
     loading: false,
     buscar: "",
     modal: false,
+    qntMin: "",
+    qntMax: "",
+    precoMin: "",
+    precoMax: "",
+    nomeOrgao: "",
+    tipoOrgao: "",
+    nomeFornecedor: "",
+    tipoFornecedor: "",
+    modalidadeLicitacao: "",
+    tipoLicitacao: "",
+    naturezaObjeto: "",
+    chkDescricao: false,
+    chkUniMedida: false,
+    chkAno: false,
+    chkGrupo: false,
   };
 
   search = async (val) => {
     this.setState({ loading: true });
-    const results = await search(
-      `http://localhost:8000/api/items/sample/?limit=100&offset=0&order=desc&description=${val}`
+    const url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${this.state.chkDescricao}&group_by_unit_metric=${this.state.chkUniMedida}&group_by_year=${this.state.chkAno}&group_by_cluster=${this.state.chkGrupo}&limit=100&offset=0&order=desc&description=${val}`;
+
+    const results = await search(url
+//      `http://localhost:8000/api/items/sample/?limit=100&offset=0&order=desc&description=${val}`
     );
     const dadosApi = results;
-
     this.setState({ dadosApi, loading: false });
   };
 
@@ -65,12 +89,10 @@ export default class FormGridFormRow extends React.Component {
       `http://localhost:8000/api/items/autocomplete/?desc=${desc}`
     );
     const dadosApiDes = retdesc;
-
     this.setState({ dadosApiDes });
   };
 
   onChangeHandler = async (e) => {
-    //alert(e.target.value);
     this.autocomplete(e.target.value);
     this.setState({ value: e.target.value });
   };
@@ -89,12 +111,24 @@ export default class FormGridFormRow extends React.Component {
     this.setState({ dadosApiDes: "" });
   };
 
+  // funções da busca avançada (filtro) modal
+  onFormSubmitFilter = async (e) => {
+    this.toggleT();
+    this.search(this.state.buscar);
+  };
+
+  onFormHandler = async (e) => {
+    this.setState({ qntMin: e.target.value });
+  };
+
   toggle() {
     this.setState({ collapse: !this.state.collapse });
   }
 
   onFormSubmit() {
     this.search(this.state.buscar);
+
+    //return <Alert color="info">No flights listed</Alert>;
   }
   toggleT() {
     this.setState({
@@ -130,6 +164,7 @@ export default class FormGridFormRow extends React.Component {
                     this.onChangeHandler(e);
                   }}
                 />
+
                 {this.state.dadosApiDes &&
                   this.state.dadosApiDes.map((dadosApiDes, i) => (
                     <div
@@ -144,11 +179,11 @@ export default class FormGridFormRow extends React.Component {
               <div className="elementosCheck">
                 <Form>
                   <FormGroup check inline>
-                    <Input type="radio" />
+                    <Input type="radio" name="exercicio" />
                     <Label check>Exercício</Label>
                   </FormGroup>
                   <FormGroup check inline>
-                    <Input type="radio" />
+                    <Input type="radio" name="periodo" />
                     <Label check>Período</Label>
                   </FormGroup>
                   <FormGroup check inline>
@@ -172,203 +207,318 @@ export default class FormGridFormRow extends React.Component {
                         toggle={this.toggleT}
                         className={this.props.className}
                       >
-                        <ModalHeader
-                          toggle={this.toggleT}
-                          cssModule={{ "modal-title": "w-100 text-center" }}
-                        >
-                          <h1>Busca Avançada</h1>
-                        </ModalHeader>
-                        <ModalBody>
-                          <Card>
-                            <CardBody>
-                              <CardTitle>Faixa</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label for="exampleEmail11">
-                                        Quantidade Comprada
-                                      </Label>
-                                      <Input
-                                        type="number"
-                                        placeholder="min"
-                                        min="0"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label for="exampleEmail11"> .</Label>
-
-                                      <Input
-                                        type="number"
-                                        placeholder="max"
-                                        min="0"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                                <FormGroup>
+                        <Form>
+                          <ModalHeader
+                            toggle={this.toggleT}
+                            cssModule={{ "modal-title": "w-100 text-center" }}
+                          >
+                            <h1>Busca Avançada</h1>
+                          </ModalHeader>
+                          <ModalBody>
+                            <Card>
+                              <CardBody>
+                                <CardTitle>Faixa</CardTitle>
+                                <Form>
                                   <Row form>
                                     <Col md={6}>
                                       <FormGroup>
-                                        <Label for="exampleEmail11">
-                                          Preço Unitário
-                                        </Label>
+                                        <Label>Quantidade Comprada</Label>
                                         <Input
                                           type="number"
                                           placeholder="min"
                                           min="0"
+                                          name="qntMin"
+                                          value={this.state.qntMin}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              qntMin: e.target.value,
+                                            });
+                                          }}
                                         />
                                       </FormGroup>
                                     </Col>
                                     <Col md={6}>
                                       <FormGroup>
-                                        <Label for="exampleEmail11">.</Label>
+                                        <Label> .</Label>
 
                                         <Input
                                           type="number"
                                           placeholder="max"
                                           min="0"
+                                          name="qntMax"
+                                          value={this.state.qntMax}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              qntMax: e.target.value,
+                                            });
+                                          }}
                                         />
                                       </FormGroup>
                                     </Col>
                                   </Row>
-                                </FormGroup>
-                              </Form>
+                                  <FormGroup>
+                                    <Row form>
+                                      <Col md={6}>
+                                        <FormGroup>
+                                          <Label>Preço Unitário</Label>
+                                          <Input
+                                            type="number"
+                                            placeholder="min"
+                                            min="0"
+                                            name="precoMin"
+                                            value={this.state.precoMin}
+                                            onChange={(e) => {
+                                              this.setState({
+                                                precoMin: e.target.value,
+                                              });
+                                            }}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col md={6}>
+                                        <FormGroup>
+                                          <Label>.</Label>
 
-                              <CardTitle>Orgão</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label for="exampleEmail11"></Label>
-                                      <Input type="text" placeholder="Nome" />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label for="exampleEmail11"></Label>
+                                          <Input
+                                            type="number"
+                                            placeholder="max"
+                                            min="0"
+                                            name="precoMax"
+                                            value={this.state.precoMax}
+                                            onChange={(e) => {
+                                              this.setState({
+                                                precoMax: e.target.value,
+                                              });
+                                            }}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                    </Row>
+                                  </FormGroup>
+                                </Form>
 
-                                      <Input type="text" placeholder="Tipo" />
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                              </Form>
+                                <CardTitle>Orgão</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          type="text"
+                                          placeholder="Nome"
+                                          name="nomeOrgao"
+                                          value={this.state.nomeOrgao}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              nomeOrgao: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
 
-                              <CardTitle>Fornecedor</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label for="exampleCity"></Label>
-                                      <Input
-                                        type="text"
-                                        name="city"
-                                        id="exampleCity"
-                                        placeholder="Nome"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={4}>
-                                    <FormGroup>
-                                      <Label for="exampleState"></Label>
-                                      <MaskCnpj />
-                                      {/* <Input
+                                        <Input
+                                          type="text"
+                                          placeholder="Tipo"
+                                          name="tipoOrgao"
+                                          value={this.state.tipoOrgao}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              tipoOrgao: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+
+                                <CardTitle>Fornecedor</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          type="text"
+                                          name="nomeFornecedor"
+                                          placeholder="Nome"
+                                          value={this.state.nomeFornecedor}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              nomeFornecedor: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <MaskCnpj />
+                                        {/* <Input
                                         type="text"
                                         name="state"
                                         id="exampleState"
                                         placeholder="CNPJ"
                                       /> */}
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={2}>
-                                    <FormGroup>
-                                      <Label for="exampleZip"></Label>
-                                      <Input
-                                        type="text"
-                                        name="zip"
-                                        id="exampleZip"
-                                        placeholder="Tipo"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                              </Form>
-                              <CardTitle>Licitação</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label for="exampleCity"></Label>
-                                      <Input
-                                        type="text"
-                                        name="city"
-                                        id="exampleCity"
-                                        placeholder="Modalidade"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={4}>
-                                    <FormGroup>
-                                      <Label for="exampleState"></Label>
-                                      <Input
-                                        type="text"
-                                        name="state"
-                                        id="exampleState"
-                                        placeholder="Tipo"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={2}>
-                                    <FormGroup>
-                                      <Label for="exampleZip"></Label>
-                                      <Input
-                                        type="text"
-                                        name="zip"
-                                        id="exampleZip"
-                                        placeholder="Natureza do Objeto"
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                              </Form>
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={2}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          type="text"
+                                          placeholder="Tipo"
+                                          name="tipoFornecedor"
+                                          value={this.state.tipoFornecedor}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              tipoFornecedor: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+                                <CardTitle>Licitação</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          type="text"
+                                          placeholder="Modalidade"
+                                          name="modalidadeLicitacao"
+                                          value={this.state.modalidadeLicitacao}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              modalidadeLicitacao:
+                                                e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          type="text"
+                                          name="tipoLicitacao"
+                                          placeholder="Tipo"
+                                          value={this.state.tipoLicitacao}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              tipoLicitacao: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={2}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          type="text"
+                                          id="naturezaObjeto"
+                                          placeholder="Natureza do Objeto"
+                                          value={this.state.naturezaObjeto}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              naturezaObjeto: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
 
-                              <CardTitle>Agrupamento</CardTitle>
-                              <Form>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input type="checkbox" /> Descrição
-                                  </Label>
-                                </FormGroup>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input type="checkbox" /> Unidade de Medida
-                                  </Label>
-                                </FormGroup>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input type="checkbox" /> Ano
-                                  </Label>
-                                </FormGroup>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input type="checkbox" /> Grupo do Item
-                                  </Label>
-                                </FormGroup>
-                              </Form>
-                            </CardBody>
-                          </Card>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button color="primary"  onClick={this.toggleT} type="submit">
-                            Buscar
-                          </Button>
-                          {"  "}
-                          <Button color="secondary" onClick={this.toggleT}>
-                            Cancelar
-                          </Button>
-                        </ModalFooter>
+                                <CardTitle>Agrupamento</CardTitle>
+                                <Form>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkDescricao"
+                                        checked={this.state.chkDescricao}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkDescricao: e.target.checked,
+                                          });
+                                        }}
+                                      />
+                                      Descrição
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkUniMedida"
+                                        checked={this.state.chkUniMedida}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkUniMedida: e.target.checked,
+                                          });
+                                        }}
+                                      />{" "}
+                                      Unidade de Medida
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkAno"
+                                        checked={this.state.chkAno}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkAno: e.target.checked,
+                                          });
+                                        }}
+                                      />{" "}
+                                      Ano
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkGrupo"
+                                        checked={this.state.chkGrupo}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkGrupo: e.target.checked,
+                                          });
+                                        }}
+                                      />{" "}
+                                      Grupo do Item
+                                    </Label>
+                                  </FormGroup>
+                                </Form>
+                              </CardBody>
+                            </Card>
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button
+                              color="primary"
+                              onClick={this.onFormSubmitFilter}
+                            >
+                              Buscar
+                            </Button>
+                            {"  "}
+                            <Button color="secondary" onClick={this.toggleT}>
+                              Cancelar
+                            </Button>
+                          </ModalFooter>
+                        </Form>
                       </Modal>
                     </div>
                   </FormGroup>

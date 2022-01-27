@@ -169,6 +169,7 @@ div#rdts1 {
 
 
 .sugestoes {
+  text-align: center;
   background: #fff;
   border-radius: 50px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -179,5 +180,6 @@ div#rdts1 {
 }
 
 .sugestoes:hover{
-  background-color: silver;
+  background-color:#d8d8d8;
+  
 }
