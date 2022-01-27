@@ -18,9 +18,7 @@ import Search from "@material-ui/icons/Search";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Box from "@material-ui/core/Box";
 
-const Retornoapi = ({ droplets }) => {
-  let cards = <h3>Loading...</h3>;
-
+const Retornoapi = (props) => {
   const tableIcons = {
     DetailPanel: forwardRef((props, ref) => (
       <ChevronRight {...props} ref={ref} />
@@ -40,31 +38,46 @@ const Retornoapi = ({ droplets }) => {
       <ArrowDownward {...props} ref={ref} />
     )),
   };
+  let columns = "";
+  if (props.agrupamento) {
+    columns = [
+      {
+        title: "Descrição",
+        field: "original",
+        align: "justify",
+      },
 
-  const columns = [
-    {
-      title: "Descrição",
-      field: "original",
-      align: "justify",
-    },
-    { title: "Data", field: "data", align: "center" }, //, width: '100%'
-    { title: "Und Medida", field: "dsc_unidade_medida", align: "center" },
-    { title: "Grupo", field: "grupo", align: "center" },
-    { title: "Orgão", field: "orgao", align: "center" },
-    { title: "Qtd Item", field: "qtde_item", align: "center" },
-    { title: "Modalidade", field: "modalidade", align: "center" },
-    { title: "Preço", field: "preco", align: "center" },
-    { title: "Tipo Licitação", field: "tipo_licitacao", align: "center" },
-    { title: "Município", field: "municipio", align: "center" },
-    { title: "Nome Vencedor", field: "nome_vencedor", align: "center" },
-  ];
+      { title: "Preço médio", field: "mean", align: "center" },
+      { title: "Preço máximo", field: "max", align: "center" },
+      { title: "Preço mínimo", field: "min", align: "center" },
+      { title: "Quantidade total", field: "count", align: "center" },
+    ];
+  } else {
+    columns = [
+      {
+        title: "Descrição",
+        field: "original",
+        align: "justify",
+      },
+      { title: "Data", field: "data", align: "center" }, //, width: '100%'
+      { title: "Und Medida", field: "dsc_unidade_medida", align: "center" },
+      { title: "Grupo", field: "grupo", align: "center" },
+      { title: "Orgão", field: "orgao", align: "center" },
+      { title: "Qtd Item", field: "qtde_item", align: "center" },
+      { title: "Modalidade", field: "modalidade", align: "center" },
+      { title: "Preço", field: "preco", align: "center" },
+      { title: "Tipo Licitação", field: "tipo_licitacao", align: "center" },
+      { title: "Município", field: "municipio", align: "center" },
+      { title: "Nome Vencedor", field: "nome_vencedor", align: "center" },
+    ];
+  }
 
   return (
     <div>
       <MaterialTable
         icons={tableIcons}
         columns={columns}
-        data={droplets}
+        data={props.dadosTabela}
         options={{
           cellStyle: {
             width: "8%",
@@ -112,10 +125,9 @@ const Retornoapi = ({ droplets }) => {
               </h3>
             ),
           },
-          grouping:{
-            placeholder:"Arraste uma coluna para ser agrupada",
-            groupedBy:"Agrupado por:"
-
+          grouping: {
+            placeholder: "Arraste uma coluna para ser agrupada",
+            groupedBy: "Agrupado por:",
           },
 
           pagination: {

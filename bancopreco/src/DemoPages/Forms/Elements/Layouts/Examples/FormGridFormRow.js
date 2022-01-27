@@ -24,7 +24,7 @@ import { GrFilter } from "react-icons/gr";
 import { search } from "./Utils";
 import { autocomplete } from "./Utils";
 
-import PropsAPI from "./PropsAPI.js";
+import PropsAPI from "./TabelaPropsAPI";
 import "./FormGridFormRow.css";
 import Meses from "./SelectMeses";
 import Cidades from "./SelectCidades";
@@ -44,6 +44,7 @@ export default class FormGridFormRow extends React.Component {
       chkUniMedida: false,
       chkAno: false,
       chkGrupo: false,
+      agrupamento: false,
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -70,15 +71,27 @@ export default class FormGridFormRow extends React.Component {
     chkUniMedida: false,
     chkAno: false,
     chkGrupo: false,
+    radioExercicio: false,
+    radioPeriodo: false,
   };
 
   search = async (val) => {
     this.setState({ loading: true });
-    const url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${this.state.chkDescricao}&group_by_unit_metric=${this.state.chkUniMedida}&group_by_year=${this.state.chkAno}&group_by_cluster=${this.state.chkGrupo}&limit=100&offset=0&order=desc&description=${val}`;
+    let url = "";
+    if (
+      this.state.chkDescricao == false &&
+      this.state.chkUniMedida == false &&
+      this.state.chkAno == false &&
+      this.state.chkGrupo == false
+    ) {
+      url = `http://127.0.0.1:8000/api/items/?limit=100&offset=0&order=desc&description=${val}`;
+    } else {
+      this.setState({ agrupamento: true });
 
-    const results = await search(url
-//      `http://localhost:8000/api/items/sample/?limit=100&offset=0&order=desc&description=${val}`
-    );
+      url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${this.state.chkDescricao}&group_by_unit_metric=${this.state.chkUniMedida}&group_by_year=${this.state.chkAno}&group_by_cluster=${this.state.chkGrupo}&limit=100&offset=0&order=desc&description=${val}`;
+    }
+
+    const results = await search(url);
     const dadosApi = results;
     this.setState({ dadosApi, loading: false });
   };
@@ -101,7 +114,7 @@ export default class FormGridFormRow extends React.Component {
     let dadosApi = <h1>{""}</h1>;
 
     if (this.state.dadosApi) {
-      dadosApi = <PropsAPI droplets={this.state.dadosApi} />;
+      dadosApi = <PropsAPI dadosTabela={this.state.dadosApi} agrupamento={this.state.agrupamento} />;
     }
 
     return dadosApi;
@@ -136,6 +149,13 @@ export default class FormGridFormRow extends React.Component {
     });
   }
 
+  handleOptionChangeRadio = async (e) => {
+    this.setState({
+      radioPeriodo: e.target.value,
+    });
+    alert(e.target.value);
+  };
+
   render() {
     if (this.state.loading) {
       return (
@@ -148,6 +168,7 @@ export default class FormGridFormRow extends React.Component {
 
     return (
       <div>
+        
         <Form onSubmit={this.onFormSubmit}>
           <Fragment>
             <div className="bancoPrecoPai">
@@ -179,11 +200,25 @@ export default class FormGridFormRow extends React.Component {
               <div className="elementosCheck">
                 <Form>
                   <FormGroup check inline>
-                    <Input type="radio" name="exercicio" />
+                    <Input
+                      type="radio"
+                      name="exercicio"
+                      checked={true === this.state.radioPeriodo}
+                      onChange={(e) => {
+                        this.setState({ radioPeriodo: true });
+                      }}
+                    />
                     <Label check>Exercício</Label>
                   </FormGroup>
                   <FormGroup check inline>
-                    <Input type="radio" name="periodo" />
+                    <Input
+                      type="radio"
+                      name="periodo"
+                      checked={false === this.state.radioPeriodo}
+                      onChange={(e) => {
+                        this.setState({ radioPeriodo: false });
+                      }}
+                    />
                     <Label check>Período</Label>
                   </FormGroup>
                   <FormGroup check inline>
@@ -530,6 +565,9 @@ export default class FormGridFormRow extends React.Component {
             Buscar
           </Button>
         </Form>
+        {
+          //para desenhar a tabela
+        }
         <div>{this.renderDadosApi}</div>
       </div>
     );
