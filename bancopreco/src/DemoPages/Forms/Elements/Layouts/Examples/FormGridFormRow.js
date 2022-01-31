@@ -114,7 +114,12 @@ export default class FormGridFormRow extends React.Component {
     let dadosApi = <h1>{""}</h1>;
 
     if (this.state.dadosApi) {
-      dadosApi = <PropsAPI dadosTabela={this.state.dadosApi} agrupamento={this.state.agrupamento} />;
+      dadosApi = (
+        <PropsAPI
+          dadosTabela={this.state.dadosApi}
+          agrupamento={this.state.agrupamento}
+        />
+      );
     }
 
     return dadosApi;
@@ -168,7 +173,6 @@ export default class FormGridFormRow extends React.Component {
 
     return (
       <div>
-        
         <Form onSubmit={this.onFormSubmit}>
           <Fragment>
             <div className="bancoPrecoPai">
