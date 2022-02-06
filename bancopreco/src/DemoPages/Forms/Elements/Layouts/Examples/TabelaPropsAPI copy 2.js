@@ -1,10 +1,7 @@
 import classes from "./Movie.module.css";
 import { truncStr } from "./Utils";
-//import React, { useState, useEffect, Component } from "react";
-import React, { Suspense, lazy, Fragment } from "react";
+import React, { useState, useEffect, Component } from "react";
 
-import axios from "axios";
-import { search } from "./Utils";
 import { forwardRef } from "react";
 import MaterialTable from "material-table";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -18,15 +15,12 @@ import FirstPage from "@material-ui/icons/FirstPage";
 import LastPage from "@material-ui/icons/LastPage";
 import Search from "@material-ui/icons/Search";
 import SaveAlt from "@material-ui/icons/SaveAlt";
-import ViewColumn from "@material-ui/icons/ViewColumn";
-//import { Edit } from '@material-ui/icons'
 import IconButton from "@material-ui/core/IconButton";
 //import RoomIcon from '@material-ui/icons/Room';
 import Equalizer from "@material-ui/icons/Equalizer";
 
 const Retornoapi = (props) => {
   const tableIcons = {
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
     DetailPanel: forwardRef((props, ref) => (
       <ChevronRight {...props} ref={ref} />
     )),
@@ -99,24 +93,20 @@ const Retornoapi = (props) => {
         icons={tableIcons}
         columns={columns}
         data={props.dadosTabela}
-        actions={[
-          {
-            icon: () => <Equalizer />,
-            tooltip: "Detalhes",
-            onClick: (event, rowData) => {
-              alert(rowData.original);
-              const retdesc = search(
-                `http://127.0.0.1:8000/api/pricing/?group_by_description=true&group_by_unit_metric=false&group_by_year=false&group_by_cluster=false&limit=10&offset=0&sort=count&order=desc&description=${rowData.original}`
-              );
+        detailPanel={rowData => {
+        return (
+          <iframe
+            width="100%"
+            height="315"
+            src="https://www.youtube.com/embed/C0DPdy98e4c"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          />
+        )
+      }}
+            onRowClick={(event, rowData, togglePanel) => togglePanel()}
 
-              window.open(
-                "http://localhost:3000/charts#/",
-                "_blank",
-                "toolbar=0,location=0,menubar=0"
-              );
-            },
-          },
-        ]}
         options={{
           cellStyle: {
             width: "8%",
@@ -148,10 +138,6 @@ const Retornoapi = (props) => {
           },
         }}
         localization={{
-          header: {
-            actions: "Detalhamento",
-          },
-
           toolbar: {
             exportCSVName: "Exportar para CSV",
             exportPDFName: "Exportar para PDF",

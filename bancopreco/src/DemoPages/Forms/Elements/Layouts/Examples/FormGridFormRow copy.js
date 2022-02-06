@@ -32,7 +32,6 @@ import MaskCnpj from "./Mask";
 import ReactSpinner from "react-bootstrap-spinner";
 
 import { ActivityIndicator } from "react-native";
- import Charts from "./SimpleLineChart";
 
 export default class FormGridFormRow extends React.Component {
   constructor(props) {
@@ -119,10 +118,6 @@ export default class FormGridFormRow extends React.Component {
         <PropsAPI
           dadosTabela={this.state.dadosApi}
           agrupamento={this.state.agrupamento}
-          ano={this.state.chkAno}
-          grupo={this.state.chkUniMedida}
-          desc={this.state.chkDescricao}
-          unidade={this.state.chkUniMedida}
         />
       );
     }
@@ -160,6 +155,9 @@ export default class FormGridFormRow extends React.Component {
   }
 
   handleOptionChangeRadio = async (e) => {
+    this.setState({
+      radioPeriodo: e.target.value,
+    });
     alert(e.target.value);
   };
 
@@ -210,12 +208,22 @@ export default class FormGridFormRow extends React.Component {
                       type="radio"
                       name="radio1"
                       defaultChecked
-                      onClick={(e) => this.handleOptionChangeRadio(e)}
+                      checked={true === this.state.radioPeriodo}
+                      onChange={(e) => {
+                        this.setState({ radioPeriodo: true });
+                      }}
                     />
                     <Label check>Exercício</Label>
                   </FormGroup>
                   <FormGroup check inline>
-                    <Input type="radio" name="radio1" />
+                    <Input
+                      type="radio"
+                      name="radio1"
+                      checked={false === this.state.radioPeriodo}
+                      onChange={(e) => {
+                        this.setState({ radioPeriodo: false });
+                      }}
+                    />
                     <Label check>Período</Label>
                   </FormGroup>
                   <FormGroup check inline>
@@ -562,7 +570,6 @@ export default class FormGridFormRow extends React.Component {
             Buscar
           </Button>
         </Form>
-
         {
           //para desenhar a tabela
         }

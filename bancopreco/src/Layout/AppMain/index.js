@@ -1,7 +1,9 @@
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect,Switch } from "react-router-dom";
 import React, { Suspense, lazy, Fragment } from "react";
 
 import { ToastContainer } from "react-toastify";
+
+import Chart from "../../DemoPages/Forms/Elements/Layouts/Examples/SimpleLineChart"
 
 const Dashboards = lazy(() => import("../../DemoPages/Dashboards"));
 const Forms = lazy(() => import("../../DemoPages/Forms"));
@@ -37,11 +39,19 @@ const AppMain = () => {
         <Route path="/dashboards" component={Dashboards} />
       </Suspense>
 
-      <Route
+      {/*  <Route
         exact
         path="/"
         render={() => <Redirect to="/dashboards/basic" />}
-      />
+      />  */}
+
+      <Router>
+        <Switch>
+          <Route exact path="/charts" component={Chart}/>
+        </Switch>
+      </Router>
+
+
       <ToastContainer />
     </Fragment>
   );

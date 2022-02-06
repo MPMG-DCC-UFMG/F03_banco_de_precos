@@ -1,0 +1,29 @@
+.tituloGrafico{
+  text-align: center !important;
+
+}
+.charts {
+  margin-top: 80px;
+}
+
+.chartsPrincipal {
+  margin-top: 105px;
+  margin: auto;
+  width: 95%;
+  padding: 10px;
+}
+
+.app-page-title {
+  margin-top: 100px;
+}
+
+.page-title-subheading {
+  font-weight: bold !important;
+  font-size: xx-large !important;
+  opacity: 1 !important;
+}
+
+
+.col-md-4 {
+max-width:25%!important;
+}
