@@ -1,4 +1,3 @@
-import classes from "./Movie.module.css";
 import { truncStr } from "./Utils";
 import React, { useState, useEffect, Component } from "react";
 
@@ -18,8 +17,7 @@ import ViewColumn from "@material-ui/icons/ViewColumn";
 import Equalizer from "@material-ui/icons/Equalizer";
 import { Button, Modal, ModalFooter, ModalHeader, ModalBody } from "reactstrap";
 import Charts from "./Charts";
-import "./Charts.css"
-
+import "./Charts.css";
 
 const Retornoapi = (props) => {
   const tableIcons = {
@@ -44,13 +42,13 @@ const Retornoapi = (props) => {
   };
 
   let columns = [];
+  let action = "";
+
   if (props.agrupamento) {
     if (props.desc) {
       columns.push({ title: "Descrição", field: "original", align: "center" });
     }
-    if (props.grupo) {
-      columns.push({ title: "Grupo", field: "grupo", align: "center" });
-    }
+
     if (props.ano) {
       columns.push({ title: "Ano", field: "ano", align: "center" });
     }
@@ -144,12 +142,15 @@ const Retornoapi = (props) => {
           },
         ]}
         options={{
+          actionsCellStyle: {
+            backgroundColor: "#f2f2f2",
+            color: "#000000",
+            justifyContent: "center", // border: "3px solid black",
+          },
           cellStyle: {
-            width: "8%",
             maxWidth: "100%",
           },
           headerStyle: {
-            width: "100%",
             maxWidth: "100%",
           },
           grouping: true,

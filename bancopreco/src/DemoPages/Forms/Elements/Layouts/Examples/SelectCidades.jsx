@@ -26,7 +26,7 @@ const App = () => {
   return (
     <DropdownTreeSelect
       data={data}
-      texts={{ placeholder: "Regiões" }}
+      texts={{ placeholder: "Minas Gerais" }}
       onChange={onChange}
       className="bootstrap-demo"
     />

@@ -23,7 +23,6 @@ import { GrFilter } from "react-icons/gr";
 // https://react-icons.github.io/react-icons/search?q=filter
 
 import { search } from "./Utils";
-import { autocomplete } from "./Utils";
 import { UncontrolledTooltip } from "reactstrap";
 
 import PropsAPI from "./TabelaPropsAPI";
@@ -32,9 +31,11 @@ import Meses from "./SelectMeses";
 import Cidades from "./SelectCidades";
 import MaskCnpj from "./Mask";
 import ReactSpinner from "react-bootstrap-spinner";
-
+import LicitacaoModalidade from "./LicitacaoModalidade";
 import { ActivityIndicator } from "react-native";
 import TipoOrgao from "./TipoOrgao";
+import NaturezaObjeto from "./NaturezaObjeto";
+import TipoLicitacao from "./TipoLicitacao";
 
 export default class FormGridFormRow extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ export default class FormGridFormRow extends React.Component {
   state = {
     dadosApi: null,
     dadosApiDes: null,
+    dadosApiFor: null,
     loading: false,
     buscar: "",
     modal: false,
@@ -111,6 +113,25 @@ export default class FormGridFormRow extends React.Component {
   onChangeHandler = async (e) => {
     this.autocomplete(e.target.value);
     this.setState({ value: e.target.value });
+  };
+
+  // função para autocomplete do fornecedor
+  autocompleteFornecedor = async (desc) => {
+    const retFor = await search(
+      `http://127.0.0.1:8000/api/filters/autocomplete/?bidder_name=${desc}`
+    );
+    const dadosApiFor = retFor;
+    this.setState({ dadosApiFor });
+    console.log(dadosApiFor);
+  };
+
+  onChangeHandlerFornecedor = async (e) => {
+    this.autocompleteFornecedor(e.target.value);
+    this.setState({ value: e.target.value });
+  };
+  onSuggestHandlerFornecedor = async (e) => {
+    this.setState({ nomeFornecedor: e });
+    this.setState({ dadosApiFor: "" });
   };
 
   get renderDadosApi() {
@@ -357,16 +378,34 @@ export default class FormGridFormRow extends React.Component {
                                       <FormGroup>
                                         <Label></Label>
                                         <Input
-                                          type="text"
-                                          name="nomeFornecedor"
-                                          placeholder="Nome"
+                                          className="fornecedorComp"
+                                          bsSize="lg"
+                                          placeholder="Fornecedor"
                                           value={this.state.nomeFornecedor}
                                           onChange={(e) => {
                                             this.setState({
                                               nomeFornecedor: e.target.value,
                                             });
+                                            this.onChangeHandlerFornecedor(e);
                                           }}
                                         />
+
+                                        {this.state.dadosApiFor &&
+                                          this.state.dadosApiFor.map(
+                                            (dadosApiFor, i) => (
+                                              <div
+                                                key={i}
+                                                className="fornecedorComp"
+                                                onClick={(e) =>
+                                                  this.onSuggestHandlerFornecedor(
+                                                    dadosApiFor.bidder_name
+                                                  )
+                                                }
+                                              >
+                                                {dadosApiFor.bidder_name}
+                                              </div>
+                                            )
+                                          )}
                                       </FormGroup>
                                     </Col>
                                     <Col md={4}>
@@ -381,20 +420,17 @@ export default class FormGridFormRow extends React.Component {
                                       /> */}
                                       </FormGroup>
                                     </Col>
-                                    <Col md={2}>
+                                    <Col md={4}>
                                       <FormGroup>
                                         <Label></Label>
-                                        <Input
-                                          type="text"
-                                          placeholder="Tipo"
-                                          name="tipoFornecedor"
-                                          value={this.state.tipoFornecedor}
-                                          onChange={(e) => {
-                                            this.setState({
-                                              tipoFornecedor: e.target.value,
-                                            });
-                                          }}
-                                        />
+                                        <select name="tipoFornecedor">
+                                          <option value="st">
+                                            Tipo Fornecedor{" "}
+                                          </option>
+
+                                          <option value="j">J</option>
+                                          <option value="f">F</option>
+                                        </select>
                                       </FormGroup>
                                     </Col>
                                   </Row>
@@ -405,50 +441,20 @@ export default class FormGridFormRow extends React.Component {
                                     <Col md={6}>
                                       <FormGroup>
                                         <Label></Label>
-                                        <Input
-                                          type="text"
-                                          placeholder="Modalidade"
-                                          name="modalidadeLicitacao"
-                                          value={this.state.modalidadeLicitacao}
-                                          onChange={(e) => {
-                                            this.setState({
-                                              modalidadeLicitacao:
-                                                e.target.value,
-                                            });
-                                          }}
-                                        />
+                                        <LicitacaoModalidade />
                                       </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                       <FormGroup>
                                         <Label></Label>
-                                        <Input
-                                          type="text"
-                                          name="tipoLicitacao"
-                                          placeholder="Tipo"
-                                          value={this.state.tipoLicitacao}
-                                          onChange={(e) => {
-                                            this.setState({
-                                              tipoLicitacao: e.target.value,
-                                            });
-                                          }}
-                                        />
+                                        <TipoLicitacao />
                                       </FormGroup>
                                     </Col>
-                                    <Col md={2}>
+                                    <Col md={4}>
                                       <FormGroup>
                                         <Label></Label>
-                                        <Input
-                                          type="text"
-                                          id="naturezaObjeto"
-                                          placeholder="Natureza do Objeto"
-                                          value={this.state.naturezaObjeto}
-                                          onChange={(e) => {
-                                            this.setState({
-                                              naturezaObjeto: e.target.value,
-                                            });
-                                          }}
-                                        />
+
+                                        <NaturezaObjeto />
                                       </FormGroup>
                                     </Col>
                                   </Row>
@@ -457,7 +463,7 @@ export default class FormGridFormRow extends React.Component {
                                 <CardTitle>
                                   Agrupamento{" "}
                                   <span
-                                    style={{ color: "blue" }}
+                                    style={{ color: "black" }}
                                     href="#"
                                     id="UncontrolledTooltipExample"
                                   >

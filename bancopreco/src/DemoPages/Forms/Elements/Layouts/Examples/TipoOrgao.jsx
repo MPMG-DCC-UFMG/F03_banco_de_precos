@@ -3,7 +3,7 @@ import "./FormGridFormRow.css";
 const options = [
 
   {
-    label: "Tipo Orgao",
+    label: "Tipo Orgão",
     value: "tiporgao",
   },
   {
