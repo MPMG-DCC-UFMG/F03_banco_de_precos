@@ -123,3 +123,9 @@ h5.card-title {
 label.form-check-label{
 font-size: x-large;
 }
+
+
+.modalCharts{
+   max-width: 80%; 
+   max-height: 80%;
+}

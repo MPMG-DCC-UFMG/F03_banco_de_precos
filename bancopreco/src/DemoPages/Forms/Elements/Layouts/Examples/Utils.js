@@ -36,10 +36,10 @@ const makeRequestCreator = () => {
     } catch (error) {
       if (axios.isCancel(error)) {
         // Handle if request was cancelled
-        console.log("Request canceled", error.message);
+        console.log("Requisição cancelada", error.message);
       } else {
         // Handle usual errors
-        console.log("Something went wrong: ", error.message);
+        console.log("Erro em requisição: ", error.message);
       }
     }
   };

@@ -1,13 +1,17 @@
 import classes from "./Movie.module.css";
 import { truncStr } from "./Utils";
 import React, { useState, useEffect, Component } from "react";
+//import React, { Suspense, lazy, Fragment } from "react";
 
+import axios from "axios";
 import { search } from "./Utils";
 import { forwardRef } from "react";
 import MaterialTable from "material-table";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import Clear from "@material-ui/icons/Clear";
 import FilterList from "@material-ui/icons/FilterList";
 import FirstPage from "@material-ui/icons/FirstPage";
@@ -15,11 +19,12 @@ import LastPage from "@material-ui/icons/LastPage";
 import Search from "@material-ui/icons/Search";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+//import { Edit } from '@material-ui/icons'
+import IconButton from "@material-ui/core/IconButton";
+//import RoomIcon from '@material-ui/icons/Room';
 import Equalizer from "@material-ui/icons/Equalizer";
-import { Button, Modal, ModalFooter, ModalHeader, ModalBody } from "reactstrap";
 import Charts from "./Charts";
-import "./Charts.css"
-
+import { Redirect } from "react-router";
 
 const Retornoapi = (props) => {
   const tableIcons = {
@@ -90,47 +95,18 @@ const Retornoapi = (props) => {
     ];
   }
 
-  // Modal open state
-  const [modal, setModal] = React.useState(false);
-
-  // Toggle for Modal
-  const toggle = () => setModal(!modal);
-
-  const [state, setstate] = useState({ data: "", loading: false });
+  const [state, setstate] = useState({ data: "" });
 
   const changeState = (dadosTab) => {
     setstate({
       data: dadosTab,
-      loading: false,
     });
-  };
-
-  const alertMyRow = (selectedRow) => {
-    changeState(selectedRow);
-
-    toggle();
   };
 
   return (
     <div>
-      <div className="modalCharts">
-        <Modal
-          isOpen={modal}
-          toggle={toggle}
-          modalTransition={{ timeout: 2000 }}
-          className="custom-modal-style"
-        >
-          <ModalHeader
-            toggle={this.toggle}
-            cssModule={{ "modal-title": "w-100 text-center" }}
-          >
-            <h1>Detalhamento</h1>
-          </ModalHeader>
-          <ModalBody>
-            <Charts data={state.data} />
-          </ModalBody>
-        </Modal>
-      </div>
+      
+      {/* <Charts data={state.data} /> */}
 
       <MaterialTable
         icons={tableIcons}
@@ -140,7 +116,11 @@ const Retornoapi = (props) => {
           {
             icon: () => <Equalizer />,
             tooltip: "Detalhes",
-            onClick: (evt, selectedRow) => alertMyRow(selectedRow),
+            onClick: (event, rowData) => {
+              // {
+              //   changeState(rowData);
+              // }
+            },
           },
         ]}
         options={{

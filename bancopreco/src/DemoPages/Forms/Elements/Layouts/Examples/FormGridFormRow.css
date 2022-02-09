@@ -166,8 +166,6 @@ div#rdts1 {
   margin-top: 100px;
 }
 
-
-
 .sugestoes {
   text-align: center;
   background: #fff;
@@ -179,7 +177,41 @@ div#rdts1 {
   border-bottom: 1px solid black;
 }
 
-.sugestoes:hover{
-  background-color:#d8d8d8;
-  
+.sugestoes:hover {
+  background-color: #d8d8d8;
+}
+
+.suggest-with-trap .dropdown-menu {
+  width: 100%;
+}
+
+.suggest-with-trap .react-autosuggest__suggestions-container:empty {
+  list-style: none;
+  padding: 0;
+}
+.suggest-with-trap .react-autosuggest__suggestions-container ul {
+  list-style: none;
+  padding: 0;
+}
+.tipoorgao {
+  display: block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
 }

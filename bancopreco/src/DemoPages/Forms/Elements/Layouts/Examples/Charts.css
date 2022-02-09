@@ -27,3 +27,10 @@
 .col-md-4 {
 max-width:25%!important;
 }
+
+
+
+.custom-modal-style {
+width: 3000px;
+height: 802px;
+}

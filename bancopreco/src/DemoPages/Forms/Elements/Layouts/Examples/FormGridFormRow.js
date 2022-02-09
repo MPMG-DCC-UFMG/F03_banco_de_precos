@@ -1,4 +1,5 @@
 import React, { Fragment, useState, Component } from "react";
+import Orgao from "./Orgao";
 import {
   Col,
   Row,
@@ -23,6 +24,7 @@ import { GrFilter } from "react-icons/gr";
 
 import { search } from "./Utils";
 import { autocomplete } from "./Utils";
+import { UncontrolledTooltip } from "reactstrap";
 
 import PropsAPI from "./TabelaPropsAPI";
 import "./FormGridFormRow.css";
@@ -32,7 +34,7 @@ import MaskCnpj from "./Mask";
 import ReactSpinner from "react-bootstrap-spinner";
 
 import { ActivityIndicator } from "react-native";
- import Charts from "./SimpleLineChart";
+import TipoOrgao from "./TipoOrgao";
 
 export default class FormGridFormRow extends React.Component {
   constructor(props) {
@@ -167,7 +169,6 @@ export default class FormGridFormRow extends React.Component {
     if (this.state.loading) {
       return (
         <div>
-          {/* <ReactSpinner type="border" color="primary" size="5" style={{ flex: 1 }}/> */}
           <ActivityIndicator size={80} style={{ flex: 1 }} />
         </div>
       );
@@ -181,6 +182,7 @@ export default class FormGridFormRow extends React.Component {
               <div className="bancoPreco">
                 <h1>Banco de Preços</h1>
               </div>
+
               <div className="campoBuscar">
                 <Input
                   bsSize="lg"
@@ -335,34 +337,14 @@ export default class FormGridFormRow extends React.Component {
                                     <Col md={6}>
                                       <FormGroup>
                                         <Label></Label>
-                                        <Input
-                                          type="text"
-                                          placeholder="Nome"
-                                          name="nomeOrgao"
-                                          value={this.state.nomeOrgao}
-                                          onChange={(e) => {
-                                            this.setState({
-                                              nomeOrgao: e.target.value,
-                                            });
-                                          }}
-                                        />
+                                        <Orgao />
                                       </FormGroup>
                                     </Col>
                                     <Col md={6}>
                                       <FormGroup>
                                         <Label></Label>
 
-                                        <Input
-                                          type="text"
-                                          placeholder="Tipo"
-                                          name="tipoOrgao"
-                                          value={this.state.tipoOrgao}
-                                          onChange={(e) => {
-                                            this.setState({
-                                              tipoOrgao: e.target.value,
-                                            });
-                                          }}
-                                        />
+                                        <TipoOrgao></TipoOrgao>
                                       </FormGroup>
                                     </Col>
                                   </Row>
@@ -472,7 +454,26 @@ export default class FormGridFormRow extends React.Component {
                                   </Row>
                                 </Form>
 
-                                <CardTitle>Agrupamento</CardTitle>
+                                <CardTitle>
+                                  Agrupamento{" "}
+                                  <span
+                                    style={{ color: "blue" }}
+                                    href="#"
+                                    id="UncontrolledTooltipExample"
+                                  >
+                                    *
+                                  </span>
+                                  <UncontrolledTooltip
+                                    placement="right"
+                                    target="UncontrolledTooltipExample"
+                                  >
+                                    Agrupar os dados de acordo com um ou mais
+                                    atributos relacionados ao objeto de forma a
+                                    obter estatísticas de preço, tais como
+                                    média, máximo e mínimo. Esse agrupamento
+                                    pode levar tempo extra em processamento.
+                                  </UncontrolledTooltip>
+                                </CardTitle>
                                 <Form>
                                   <FormGroup check inline>
                                     <Label check>

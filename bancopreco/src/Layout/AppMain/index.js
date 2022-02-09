@@ -3,7 +3,7 @@ import React, { Suspense, lazy, Fragment } from "react";
 
 import { ToastContainer } from "react-toastify";
 
-import Chart from "../../DemoPages/Forms/Elements/Layouts/Examples/SimpleLineChart"
+import Chart from "../../DemoPages/Forms/Elements/Layouts/Examples/Charts"
 
 const Dashboards = lazy(() => import("../../DemoPages/Dashboards"));
 const Forms = lazy(() => import("../../DemoPages/Forms"));

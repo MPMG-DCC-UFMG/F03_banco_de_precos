@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import classnames from "classnames";
-
+import { NavLink } from "react-router-dom";
 import {
   Row,
   Col,
@@ -42,6 +41,9 @@ import {
 import "./Charts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppHeader from "../../../../../Layout/AppHeader";
+import { search } from "./Utils";
+import { ActivityIndicator } from "react-native";
+import React, { useState, useEffect, Component, Fragment } from "react";
 
 const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
@@ -72,109 +74,148 @@ const data2 = [
 
 const dataApi = [
   {
-    original: "GAS DE COZINHA 13 KG",
-    mean: 58.54978723404257,
-    max: 85.0,
-    min: 6.84,
-    count: 94,
+    original:
+      "ITEM 10973: BOTIJAO DE GAS CONTENDO 13 (TREZE) QUILOGRAMAS CADA, PARA REPOSICAO, DE GAS LIQUEFEITO DE PETROLEO (GLP), COMPOSTO DE PROPANO E BUTANO",
+    dsc_unidade_medida: "unidade",
+    ano: 2014,
+    grupo: "item_3",
+    mean: 41.4,
+    max: 42,
+    min: 41,
+    count: 5,
   },
+
   {
-    original: "GAS GLP 13 KG",
-    mean: 61.76632183908046,
-    max: 156.66,
-    min: 30.8,
-    count: 87,
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2014,
+    grupo: "gas_7",
+    mean: 46.260000000000005,
+    max: 51.9,
+    min: 42.5,
+    count: 5,
   },
   {
     original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
-    mean: 69.12164705882353,
-    max: 190.0,
-    min: 33.9,
-    count: 85,
+    dsc_unidade_medida: "unidade",
+    ano: 2015,
+    grupo: "gas_7",
+    mean: 48.61666666666667,
+    max: 59,
+    min: 43,
+    count: 12,
   },
   {
-    original: "GAS 13 KG",
-    mean: 64.45500000000001,
-    max: 104.0,
-    min: 35.9,
-    count: 70,
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2016,
+    grupo: "gas_7",
+    mean: 56.585,
+    max: 63.75,
+    min: 51,
+    count: 10,
   },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2017,
+    grupo: "gas_7",
+    mean: 59.888888888888886,
+    max: 67,
+    min: 46.5,
+    count: 9,
+  },
+
   {
     original:
-      "GAS DE COZINHA A GRANEL RESIDENCIAL  BOTIJAO PESANDO 13 KG  SEM VASILHAME-2409",
-    mean: 51.53739130434783,
-    max: 73.0,
-    min: 35.63,
-    count: 69,
+      "GAS LIQUEFEITO DE PETROLEO  ACONDICIONADO EM CILINDRO DE 13 KG  (P13 LIQUIDO)  COMPOSICAO BASICA: PROPANO E BUTANO   MATERIAL TOXICO E INFLAMAVEL  DE ACORDO COM AS LEGISLACOES VIGENTES DA ANP E ABNT",
+    dsc_unidade_medida: "botijao",
+    ano: 2018,
+    grupo: "gas_11",
+    mean: 70.63,
+    max: 74.59,
+    min: 67,
+    count: 5,
   },
   {
-    original: "BOTIJAO DE GAS 13 KG P13-4159",
-    mean: 53.06666666666668,
-    max: 60.0,
-    min: 49.5,
-    count: 60,
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2018,
+    grupo: "gas_7",
+    mean: 75.345,
+    max: 89.25,
+    min: 63.95,
+    count: 10,
   },
   {
-    original: "BOTIJAO DE GAS 13 KG",
-    mean: 73.6856862745098,
-    max: 218.0,
-    min: 29.89,
-    count: 51,
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2019,
+    grupo: "gas_7",
+    mean: 74.45625,
+    max: 80.25,
+    min: 66,
+    count: 8,
   },
   {
-    original: "GAS LIQUEFEITO DE PETROLEO",
-    mean: 61.56821428571429,
-    max: 95.0,
-    min: 39.9,
-    count: 28,
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2020,
+    grupo: "gas_7",
+    mean: 76.41666666666667,
+    max: 89,
+    min: 66.5,
+    count: 9,
   },
+
   {
-    original: "GAS ACONDICIONADO EM BOTIJOES P-13",
-    mean: 63.849999999999994,
-    max: 88.0,
-    min: 44.0,
-    count: 26,
-  },
-  {
-    original: "RECARGA DE GAS GLP 13 KG",
-    mean: 65.49384615384616,
-    max: 98.0,
-    min: 38.9,
-    count: 26,
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2021,
+    grupo: "gas_7",
+    mean: 79.178,
+    max: 102,
+    min: 64.39,
+    count: 5,
   },
 ];
 
-export default class AnalyticsDashboard1 extends Component {
-  constructor() {
-    super();
+export default class Charts extends Component {
+  state = {
+    loading: false,
+    dadosApiCharts: [],
+  };
 
-    this.state = {
-      dropdownOpen: false,
-      activeTab1: "11",
-    };
-    this.toggle = this.toggle.bind(this);
-    this.toggle1 = this.toggle1.bind(this);
+  componentDidMount() {
+    this.search(this.props.data.original);
   }
 
-  toggle() {
-    this.setState((prevState) => ({
-      dropdownOpen: !prevState.dropdownOpen,
-    }));
-  }
+  search = async (val) => {
+    this.setState({ loading: true });
 
-  toggle1(tab) {
-    if (this.state.activeTab1 !== tab) {
-      this.setState({
-        activeTab1: tab,
-      });
-    }
-  }
+    const url = `http://127.0.0.1:8000/api/items/match/?limit=10&offset=0&order=desc&year=${this.props.data.ano}&description=${val}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`;
+    const results = await search(url);
+    const dadosApiCharts = results;
+    this.setState({ dadosApiCharts:dadosApiCharts, loading: false });
+
+    console.log("response.JSON:", {
+      message: "Request received",
+      data: dadosApiCharts,
+    });
+  };
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div>
+          {/* <ReactSpinner type="border" color="primary" size="5" style={{ flex: 1 }}/> */}
+          <ActivityIndicator size={80} style={{ flex: 1 }} />
+        </div>
+      );
+    }
+
     return (
       <div>
-        <AppHeader />
-
         <Fragment>
           <ReactCSSTransitionGroup
             component="div"
@@ -186,14 +227,20 @@ export default class AnalyticsDashboard1 extends Component {
           >
             <div className="chartsPrincipal">
               <PageTitle
-                subheading="PAINEL DE DETALHAMENTO"
+                subheading={this.props.data.original}
                 icon="pe-7s-graph1"
+                subheading2={this.props.data.dsc_unidade_medida}
+                subheading3={this.props.data.ano}
+                subheading4={this.props.data.grupo}
               />
+
               <Row>
                 <Col md="4">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
-                      <div className="widget-numbers">4517.82</div>
+                      <div className="widget-numbers">
+                        {this.props.data.count}
+                      </div>
                       <div className="widget-subheading">
                         <h1>Quantidade de Itens </h1>
                       </div>
@@ -218,7 +265,9 @@ export default class AnalyticsDashboard1 extends Component {
                 <Col md="4">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
-                      <div className="widget-numbers">4517.82</div>
+                      <div className="widget-numbers">
+                        R$ {this.props.data.mean}
+                      </div>
                       <div className="widget-subheading">
                         <h1>Preço Médio</h1>
                       </div>
@@ -249,7 +298,9 @@ export default class AnalyticsDashboard1 extends Component {
                 <Col md="4">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
-                      <div className="widget-numbers">4517.82</div>
+                      <div className="widget-numbers">
+                        R$ {this.props.data.min},00
+                      </div>
                       <div className="widget-subheading">
                         <h1>Preço Mínimo </h1>
                       </div>
@@ -274,7 +325,10 @@ export default class AnalyticsDashboard1 extends Component {
                 <Col md="4">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
-                      <div className="widget-numbers">4517.82</div>
+                      <div className="widget-numbers">
+                        {" "}
+                        R$ {this.props.data.max},00
+                      </div>
                       <div className="widget-subheading">
                         <h1>Preço Máximo</h1>
                       </div>
@@ -314,63 +368,49 @@ export default class AnalyticsDashboard1 extends Component {
                       <Row className="mt-3">
                         <Col md="6">
                           <h2 className="tituloGrafico">Média de preços</h2>
-
-                          <BarChart
-                            width={650}
-                            height={300}
-                            data={dataApi}
-                            margin={{
-                              top: 5,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                            barSize={20}
-                          >
-                            <XAxis
-                              dataKey="original"
-                              scale="point"
-                              padding={{ left: 10, right: 10 }}
+                          <LineChart width={550} height={300} data={dataApi}>
+                            <Line
+                              type="monotone"
+                              dataKey="mean"
+                              stroke="#008080	"
+                              strokeWidth={2}
                             />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Bar
+                            <Line
+                              type="monotone"
                               dataKey="mean"
-                              fill="#FF8C00"
-                              background={{ fill: "#eee" }}
+                              stroke="#008080"
                             />
-                          </BarChart>
+                          </LineChart>
                         </Col>
                         <Col md="6">
-                          <h2 className="tituloGrafico">Quantidade de Itens</h2>
+                          <h2 className="tituloGrafico">Quantidade por Ano</h2>
 
-                          <BarChart
-                            width={650}
-                            height={300}
+                          <AreaChart
+                            width={550}
+                            height={290}
                             data={dataApi}
                             margin={{
-                              top: 5,
+                              top: 10,
                               right: 30,
-                              left: 20,
-                              bottom: 5,
+                              left: 0,
+                              bottom: 0,
                             }}
-                            barSize={20}
                           >
-                            <XAxis
-                              dataKey="original"
-                              scale="point"
-                              padding={{ left: 10, right: 10 }}
-                            />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="original" />
                             <YAxis />
                             <Tooltip />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Bar
+                            <Area
+                              type="monotone"
                               dataKey="count"
-                              fill="#0000cc"
-                              background={{ fill: "#eee" }}
+                              stroke="#8884d8"
+                              fill="#fb9e86"
                             />
-                          </BarChart>
+                          </AreaChart>
                         </Col>
                       </Row>
                       <div className="divider mt-4" />
@@ -384,7 +424,7 @@ export default class AnalyticsDashboard1 extends Component {
                         <i className="header-icon lnr-rocket icon-gradient bg-tempting-azure">
                           {" "}
                         </i>
-                        Gráfico 2 - Preços Mínimos e Máximos
+                        Preços Mínimos/Máximos por Ano
                       </div>
                       <div className="btn-actions-pane-right"></div>
                     </CardHeader>
@@ -394,10 +434,10 @@ export default class AnalyticsDashboard1 extends Component {
                           <Row className="mt-3">
                             <Col md="6">
                               <h2 className="tituloGrafico">
-                                Preço Minimo  & Máximo 
+                                Preço Minimo & Máximo
                               </h2>
                               <BarChart
-                                width={750}
+                                width={550}
                                 height={300}
                                 data={dataApi}
                                 margin={{
@@ -408,7 +448,7 @@ export default class AnalyticsDashboard1 extends Component {
                                 }}
                               >
                                 <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="original" />
+                                <XAxis dataKey="ano" />
                                 <YAxis />
                                 <Tooltip />
                                 <Bar dataKey="min" fill="#8884d8" />
@@ -417,128 +457,31 @@ export default class AnalyticsDashboard1 extends Component {
                             </Col>
                             <Col md="6">
                               <h2 className="tituloGrafico">
-                                Quantidade de Itens
+                                Quantidade por Unidade de Medida
                               </h2>
+                              <BarChart
+                                width={550}
+                                height={300}
+                                data={dataApi}
+                                margin={{
+                                  top: 20,
+                                  right: 30,
+                                  left: 20,
+                                  bottom: 5,
+                                }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="ano" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="min" stackId="a" fill="#3db0f7" />
+                                <Bar dataKey="max" stackId="a" fill="#82ca9d" />
+                                <Bar dataKey="count" fill="#ffc658" />
+                              </BarChart>
                             </Col>
                           </Row>
                           <div className="divider mt-4" />
-                        </CardBody>
-                      </TabPane>
-                      <TabPane tabId="22">
-                        <div className="widget-chart p-0">
-                          <ResponsiveContainer height={179}>
-                            <ComposedChart data={data2}>
-                              <CartesianGrid stroke="#ffffff" />
-                              <Area
-                                type="monotone"
-                                dataKey="amt"
-                                fill="#f7ffd0"
-                                stroke="#85a200"
-                              />
-                              <Bar
-                                dataKey="pv"
-                                barSize={16}
-                                fill="var(--primary)"
-                              />
-                              <Line
-                                type="monotone"
-                                dataKey="uv"
-                                strokeWidth="3"
-                                stroke="var(--danger)"
-                              />
-                            </ComposedChart>
-                          </ResponsiveContainer>
-                          <div className="widget-chart-content mt-3 mb-2">
-                            <div className="widget-description mt-0 text-success">
-                              <FontAwesomeIcon icon={faArrowUp} />
-                              <span className="pl-2 pr-2">37.2%</span>
-                              <span className="text-muted opacity-8">
-                                performance increase
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <CardBody className="pt-2">
-                          <Row>
-                            <Col md="6">
-                              <div className="widget-content">
-                                <div className="widget-content-outer">
-                                  <div className="widget-content-wrapper">
-                                    <div className="widget-content-left mr-3">
-                                      <div className="widget-numbers fsize-3 text-muted">
-                                        23%
-                                      </div>
-                                    </div>
-                                    <div className="widget-content-right">
-                                      <div className="text-muted opacity-6">
-                                        Deploys
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="widget-progress-wrapper mt-1">
-                                    <Progress
-                                      className="progress-bar-sm progress-bar-animated-alt"
-                                      color="warning"
-                                      value="23"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </Col>
-                          </Row>
-                          <div className="divider mt-4" />
-                          <Row>
-                            <Col md="6">
-                              <div className="widget-content">
-                                <div className="widget-content-outer">
-                                  <div className="widget-content-wrapper">
-                                    <div className="widget-content-left mr-3">
-                                      <div className="widget-numbers fsize-3 text-muted">
-                                        83%
-                                      </div>
-                                    </div>
-                                    <div className="widget-content-right">
-                                      <div className="text-muted opacity-6">
-                                        Servers Load
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="widget-progress-wrapper mt-1">
-                                    <Progress
-                                      className="progress-bar-sm progress-bar-animated-alt"
-                                      color="danger"
-                                      value="83"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </Col>
-                            <Col md="6">
-                              <div className="widget-content">
-                                <div className="widget-content-outer">
-                                  <div className="widget-content-wrapper">
-                                    <div className="widget-content-left mr-3">
-                                      <div className="widget-numbers fsize-3 text-muted">
-                                        48%
-                                      </div>
-                                    </div>
-                                    <div className="widget-content-right">
-                                      <div className="text-muted opacity-6">
-                                        Reported Bugs
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="widget-progress-wrapper mt-1">
-                                    <Progress
-                                      className="progress-bar-sm progress-bar-animated-alt"
-                                      color="alternate"
-                                      value="48"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </Col>
-                          </Row>
                         </CardBody>
                       </TabPane>
                     </TabContent>
