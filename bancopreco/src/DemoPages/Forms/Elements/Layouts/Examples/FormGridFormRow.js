@@ -80,8 +80,6 @@ export default class FormGridFormRow extends React.Component {
     status: 0,
   };
 
-  
-
   search = async (val) => {
     this.setState({ loading: true });
     let url = "";
