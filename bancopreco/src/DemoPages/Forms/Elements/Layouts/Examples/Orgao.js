@@ -2212,7 +2212,7 @@ const lowerCasedCompanies = companies.map((company) => {
   };
 });
 
-const App = () => {
+const Orgao = () => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -2234,6 +2234,7 @@ const App = () => {
         }}
         onSuggestionSelected={(_, { suggestionValue }) =>
           console.log("Selected: " + suggestionValue)
+          
         }
         getSuggestionValue={(suggestion) => suggestion.name}
         renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
@@ -2250,4 +2251,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Orgao;

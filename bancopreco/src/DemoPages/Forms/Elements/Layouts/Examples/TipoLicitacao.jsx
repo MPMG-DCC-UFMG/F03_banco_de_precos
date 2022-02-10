@@ -21,18 +21,18 @@ const options = [
     label: "TECNICA E PRECO",
     value: "TECNICA E PRECO",
   },
-  
 ];
 
 class App extends React.Component {
   render() {
+   
     return (
       <div>
-        <select className="tipoorgao">
-          {options.map((option) => (
-            <option value={option.value}>{option.label}</option>
-          ))}
-        </select>
+          <select className="tipoLicitacao">
+            {options.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+          </select>
       </div>
     );
   }

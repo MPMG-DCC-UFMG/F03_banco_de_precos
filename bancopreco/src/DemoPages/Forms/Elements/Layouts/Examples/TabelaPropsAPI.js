@@ -42,7 +42,6 @@ const Retornoapi = (props) => {
   };
 
   let columns = [];
-  let action = "";
 
   if (props.agrupamento) {
     if (props.desc) {
@@ -77,7 +76,6 @@ const Retornoapi = (props) => {
       },
       { title: "Data", field: "data", align: "center" }, //, width: '100%'
       { title: "Und Medida", field: "dsc_unidade_medida", align: "center" },
-      { title: "Grupo", field: "grupo", align: "center" },
       { title: "Orgão", field: "orgao", align: "center" },
       { title: "Qtd Item", field: "qtde_item", align: "center" },
       { title: "Modalidade", field: "modalidade", align: "center" },

@@ -218,3 +218,12 @@ input.fornecedorComp.form-control-lg.form-control {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
     -webkit-box-shadow 0.15s ease-in-out;
 }
+
+.anoExercicio{
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    border-radius: 10px 10px !important;
+    height: 30px !important;
+    vertical-align: super !important;
+}

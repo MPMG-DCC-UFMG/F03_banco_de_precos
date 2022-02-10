@@ -1,4 +1,5 @@
 import React, { Fragment, useState, Component } from "react";
+
 import Orgao from "./Orgao";
 import {
   Col,
@@ -20,7 +21,6 @@ import {
 } from "reactstrap";
 
 import { GrFilter } from "react-icons/gr";
-// https://react-icons.github.io/react-icons/search?q=filter
 
 import { search } from "./Utils";
 import { UncontrolledTooltip } from "reactstrap";
@@ -30,7 +30,6 @@ import "./FormGridFormRow.css";
 import Meses from "./SelectMeses";
 import Cidades from "./SelectCidades";
 import MaskCnpj from "./Mask";
-import ReactSpinner from "react-bootstrap-spinner";
 import LicitacaoModalidade from "./LicitacaoModalidade";
 import { ActivityIndicator } from "react-native";
 import TipoOrgao from "./TipoOrgao";
@@ -78,7 +77,10 @@ export default class FormGridFormRow extends React.Component {
     chkGrupo: false,
     radioExercicio: false,
     radioPeriodo: false,
+    status: 0,
   };
+
+  
 
   search = async (val) => {
     this.setState({ loading: true });
@@ -152,6 +154,10 @@ export default class FormGridFormRow extends React.Component {
 
     return dadosApi;
   }
+
+  reset = () => {
+    this.setState({ precoMax: "" });
+  };
   onSuggestHandler = async (e) => {
     this.setState({ buscar: e });
     this.setState({ dadosApiDes: "" });
@@ -160,6 +166,17 @@ export default class FormGridFormRow extends React.Component {
   // funções da busca avançada (filtro) modal
   onFormSubmitFilter = async (e) => {
     this.toggleT();
+    const stringBusca =
+      "QntMin:" +
+      this.state.qntMin +
+      "QntMax" +
+      this.state.qntMax +
+      "PrMIn" +
+      this.state.precoMin +
+      "precMax" +
+      this.state.precoMax;
+    alert(stringBusca);
+
     this.search(this.state.buscar);
   };
 
@@ -173,8 +190,6 @@ export default class FormGridFormRow extends React.Component {
 
   onFormSubmit() {
     this.search(this.state.buscar);
-
-    //return <Alert color="info">No flights listed</Alert>;
   }
   toggleT() {
     this.setState({
@@ -183,7 +198,8 @@ export default class FormGridFormRow extends React.Component {
   }
 
   handleOptionChangeRadio = async (e) => {
-    alert(e.target.value);
+    alert(e);
+    this.setState({ status });
   };
 
   render() {
@@ -233,12 +249,16 @@ export default class FormGridFormRow extends React.Component {
                       type="radio"
                       name="radio1"
                       defaultChecked
-                      onClick={(e) => this.handleOptionChangeRadio(e)}
+                      onClick={(e) => this.handleOptionChangeRadio(1)}
                     />
                     <Label check>Exercício</Label>
                   </FormGroup>
                   <FormGroup check inline>
-                    <Input type="radio" name="radio1" />
+                    <Input
+                      type="radio"
+                      name="radio1"
+                      onClick={(e) => this.handleOptionChangeRadio(2)}
+                    />
                     <Label check>Período</Label>
                   </FormGroup>
                   <FormGroup check inline>
@@ -252,7 +272,6 @@ export default class FormGridFormRow extends React.Component {
                     <div>
                       <Button color="gray" onClick={this.toggleT}>
                         <h4>
-                          {" "}
                           <GrFilter /> Filtro{" "}
                         </h4>
                       </Button>
@@ -428,8 +447,8 @@ export default class FormGridFormRow extends React.Component {
                                             Tipo Fornecedor{" "}
                                           </option>
 
-                                          <option value="j">J</option>
-                                          <option value="f">F</option>
+                                          <option value="j">Jurídica</option>
+                                          <option value="f">Física</option>
                                         </select>
                                       </FormGroup>
                                     </Col>
@@ -552,7 +571,12 @@ export default class FormGridFormRow extends React.Component {
                             >
                               Buscar
                             </Button>
-                            {"  "}
+                            <Button
+                              color="default"
+                              onClick={() => this.reset()}
+                            >
+                              Resetar
+                            </Button>
                             <Button color="secondary" onClick={this.toggleT}>
                               Cancelar
                             </Button>

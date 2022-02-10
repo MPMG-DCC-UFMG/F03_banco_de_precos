@@ -23,7 +23,7 @@ const lowerCasedCompanies = companies.map((company) => {
   };
 });
 
-const App = () => {
+const LicitacaoModalidade = () => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -60,4 +60,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default LicitacaoModalidade;
