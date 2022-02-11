@@ -1,5 +1,4 @@
 import React, { Fragment, useState, Component } from "react";
-
 import Orgao from "./Orgao";
 import {
   Col,
@@ -53,6 +52,8 @@ export default class FormGridFormRow extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.toggleT = this.toggleT.bind(this);
   }
+
+
   state = {
     dadosApi: null,
     dadosApiDes: null,
@@ -270,6 +271,7 @@ export default class FormGridFormRow extends React.Component {
                     <div>
                       <Button color="gray" onClick={this.toggleT}>
                         <h4>
+                          {" "}
                           <GrFilter /> Filtro{" "}
                         </h4>
                       </Button>
@@ -478,7 +480,7 @@ export default class FormGridFormRow extends React.Component {
                                 </Form>
 
                                 <CardTitle>
-                                  Agrupamento{" "}
+                                  Critério de Agregação de Resultados
                                   <span
                                     style={{ color: "black" }}
                                     href="#"
@@ -539,7 +541,7 @@ export default class FormGridFormRow extends React.Component {
                                             chkAno: e.target.checked,
                                           });
                                         }}
-                                      />{" "}
+                                      />
                                       Ano
                                     </Label>
                                   </FormGroup>

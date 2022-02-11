@@ -2212,7 +2212,7 @@ const lowerCasedCompanies = companies.map((company) => {
   };
 });
 
-const Orgao = () => {
+const App = () => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -2221,6 +2221,7 @@ const Orgao = () => {
       company.name.includes(value.trim().toUpperCase())
     );
   }
+
   return (
     <div>
       <AutoSuggest
@@ -2234,7 +2235,6 @@ const Orgao = () => {
         }}
         onSuggestionSelected={(_, { suggestionValue }) =>
           console.log("Selected: " + suggestionValue)
-          
         }
         getSuggestionValue={(suggestion) => suggestion.name}
         renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
@@ -2250,5 +2250,4 @@ const Orgao = () => {
     </div>
   );
 };
-
-export default Orgao;
+export default App;
