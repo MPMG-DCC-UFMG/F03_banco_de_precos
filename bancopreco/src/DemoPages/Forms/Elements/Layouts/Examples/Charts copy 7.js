@@ -73,15 +73,17 @@ const data2 = [
   { name: "Page G", uv: 5349, pv: 3430, amt: 3210 },
 ];
 
+
 export default class javascriptMap extends Component {
-  state = {
-    loading: false,
-    data: [],
-  };
+ constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+    };
+  }
+
 
   getData() {
-    this.setState({ loading: true });
-
     axios
       .get(
         "http://127.0.0.1:8000/api/items/match/?limit=10&offset=0&order=desc&year=2018&description=GAS%20GLP,%20ACONDICIONADO%20EM%20BOTIJAO%20RETORNAVEL%20DE%2013%20KG&unit_measure=unidade&group=gas_7"
@@ -89,15 +91,16 @@ export default class javascriptMap extends Component {
       .then((res) => {
         var data = res.data;
         this.setState({ data: data });
-        this.setState({ loading: false });
       });
+
+       console.log(data)
+
   }
   componentDidMount() {
-    //console.log("test" + this.props.data.ano);
     this.getData();
   }
   render() {
-    console.log(this.state.loading);
+    //const { dataApi } = this.state;
     if (this.state.loading) {
       return (
         <div>
@@ -105,30 +108,7 @@ export default class javascriptMap extends Component {
         </div>
       );
     }
-    const { data } = this.state;
-    console.log(data.sort((a, b) => (a.mes > b.mes ? 1 : -1)));
-
-    let monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Abr",
-      "Mai",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Set",
-      "Out",
-      "Nov",
-      "Dez",
-    ];
-
-    const getXValueData2 = (data) => {
-      const index = monthNames[data["mes"]];
-
-      return index;
-    };
-
+  
     return (
       <div>
         <Fragment>
@@ -289,7 +269,7 @@ export default class javascriptMap extends Component {
                         <i className="header-icon lnr-rocket icon-gradient bg-tempting-azure">
                           {" "}
                         </i>
-                        Relação de Itens
+                        Médias de Preços
                       </div>
                       <div className="btn-actions-pane-right"></div>
                     </CardHeader>
@@ -297,23 +277,24 @@ export default class javascriptMap extends Component {
                     <CardBody className="pt-2">
                       <Row className="mt-3">
                         <Col md="6">
-                          {/* <h2 className="tituloGrafico">Média de preços</h2> */}
-                          <BarChart
-                            width={600}
-                            height={300}
-                            data={data}
-                            margin={{
-                              top: 5,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
-                            <XAxis dataKey="data" />
+                          <h2 className="tituloGrafico">Média de preços</h2>
+                          <LineChart width={550} height={300} data={this.state.dataApi}>
+                            <Line
+                              type="monotone"
+                              dataKey="mean"
+                              stroke="#008080	"
+                              strokeWidth={2}
+                            />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="ano" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="qtde_item" fill="#82ca9d" />
-                          </BarChart>
+                            <Line
+                              type="monotone"
+                              dataKey="mean"
+                              stroke="#008080"
+                            />
+                          </LineChart>
                         </Col>
                       </Row>
                       <div className="divider mt-4" />
@@ -327,7 +308,7 @@ export default class javascriptMap extends Component {
                         <i className="header-icon lnr-rocket icon-gradient bg-tempting-azure">
                           {" "}
                         </i>
-                        Relação de Preços
+                        Preços Mínimos e Máximos
                       </div>
                       <div className="btn-actions-pane-right"></div>
                     </CardHeader>
@@ -335,11 +316,11 @@ export default class javascriptMap extends Component {
                     <CardBody className="pt-2">
                       <Row className="mt-3">
                         <Col md="6">
-                          {/* <h2 className="tituloGrafico">Preços </h2> */}
+                          <h2 className="tituloGrafico">Preços Min/Max</h2>
                           <BarChart
                             width={600}
                             height={300}
-                            data={data}
+                            data={this.state.dataApi}
                             margin={{
                               top: 5,
                               right: 30,
@@ -347,10 +328,12 @@ export default class javascriptMap extends Component {
                               bottom: 5,
                             }}
                           >
-                            <XAxis dataKey="data" />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="ano" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="preco" fill="#ffa500" />
+                            <Bar dataKey="min" fill="#8884d8" />
+                            <Bar dataKey="max" fill="#82ca9d" />
                           </BarChart>
                         </Col>
                       </Row>

@@ -46,7 +46,7 @@ import { ActivityIndicator } from "react-native";
 import React, { useState, useEffect, Component, Fragment } from "react";
 import axios from "axios";
 
-const data1 = [
+const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
   { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
   { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
@@ -73,31 +73,137 @@ const data2 = [
   { name: "Page G", uv: 5349, pv: 3430, amt: 3210 },
 ];
 
+const dataApi = [
+  {
+    original:
+      "ITEM 10973: BOTIJAO DE GAS CONTENDO 13 (TREZE) QUILOGRAMAS CADA, PARA REPOSICAO, DE GAS LIQUEFEITO DE PETROLEO (GLP), COMPOSTO DE PROPANO E BUTANO",
+    dsc_unidade_medida: "unidade",
+    ano: 2014,
+    grupo: "item_3",
+    mean: 41.4,
+    max: 42,
+    min: 41,
+    count: 5,
+  },
+
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2014,
+    grupo: "gas_7",
+    mean: 46.260000000000005,
+    max: 51.9,
+    min: 42.5,
+    count: 5,
+  },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2015,
+    grupo: "gas_7",
+    mean: 48.61666666666667,
+    max: 59,
+    min: 43,
+    count: 12,
+  },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2016,
+    grupo: "gas_7",
+    mean: 56.585,
+    max: 63.75,
+    min: 51,
+    count: 10,
+  },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2017,
+    grupo: "gas_7",
+    mean: 59.888888888888886,
+    max: 67,
+    min: 46.5,
+    count: 9,
+  },
+
+  {
+    original:
+      "GAS LIQUEFEITO DE PETROLEO  ACONDICIONADO EM CILINDRO DE 13 KG  (P13 LIQUIDO)  COMPOSICAO BASICA: PROPANO E BUTANO   MATERIAL TOXICO E INFLAMAVEL  DE ACORDO COM AS LEGISLACOES VIGENTES DA ANP E ABNT",
+    dsc_unidade_medida: "botijao",
+    ano: 2018,
+    grupo: "gas_11",
+    mean: 70.63,
+    max: 74.59,
+    min: 67,
+    count: 5,
+  },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2018,
+    grupo: "gas_7",
+    mean: 75.345,
+    max: 89.25,
+    min: 63.95,
+    count: 10,
+  },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2019,
+    grupo: "gas_7",
+    mean: 74.45625,
+    max: 80.25,
+    min: 66,
+    count: 8,
+  },
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2020,
+    grupo: "gas_7",
+    mean: 76.41666666666667,
+    max: 89,
+    min: 66.5,
+    count: 9,
+  },
+
+  {
+    original: "GAS GLP, ACONDICIONADO EM BOTIJAO RETORNAVEL DE 13 KG",
+    dsc_unidade_medida: "unidade",
+    ano: 2021,
+    grupo: "gas_7",
+    mean: 79.178,
+    max: 102,
+    min: 64.39,
+    count: 5,
+  },
+];
+
 export default class javascriptMap extends Component {
   state = {
-    loading: false,
-    data: [],
+    dataApi: [],
   };
 
   getData() {
-    this.setState({ loading: true });
-
     axios
       .get(
-        "http://127.0.0.1:8000/api/items/match/?limit=10&offset=0&order=desc&year=2018&description=GAS%20GLP,%20ACONDICIONADO%20EM%20BOTIJAO%20RETORNAVEL%20DE%2013%20KG&unit_measure=unidade&group=gas_7"
+        `http://127.0.0.1:8000/api/items/match/?limit=10&offset=0&order=desc&year=${this.props.data.ano}&description=${val}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
-        var data = res.data;
-        this.setState({ data: data });
-        this.setState({ loading: false });
+        var dataApi = res.dataApi;
+        this.setState({ dataApi: dataApi });
       });
+    console.log({ dataApi });
+
+   
   }
   componentDidMount() {
-    //console.log("test" + this.props.data.ano);
     this.getData();
   }
   render() {
-    console.log(this.state.loading);
+    const { dataApi } = this.state;
     if (this.state.loading) {
       return (
         <div>
@@ -105,29 +211,14 @@ export default class javascriptMap extends Component {
         </div>
       );
     }
-    const { data } = this.state;
-    console.log(data.sort((a, b) => (a.mes > b.mes ? 1 : -1)));
+    //var atual = 600000.0;
+    var media = this.props.data.mean;
 
-    let monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Abr",
-      "Mai",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Set",
-      "Out",
-      "Nov",
-      "Dez",
-    ];
-
-    const getXValueData2 = (data) => {
-      const index = monthNames[data["mes"]];
-
-      return index;
-    };
+    //com R$
+    var f = media
+      .toLocaleString("pt-br", { style: "currency", currency: "BRL" })
+      .replace(".", ",");
+    console.log(f);
 
     return (
       <div>
@@ -163,7 +254,7 @@ export default class javascriptMap extends Component {
                     <div className="widget-chart-wrapper chart-wrapper-relative">
                       <ResponsiveContainer height={80}>
                         <LineChart
-                          data={data1}
+                          data={data}
                           margin={{ top: 5, right: 5, left: 5, bottom: 0 }}
                         >
                           <Line
@@ -289,7 +380,7 @@ export default class javascriptMap extends Component {
                         <i className="header-icon lnr-rocket icon-gradient bg-tempting-azure">
                           {" "}
                         </i>
-                        Relação de Itens
+                        Médias de Preços
                       </div>
                       <div className="btn-actions-pane-right"></div>
                     </CardHeader>
@@ -297,23 +388,24 @@ export default class javascriptMap extends Component {
                     <CardBody className="pt-2">
                       <Row className="mt-3">
                         <Col md="6">
-                          {/* <h2 className="tituloGrafico">Média de preços</h2> */}
-                          <BarChart
-                            width={600}
-                            height={300}
-                            data={data}
-                            margin={{
-                              top: 5,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
-                            <XAxis dataKey="data" />
+                          <h2 className="tituloGrafico">Média de preços</h2>
+                          <LineChart width={550} height={300} data={dataApi}>
+                            <Line
+                              type="monotone"
+                              dataKey="mean"
+                              stroke="#008080	"
+                              strokeWidth={2}
+                            />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="ano" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="qtde_item" fill="#82ca9d" />
-                          </BarChart>
+                            <Line
+                              type="monotone"
+                              dataKey="mean"
+                              stroke="#008080"
+                            />
+                          </LineChart>
                         </Col>
                       </Row>
                       <div className="divider mt-4" />
@@ -327,7 +419,7 @@ export default class javascriptMap extends Component {
                         <i className="header-icon lnr-rocket icon-gradient bg-tempting-azure">
                           {" "}
                         </i>
-                        Relação de Preços
+                        Preços Mínimos e Máximos
                       </div>
                       <div className="btn-actions-pane-right"></div>
                     </CardHeader>
@@ -335,11 +427,11 @@ export default class javascriptMap extends Component {
                     <CardBody className="pt-2">
                       <Row className="mt-3">
                         <Col md="6">
-                          {/* <h2 className="tituloGrafico">Preços </h2> */}
+                          <h2 className="tituloGrafico">Preços Min/Max</h2>
                           <BarChart
                             width={600}
                             height={300}
-                            data={data}
+                            data={dataApi}
                             margin={{
                               top: 5,
                               right: 30,
@@ -347,10 +439,12 @@ export default class javascriptMap extends Component {
                               bottom: 5,
                             }}
                           >
-                            <XAxis dataKey="data" />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="ano" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="preco" fill="#ffa500" />
+                            <Bar dataKey="min" fill="#8884d8" />
+                            <Bar dataKey="max" fill="#82ca9d" />
                           </BarChart>
                         </Col>
                       </Row>
