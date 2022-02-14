@@ -1,5 +1,6 @@
 import React, { Fragment, useState, Component } from "react";
 import Orgao from "./Orgao";
+
 import {
   Col,
   Row,
@@ -8,7 +9,7 @@ import {
   Collapse,
   CardTitle,
   Button,
-  Form,
+  Form ,
   FormGroup,
   Label,
   Input,
@@ -52,7 +53,6 @@ export default class FormGridFormRow extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.toggleT = this.toggleT.bind(this);
   }
-
 
   state = {
     dadosApi: null,
@@ -174,7 +174,7 @@ export default class FormGridFormRow extends React.Component {
       this.state.precoMin +
       "precMax" +
       this.state.precoMax;
-    alert(stringBusca);
+   // alert(stringBusca);
 
     this.search(this.state.buscar);
   };
@@ -212,6 +212,9 @@ export default class FormGridFormRow extends React.Component {
 
     return (
       <div>
+        <Form>
+          <inp name="email"></inp>
+        </Form>
         <Form onSubmit={this.onFormSubmit}>
           <Fragment>
             <div className="bancoPrecoPai">
@@ -486,9 +489,9 @@ export default class FormGridFormRow extends React.Component {
                                     href="#"
                                     id="UncontrolledTooltipExample"
                                   >
-                                    *
+                                    ?
                                   </span>
-                                  <UncontrolledTooltip
+                                  <UncontrolledTooltipBanco de Preços
                                     placement="right"
                                     target="UncontrolledTooltipExample"
                                   >
