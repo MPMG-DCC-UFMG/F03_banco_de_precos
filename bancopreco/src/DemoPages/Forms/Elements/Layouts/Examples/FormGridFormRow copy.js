@@ -1,5 +1,7 @@
 import React, { Fragment, useState, Component } from "react";
 import Orgao from "./Orgao";
+import Form from "@unform/web";
+import { Input as inp } from "./Inputs/Input";
 
 import {
   Col,
@@ -9,7 +11,7 @@ import {
   Collapse,
   CardTitle,
   Button,
-  Form ,
+  Form as For,
   FormGroup,
   Label,
   Input,
@@ -174,7 +176,7 @@ export default class FormGridFormRow extends React.Component {
       this.state.precoMin +
       "precMax" +
       this.state.precoMax;
-   // alert(stringBusca);
+    alert(stringBusca);
 
     this.search(this.state.buscar);
   };
@@ -211,13 +213,17 @@ export default class FormGridFormRow extends React.Component {
     }
 
     return (
-      <div>  
-        <Form onSubmit={this.onFormSubmit}>
+      <div>
+        <Form>
+          <inp name="email"></inp>
+        </Form>
+        <For onSubmit={this.onFormSubmit}>
           <Fragment>
             <div className="bancoPrecoPai">
               <div className="bancoPreco">
                 <h1>Banco de Preços</h1>
               </div>
+
               <div className="campoBuscar">
                 <Input
                   bsSize="lg"
@@ -241,7 +247,7 @@ export default class FormGridFormRow extends React.Component {
                   ))}
               </div>
               <div className="elementosCheck">
-                <Form>
+                <For>
                   <FormGroup check inline>
                     <Input
                       type="radio"
@@ -280,7 +286,7 @@ export default class FormGridFormRow extends React.Component {
                         toggle={this.toggleT}
                         className={this.props.className}
                       >
-                        <Form>
+                        <For>
                           <ModalHeader
                             toggle={this.toggleT}
                             cssModule={{ "modal-title": "w-100 text-center" }}
@@ -291,7 +297,7 @@ export default class FormGridFormRow extends React.Component {
                             <Card>
                               <CardBody>
                                 <CardTitle>Faixa</CardTitle>
-                                <Form>
+                                <For>
                                   <Row form>
                                     <Col md={6}>
                                       <FormGroup>
@@ -368,10 +374,10 @@ export default class FormGridFormRow extends React.Component {
                                       </Col>
                                     </Row>
                                   </FormGroup>
-                                </Form>
+                                </For>
 
                                 <CardTitle>Orgão</CardTitle>
-                                <Form>
+                                <For>
                                   <Row form>
                                     <Col md={6}>
                                       <FormGroup>
@@ -387,10 +393,10 @@ export default class FormGridFormRow extends React.Component {
                                       </FormGroup>
                                     </Col>
                                   </Row>
-                                </Form>
+                                </For>
 
                                 <CardTitle>Fornecedor</CardTitle>
-                                <Form>
+                                <For>
                                   <Row form>
                                     <Col md={6}>
                                       <FormGroup>
@@ -452,9 +458,9 @@ export default class FormGridFormRow extends React.Component {
                                       </FormGroup>
                                     </Col>
                                   </Row>
-                                </Form>
+                                </For>
                                 <CardTitle>Licitação</CardTitle>
-                                <Form>
+                                <For>
                                   <Row form>
                                     <Col md={6}>
                                       <FormGroup>
@@ -476,7 +482,7 @@ export default class FormGridFormRow extends React.Component {
                                       </FormGroup>
                                     </Col>
                                   </Row>
-                                </Form>
+                                </For>
 
                                 <CardTitle>
                                   Critério de Agregação de Resultados
@@ -485,7 +491,7 @@ export default class FormGridFormRow extends React.Component {
                                     href="#"
                                     id="UncontrolledTooltipExample"
                                   >
-                                    ?
+                                    *
                                   </span>
                                   <UncontrolledTooltip
                                     placement="right"
@@ -498,7 +504,7 @@ export default class FormGridFormRow extends React.Component {
                                     pode levar tempo extra em processamento.
                                   </UncontrolledTooltip>
                                 </CardTitle>
-                                <Form>
+                                <For>
                                   <FormGroup check inline>
                                     <Label check>
                                       <Input
@@ -559,7 +565,7 @@ export default class FormGridFormRow extends React.Component {
                                       Grupo do Item
                                     </Label>
                                   </FormGroup>
-                                </Form>
+                                </For>
                               </CardBody>
                             </Card>
                           </ModalBody>
@@ -580,18 +586,18 @@ export default class FormGridFormRow extends React.Component {
                               Cancelar
                             </Button>
                           </ModalFooter>
-                        </Form>
+                        </For>
                       </Modal>
                     </div>
                   </FormGroup>
-                </Form>
+                </For>
               </div>
             </div>
           </Fragment>
           <Button color="primary" className="btnBuscar" type="submit">
             Buscar
           </Button>
-        </Form>
+        </For>
 
         {
           //para desenhar a tabela

@@ -84,7 +84,7 @@ export default class javascriptMap extends Component {
 
     axios
       .get(
-        "http://127.0.0.1:8000/api/items/match/?limit=10&offset=0&order=desc&year=2018&description=GAS%20GLP,%20ACONDICIONADO%20EM%20BOTIJAO%20RETORNAVEL%20DE%2013%20KG&unit_measure=unidade&group=gas_7"
+        `http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
         var data = res.data;
@@ -309,8 +309,17 @@ export default class javascriptMap extends Component {
                               bottom: 5,
                             }}
                           >
-                            <XAxis dataKey="data" />
-                            <YAxis />
+                            <XAxis
+                              dataKey={getXValueData2}
+                              label={{ value: "Meses", dy: 15 }}
+                            />
+                            <YAxis
+                              label={{
+                                value: "Quantidade de Itens",
+                                angle: -90,
+                                dx: -30,
+                              }}
+                            />
                             <Tooltip />
                             <Bar dataKey="qtde_item" fill="#82ca9d" />
                           </BarChart>
@@ -347,8 +356,18 @@ export default class javascriptMap extends Component {
                               bottom: 5,
                             }}
                           >
-                            <XAxis dataKey="data" />
-                            <YAxis />
+                            {" "}
+                            <XAxis
+                              dataKey={getXValueData2}
+                              label={{ value: "Meses", dy: 15 }}
+                            />
+                            <YAxis
+                              label={{
+                                value: "Preço",
+                                angle: -90,
+                                dx: -12,
+                              }}
+                            />
                             <Tooltip />
                             <Bar dataKey="preco" fill="#ffa500" />
                           </BarChart>
