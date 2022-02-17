@@ -46,33 +46,6 @@ import { ActivityIndicator } from "react-native";
 import React, { useState, useEffect, Component, Fragment } from "react";
 import axios from "axios";
 
-const data1 = [
-  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
-  { name: "Page C", uv: 2000, pv: 6800, amt: 2290 },
-  { name: "Page D", uv: 4780, pv: 7908, amt: 2000 },
-  { name: "Page E", uv: 2890, pv: 9800, amt: 2181 },
-  { name: "Page F", uv: 1390, pv: 3800, amt: 1500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
-];
-
-const data2 = [
-  { name: "Page A", uv: 5400, pv: 5240, amt: 1240 },
-  { name: "Page B", uv: 7300, pv: 4139, amt: 3221 },
-  { name: "Page C", uv: 8200, pv: 7980, amt: 5229 },
-  { name: "Page D", uv: 6278, pv: 4390, amt: 3200 },
-  { name: "Page E", uv: 3189, pv: 7480, amt: 6218 },
-  { name: "Page D", uv: 9478, pv: 6790, amt: 2200 },
-  { name: "Page E", uv: 1289, pv: 1980, amt: 7218 },
-  { name: "Page F", uv: 3139, pv: 2380, amt: 5150 },
-  { name: "Page G", uv: 5349, pv: 3430, amt: 3210 },
-];
-
 export default class javascriptMap extends Component {
   state = {
     loading: false,
@@ -160,21 +133,6 @@ export default class javascriptMap extends Component {
                         <h1>Qnt de Itens </h1>
                       </div>
                     </div>
-                    <div className="widget-chart-wrapper chart-wrapper-relative">
-                      <ResponsiveContainer height={80}>
-                        <LineChart
-                          data={data1}
-                          margin={{ top: 5, right: 5, left: 5, bottom: 0 }}
-                        >
-                          <Line
-                            type="monotone"
-                            dataKey="pv"
-                            stroke="#3ac47d"
-                            strokeWidth={3}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
                   </div>
                 </Col>
                 <Col md="4">
@@ -191,27 +149,6 @@ export default class javascriptMap extends Component {
                       <div className="widget-subheading">
                         <h1>Preço Médio</h1>
                       </div>
-                    </div>
-                    <div className="widget-chart-wrapper chart-wrapper-relative">
-                      <ResponsiveContainer height={80}>
-                        <LineChart
-                          data={data2}
-                          margin={{ top: 0, right: 5, left: 5, bottom: 0 }}
-                        >
-                          <Line
-                            type="monotone"
-                            dataKey="pv"
-                            stroke="#d6b5ff"
-                            strokeWidth={2}
-                          />
-                          <Line
-                            type="monotone"
-                            dataKey="uv"
-                            stroke="#a75fff"
-                            strokeWidth={2}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
                     </div>
                   </div>
                 </Col>
@@ -230,21 +167,6 @@ export default class javascriptMap extends Component {
                         <h1>Preço Mínimo </h1>
                       </div>
                     </div>
-                    <div className="widget-chart-wrapper chart-wrapper-relative">
-                      <ResponsiveContainer height={80}>
-                        <AreaChart
-                          data={data2}
-                          margin={{ top: 0, right: 5, left: 5, bottom: 0 }}
-                        >
-                          <Area
-                            type="monotoneX"
-                            dataKey="uv"
-                            stroke="#fd7e14"
-                            fill="#ffb87d"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </div>
                   </div>
                 </Col>
                 <Col md="4">
@@ -262,21 +184,6 @@ export default class javascriptMap extends Component {
                       <div className="widget-subheading">
                         <h1>Preço Máximo</h1>
                       </div>
-                    </div>
-                    <div className="widget-chart-wrapper chart-wrapper-relative">
-                      <ResponsiveContainer height={80}>
-                        <BarChart
-                          data={data2}
-                          margin={{ top: 0, right: 5, left: 5, bottom: 0 }}
-                        >
-                          <Bar
-                            dataKey="uv"
-                            fill="#81a4ff"
-                            stroke="#3f6ad8"
-                            strokeWidth={2}
-                          />
-                        </BarChart>
-                      </ResponsiveContainer>
                     </div>
                   </div>
                 </Col>

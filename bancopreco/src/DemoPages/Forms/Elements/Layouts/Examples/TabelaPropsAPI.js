@@ -45,7 +45,7 @@ const Retornoapi = (props) => {
 
   if (props.agrupamento) {
     if (props.desc) {
-      columns.push({ title: "Descrição", field: "original", align: "center" });
+      columns.push({ title: "Descrição", field: "original", align: "left" });
     }
 
     if (props.ano) {
@@ -59,9 +59,9 @@ const Retornoapi = (props) => {
       });
     }
 
-    columns.push({ title: "Preço médio", field: "mean", align: "center" });
-    columns.push({ title: "Preço máximo", field: "max", align: "center" });
-    columns.push({ title: "Preço mínimo", field: "min", align: "center" });
+    columns.push({ title: "Preço médio (R$)", field: "mean", align: "center" });
+    columns.push({ title: "Preço máximo (R$)", field: "max", align: "center" });
+    columns.push({ title: "Preço mínimo (R$)", field: "min", align: "center" });
     columns.push({
       title: "Quantidade total",
       field: "count",
@@ -72,17 +72,43 @@ const Retornoapi = (props) => {
       {
         title: "Descrição",
         field: "original",
-        align: "justify",
+        align: "left",
+        width: "100%",
       },
-      { title: "Data", field: "data", align: "center" }, //, width: '100%'
-      { title: "Und Medida", field: "dsc_unidade_medida", align: "center" },
-      { title: "Orgão", field: "orgao", align: "center" },
-      { title: "Qtd Item", field: "qtde_item", align: "center" },
-      { title: "Modalidade", field: "modalidade", align: "center" },
-      { title: "Preço", field: "preco", align: "center" },
-      { title: "Tipo Licitação", field: "tipo_licitacao", align: "center" },
-      { title: "Município", field: "municipio", align: "center" },
-      { title: "Nome Vencedor", field: "nome_vencedor", align: "center" },
+      {
+        title: "Und Medida",
+        field: "dsc_unidade_medida",
+        align: "center",
+        width: "50%",
+      },
+
+      { title: "Preço (R$)", field: "preco", align: "center", width: "50%" },
+      { title: "Qtd Item", field: "qtde_item", align: "center", width: "50%" },
+
+      {
+        title: "Nome Vencedor",
+        field: "nome_vencedor",
+        align: "center",
+        width: "50%",
+      },
+      { title: "Orgão", field: "orgao", align: "center", width: "20%" },
+
+      { title: "Município", field: "municipio", align: "center", width: "20%" },
+
+      {
+        title: "Modalidade",
+        field: "modalidade",
+        align: "center",
+        width: "20%",
+      },
+      {
+        title: "Tipo Licitação",
+        field: "tipo_licitacao",
+        align: "center",
+        width: "20%",
+      },
+
+      { title: "Data", field: "data", align: "center", width: "50%" }, //, width: '100%'
     ];
   }
 
@@ -146,7 +172,9 @@ const Retornoapi = (props) => {
             justifyContent: "center", // border: "3px solid black",
           },
           cellStyle: {
-            maxWidth: "100%",
+            maxWidth: 50, // <--- ADD THIS AND IT WILL WORK
+            height: 2,
+            maxHeight: 3,
           },
           headerStyle: {
             maxWidth: "100%",

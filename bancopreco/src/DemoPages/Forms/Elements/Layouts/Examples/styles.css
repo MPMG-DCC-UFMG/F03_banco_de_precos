@@ -95,12 +95,11 @@ input.form-check-input {
 
 h5.card-title {
   font-size: x-large;
+  text-transform: none !important;
+  color: #808080
 }
 
-.card-header,
-.card-title {
-  color: rgb(86 81 81 / 70%);
-}
+
 
 label.form-check-label {
   font-size: x-large;

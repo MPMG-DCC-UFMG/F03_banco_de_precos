@@ -9,7 +9,7 @@ import {
   Collapse,
   CardTitle,
   Button,
-  Form ,
+  Form,
   FormGroup,
   Label,
   Input,
@@ -174,7 +174,7 @@ export default class FormGridFormRow extends React.Component {
       this.state.precoMin +
       "precMax" +
       this.state.precoMax;
-   // alert(stringBusca);
+    // alert(stringBusca);
 
     this.search(this.state.buscar);
   };
@@ -211,7 +211,7 @@ export default class FormGridFormRow extends React.Component {
     }
 
     return (
-      <div>  
+      <div>
         <Form onSubmit={this.onFormSubmit}>
           <Fragment>
             <div className="bancoPrecoPai">
@@ -477,6 +477,7 @@ export default class FormGridFormRow extends React.Component {
                                     </Col>
                                   </Row>
                                 </Form>
+                                <hr />
 
                                 <CardTitle>
                                   Critério de Agregação de Resultados
@@ -485,7 +486,8 @@ export default class FormGridFormRow extends React.Component {
                                     href="#"
                                     id="UncontrolledTooltipExample"
                                   >
-                                    ?
+                                    {""}
+                                    {""} ?
                                   </span>
                                   <UncontrolledTooltip
                                     placement="right"
