@@ -168,17 +168,19 @@ div#rdts1 {
 
 
 .sugestoes {
-  text-align: center;
+  margin-top: 10px;
+  font-size: 2.5ch;
+  /* text-align: center;
   background: #fff;
   border-radius: 50px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   border-right: 1px solid black;
   border-left: 1px solid black;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid black; */
 }
 
 .sugestoes:hover{
-  background-color:#d8d8d8;
+  background-color:#fbf7f7;
   
 }

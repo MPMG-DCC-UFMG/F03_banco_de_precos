@@ -83,7 +83,7 @@ const Retornoapi = (props) => {
       },
 
       { title: "Preço (R$)", field: "preco", align: "center", width: "50%" },
-      { title: "Qtd Item", field: "qtde_item", align: "center", width: "50%" },
+      { title: "Quantidade", field: "qtde_item", align: "center", width: "50%" },
 
       {
         title: "Nome Vencedor",
