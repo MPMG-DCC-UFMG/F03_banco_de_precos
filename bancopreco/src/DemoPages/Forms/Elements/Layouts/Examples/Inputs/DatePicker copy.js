@@ -34,6 +34,8 @@ export default function DatePickerInput({ name, label, ...rest }) {
 
   return (
     <div>
+      {/* <strong>{label}</strong> */}
+      {/* <input type="text" {...rest} /> */}
       <ReactDatePicker
         locale={ptBR}
         ref={datepickerRef}

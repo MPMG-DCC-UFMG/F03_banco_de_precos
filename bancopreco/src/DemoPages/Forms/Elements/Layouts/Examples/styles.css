@@ -3,15 +3,7 @@
   text-align: center;
 }
 
-.campoBuscar {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  width: 40%;
 
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-}
 
 input.form-control-lg.form-control {
   border-radius: 50px;

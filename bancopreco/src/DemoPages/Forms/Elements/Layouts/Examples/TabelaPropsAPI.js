@@ -48,9 +48,6 @@ const Retornoapi = (props) => {
       columns.push({ title: "Descrição", field: "original", align: "left" });
     }
 
-    if (props.ano) {
-      columns.push({ title: "Ano", field: "ano", align: "center" });
-    }
     if (props.unidade) {
       columns.push({
         title: "Unidade",
@@ -60,13 +57,17 @@ const Retornoapi = (props) => {
     }
 
     columns.push({ title: "Preço médio (R$)", field: "mean", align: "center" });
-    columns.push({ title: "Preço máximo (R$)", field: "max", align: "center" });
     columns.push({ title: "Preço mínimo (R$)", field: "min", align: "center" });
+    columns.push({ title: "Preço máximo (R$)", field: "max", align: "center" });
+
     columns.push({
       title: "Quantidade total",
       field: "count",
       align: "center",
     });
+    if (props.ano) {
+      columns.push({ title: "Ano", field: "ano", align: "center" });
+    }
   } else {
     columns = [
       {
@@ -83,10 +84,15 @@ const Retornoapi = (props) => {
       },
 
       { title: "Preço (R$)", field: "preco", align: "center", width: "50%" },
-      { title: "Quantidade", field: "qtde_item", align: "center", width: "50%" },
+      {
+        title: "Quantidade",
+        field: "qtde_item",
+        align: "center",
+        width: "50%",
+      },
 
       {
-        title: "Nome Vencedor",
+        title: "Fornecedor",
         field: "nome_vencedor",
         align: "center",
         width: "50%",

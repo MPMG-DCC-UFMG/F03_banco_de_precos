@@ -2,7 +2,6 @@ import DatePickerInput from "./Inputs/DatePicker";
 import AutoCompleteInputOrgao from "./Inputs/Autocomplete";
 import AutoCompleteInputLicitacaoMod from "./Inputs/AutoCompleteInputLicitacaoMod";
 import { Form } from "@unform/web";
-import MaskedInput from "./Mask";
 
 import React, { Fragment, useState, Component, useRef, useEffect } from "react";
 import Orgao from "./Orgao";
@@ -34,7 +33,7 @@ import PropsAPI from "./TabelaPropsAPI";
 import "./FormGridFormRow.css";
 import Meses from "./SelectMeses";
 import Cidades from "./SelectCidades";
-
+import MaskCnpj from "./Mask";
 import LicitacaoModalidade from "./LicitacaoModalidade";
 import { ActivityIndicator } from "react-native";
 import TipoOrgao from "./TipoOrgao";
@@ -44,42 +43,14 @@ import TipoLicitacao from "./TipoLicitacao";
 export default function App() {
   const formRef = useRef(null);
   const { useState } = React;
-  const [loading, setLoading] = useState(false);
 
   const [descricao, setDescricao] = useState("");
   const [buscar, setBuscar] = useState("");
   const [dadosApi, setDadosApi] = useState("");
-  const [dadosApiFor, setDadosApiFor] = useState("");
-  const [buscarFor, setBuscarFor] = useState("");
-
   const [agrupamento, setAgrupamento] = useState("");
   const [chkAno, setChkAno] = useState("");
   const [chkUniMedida, setChkUniMedida] = useState("");
   const [chkDescricao, setChkDescricao] = useState("");
-  const [chkGrupo, setChkGrupo] = useState("");
-  const [fornecedor, setFornecedor] = useState("");
-
-  const [cidade, setCidade] = useState("");
-  const [microregion, setMicroregiao] = useState("");
-  const [mesoregion, setMesoregiao] = useState("");
-  const [imediateRegion, setImediateRegion] = useState("");
-  const [interRegion, setInterRegion] = useState("");
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-
-  const [licitacaoModalidade, setLicitacaoModalidade] = useState("");
-  const [tipolici, setTipolici] = useState("");
-  const [nomeLicitante, setNomeLicitante] = useState("");
-  const [tipoLicitante, setTipoLicitante] = useState("");
-  const [cpfcnpj, setCpfcnpj] = useState("");
-  const [minItens, setMinItens] = useState("");
-  const [maxItens, setMaxItens] = useState("");
-  const [minPreco, setMinPreco] = useState("");
-  const [maxPreco, setMaxPreco] = useState("");
-  const [naturezaItem, setNaturezaItem] = useState("");
-  const [unidadeMedida, setUnidadeMedida] = useState("");
-
-  const [periodo, setPeriodo] = useState(false);
 
   // Modal open state
   const [modal, setModal] = React.useState(false);
@@ -88,7 +59,6 @@ export default function App() {
   const toggle = () => setModal(!modal);
 
   const [inputs, setInputs] = useState({});
-  const [valuesCNPJ, setValuesCNPJ] = useState("");
 
   // função para pegar os campos do form
   const handleChange = (event) => {
@@ -98,85 +68,13 @@ export default function App() {
   };
 
   // função para buscar os dados na api via filtragem do form
-  const buscarAPI = async (val, dataInicial, dataFinal) => {
-    setLoading(true);
-
-    let ano = inputs.anoMesExercicio.split("-")[0];
-    let mes = inputs.anoMesExercicio.split("-")[1];
-    let datIn = dateFormat(dataInicial);
-    let dataF = dateFormat(dataFinal);
-    let anoI = datIn.split("/")[0];
-    let exerPeriodoSele = "";
-
-    if (periodo) {
-      exerPeriodoSele = `before=${datIn}&after=${dataF}`;
-    } else {
-      exerPeriodoSele = `year=${ano}&month=${mes}`;
-    }
-    console.log(inputs.tipoLicitacao);
-
+  const buscarAPI = async (val) => {
     let url = "";
-    if (
-      chkDescricao == false &&
-      chkUniMedida == false &&
-      chkAno == false &&
-      chkGrupo == false
-    ) {
-      url = `http://127.0.0.1:8000/api/pricing/?limit=100&sort=count&order=desc&${exerPeriodoSele}&description=${val}&body=${
-        formRef.current.getData().orgao
-      }&modality=${licitacaoModalidade}&procurement_type=${
-        inputs.tipoLicitacao
-      }&bidder_name=${fornecedor}&bidder_type=${
-        inputs.tipoFornecedor
-      }&bidder_document=${inputs.cnpj}&min_amount=${
-        inputs.minQntComprada
-      }&max_amount=${inputs.maxQntComprada}&min_homolog_price=${
-        inputs.precoMin
-      }&max_homolog_price=${inputs.precoMax}&object_nature=${naturezaItem}`;
-    } else {
-      url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${chkGrupo}&group_by_unit_metric=${chkUniMedida}&group_by_year=${chkAno}&group_by_cluster=${chkGrupo}&limit=100&sort=count&order=desc&${exerPeriodoSele}&description=${val}&body=${
-        formRef.current.getData().orgao
-      }&modality=${licitacaoModalidade}&procurement_type=${
-        inputs.tipoLicitacao
-      }&bidder_name=${fornecedor}&bidder_type=${
-        inputs.tipoFornecedor
-      }&bidder_document=${inputs.cnpj}&min_amount=${
-        inputs.minQntComprada
-      }&max_amount=${inputs.maxQntComprada}&min_homolog_price=${
-        inputs.precoMin
-      }&max_homolog_price=${inputs.precoMax}&object_nature=${naturezaItem}`;
-    }
-    //const results = await search(url);
-    //setDadosApi(results);
-    setLoading(false);
-    console.log(url);
-  };
 
-  const dateFormatAux = (date) => {
-    var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
+    url = `http://127.0.0.1:8000/api/items/?limit=100&offset=0&order=desc&description=${val}`;
 
-    return `${year}/${day}/${month}`; ///[year, month, day].join("-");
-  };
-
-  const dateFormat = (date) => {
-    console.log(new Date(date));
-    let formatYearMonthDay = dateFormatAux(date);
-    return formatYearMonthDay;
-  };
-
-  function handleChangeCNPJ(event) {
-    setValuesCNPJ({
-      ...valuesCNPJ,
-      [event.target.name]: event.target.value,
-    });
-  }
-
-  const onFormSubmitFilter = () => {
-    buscarAPI(descricao);
-    toggle();
+    const results = await search(url);
+    setDadosApi(results);
   };
 
   // função para autocomplete da descrição
@@ -190,15 +88,6 @@ export default function App() {
     // setDadosApiDes(retdesc)
     //console.log(state.dadosApiDes);
   };
-  const onChangeHandlerFornecedor = async (e) => {
-    autocompleteFornecedor(e.target.value);
-    setFornecedor(e.target.value);
-  };
-
-  const onSuggestHandlerFornecedor = async (e) => {
-    setFornecedor(e);
-    setBuscarFor("");
-  };
 
   function onChangeHandler(e) {
     setDescricao(e.target.value);
@@ -209,36 +98,19 @@ export default function App() {
     const retFor = await search(
       `http://127.0.0.1:8000/api/filters/autocomplete/?bidder_name=${desc}`
     );
-    console.log(retFor);
-    setBuscarFor(retFor);
+    const dadosApiFor = retFor;
+    state.dadosApiFor = dadosApiFor;
   };
 
-  // if else
-  function renderDadosApi(dados) {
-    let dadosAp = <h1>{""}</h1>;
-    console.log(dados);
-    if (dados) {
-      dadosAp = (
-        <PropsAPI
-          dadosTabela={dadosApi}
-          agrupamento={agrupamento}
-          ano={chkAno}
-          grupo={chkUniMedida}
-          desc={chkDescricao}
-          unidade={chkUniMedida}
-        />
-      );
-    }
-
-    return dadosAp;
-  }
+  const renderDadosApi = () => {
+    return dadosApi;
+  };
 
   //função para submissão do form
   const handleSubmit = () => {
-    let dataInicial = formRef.current.getData().dataInicial;
-    let dataFinal = formRef.current.getData().dataFinal;
-    buscarAPI(descricao, dataInicial, dataFinal);
+    buscarAPI(descricao);
 
+    //console.log(formRef.current.getData());
     //console.log("teste" + formRef.current.getData().orgao);
     //toggle();
   };
@@ -247,14 +119,6 @@ export default function App() {
     setDescricao(e);
     setBuscar("");
   };
-
-  if (loading) {
-    return (
-      <div>
-        <ActivityIndicator size={80} style={{ flex: 1 }} />
-      </div>
-    );
-  }
 
   return (
     <div className="App">
@@ -290,33 +154,18 @@ export default function App() {
               <FormGroup check inline>
                 <Input type="radio" name="radio1" defaultChecked />
                 <Label check>Exercício</Label>
-                <Input
-                  id="month"
-                  type="month"
-                  pattern="[0-9]{4}/[0-9]{2}"
-                  name="anoMesExercicio"
-                  className="arredondadoDataExer"
-                  value={inputs.anoMesExercicio || ""}
-                  onChange={handleChange}
-                />
               </FormGroup>
               <FormGroup check inline>
-                <Input
-                  type="radio"
-                  name="radio1"
-                  onChange={(e) => {
-                    setPeriodo(e.target.checked);
-                  }}
-                />
+                <Input type="radio" name="radio1" />
                 <Label check>Período</Label>
                 {""}
                 <DatePickerInput
-                  name="dataInicial"
+                  name="dateIni"
                   label="Data Inicial"
                   className="arredondadoData"
                 />
                 <DatePickerInput
-                  name="dataFinal"
+                  name="dateFim"
                   label="Data Final"
                   className="arredondadoData"
                 />
@@ -359,8 +208,8 @@ export default function App() {
                                   type="number"
                                   placeholder="min"
                                   min="0"
-                                  name="minQntComprada"
-                                  value={inputs.minQntComprada || ""}
+                                  name="min"
+                                  value={inputs.min || ""}
                                   onChange={handleChange}
                                 />
                               </FormGroup>
@@ -373,8 +222,8 @@ export default function App() {
                                   type="number"
                                   placeholder="max"
                                   min="0"
-                                  name="maxQntComprada"
-                                  value={inputs.maxQntComprada || ""}
+                                  name="max"
+                                  value={inputs.max || ""}
                                   onChange={handleChange}
                                 />
                               </FormGroup>
@@ -439,41 +288,16 @@ export default function App() {
                               <FormGroup>
                                 <Label></Label>
                                 <Input
+                                  className="fornecedorComp"
                                   bsSize="lg"
                                   placeholder="Fornecedor"
-                                  value={fornecedor}
-                                  onChange={(e) => {
-                                    onChangeHandlerFornecedor(e);
-                                  }}
-                                  className="fornecedorComp"
                                 />
-
-                                {buscarFor &&
-                                  buscarFor.map((buscarFor, i) => (
-                                    <div
-                                      key={i}
-                                      className="fornecedorComp"
-                                      onClick={(e) =>
-                                        onSuggestHandlerFornecedor(
-                                          buscarFor.bidder_name
-                                        )
-                                      }
-                                    >
-                                      {buscarFor.bidder_name}
-                                    </div>
-                                  ))}
                               </FormGroup>
                             </Col>
                             <Col md={4}>
                               <FormGroup>
                                 <Label></Label>
-                                <MaskedInput
-                                  name="cnpj"
-                                  mask="99.999.999/9999-99"
-                                  value={inputs.cnpj || ""}
-                                  onChange={handleChange}
-                                  className="fornecedorComp"
-                                />
+                                <MaskCnpj />
                               </FormGroup>
                             </Col>
                             <Col md={4}>
@@ -508,27 +332,7 @@ export default function App() {
                             <Col md={4}>
                               <FormGroup>
                                 <Label></Label>
-                                <select
-                                  name="tipoLicitacao"
-                                  value={inputs.tipoLicitacao || ""}
-                                  onChange={handleChange}
-                                >
-                                  <option value="tl">Tipo Licitacao </option>
-
-                                  <option value="MAIOR LANCE OU OFERTA">
-                                    MAIOR LANCE OU OFERTA
-                                  </option>
-                                  <option value="MELHOR TECNICA">
-                                    MELHOR TECNICA
-                                  </option>
-                                  <option value="MENOR PRECO">
-                                    MENOR PRECO
-                                  </option>
-
-                                  <option value="TECNICA E PRECO">
-                                    TECNICA E PRECO
-                                  </option>
-                                </select>
+                                <TipoLicitacao />
                               </FormGroup>
                             </Col>
                             <Col md={4}>
@@ -566,61 +370,33 @@ export default function App() {
 
                           <FormGroup check inline>
                             <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkDescricao"
-                                checked={chkDescricao}
-                                onChange={(e) => {
-                                  setChkDescricao(e.target.checked);
-                                }}
-                              />
+                              <Input type="checkbox" id="chkDescricao" />
                               Descrição
                             </Label>
                           </FormGroup>
                           <FormGroup check inline>
                             <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkUniMedida"
-                                checked={chkUniMedida}
-                                onChange={(e) => {
-                                  setChkUniMedida(e.target.checked);
-                                }}
-                              />
+                              <Input type="checkbox" id="chkUniMedida" />{" "}
                               Unidade de Medida
                             </Label>
                           </FormGroup>
                           <FormGroup check inline>
                             <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkAno"
-                                checked={chkAno}
-                                onChange={(e) => {
-                                  setChkAno(e.target.checked);
-                                }}
-                              />
+                              <Input type="checkbox" id="chkAno" />
                               Ano
                             </Label>
                           </FormGroup>
                           <FormGroup check inline>
                             <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkGrupo"
-                                checked={chkGrupo}
-                                onChange={(e) => {
-                                  setChkGrupo(e.target.checked);
-                                }}
-                              />{" "}
-                              Grupo do Item
+                              <Input type="checkbox" id="chkGrupo" /> Grupo do
+                              Item
                             </Label>
                           </FormGroup>
                         </CardBody>
                       </Card>
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="primary" onClick={onFormSubmitFilter}>
+                      <Button color="primary" onClick={handleSubmit}>
                         Buscar
                       </Button>
                       <Button color="default">Resetar</Button>
@@ -643,7 +419,7 @@ export default function App() {
       {
         //para desenhar a tabela
       }
-      <div>{renderDadosApi(dadosApi)}</div>
+      <div>{renderDadosApi}</div>
     </div>
   );
 }
