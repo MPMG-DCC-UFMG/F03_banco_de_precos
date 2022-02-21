@@ -131,6 +131,7 @@ export default class javascriptMap extends Component {
                       </div>
                       <div className="widget-subheading">
                         <h1>Qnt de Itens </h1>
+                        <div className="borda1"></div>
                       </div>
                     </div>
                   </div>
@@ -148,6 +149,7 @@ export default class javascriptMap extends Component {
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Médio</h1>
+                        <div className="borda2"></div>
                       </div>
                     </div>
                   </div>
@@ -165,6 +167,7 @@ export default class javascriptMap extends Component {
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Mínimo </h1>
+                        <div className="borda3"></div>
                       </div>
                     </div>
                   </div>
@@ -183,6 +186,7 @@ export default class javascriptMap extends Component {
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Máximo</h1>
+                        <div className="borda4"></div>
                       </div>
                     </div>
                   </div>

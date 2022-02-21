@@ -1,10 +1,4 @@
-import DatePickerInput from "./Inputs/DatePicker";
-import AutoCompleteInputOrgao from "./Inputs/Autocomplete";
-import AutoCompleteInputLicitacaoMod from "./Inputs/AutoCompleteInputLicitacaoMod";
-import { Form } from "@unform/web";
-import MaskedInput from "./Mask";
-
-import React, { Fragment, useState, Component, useRef, useEffect } from "react";
+import React, { Fragment, useState, Component } from "react";
 import Orgao from "./Orgao";
 
 import {
@@ -15,6 +9,7 @@ import {
   Collapse,
   CardTitle,
   Button,
+  Form,
   FormGroup,
   Label,
   Input,
@@ -34,616 +29,553 @@ import PropsAPI from "./TabelaPropsAPI";
 import "./FormGridFormRow.css";
 import Meses from "./SelectMeses";
 import Cidades from "./SelectCidades";
-
+import MaskCnpj from "./Mask";
 import LicitacaoModalidade from "./LicitacaoModalidade";
 import { ActivityIndicator } from "react-native";
 import TipoOrgao from "./TipoOrgao";
 import NaturezaObjeto from "./NaturezaObjeto";
 import TipoLicitacao from "./TipoLicitacao";
 
-export default function App() {
-  const formRef = useRef(null);
-  const { useState } = React;
-  const [loading, setLoading] = useState(false);
+export default class FormGridFormRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = { collapse: false };
+    // para iniciar como falso
+    this.state = {
+      chkDescricao: false,
+      chkUniMedida: false,
+      chkAno: false,
+      chkGrupo: false,
+      agrupamento: false,
+    };
 
-  const [descricao, setDescricao] = useState("");
-  const [buscar, setBuscar] = useState("");
-  const [dadosApi, setDadosApi] = useState("");
-  const [dadosApiFor, setDadosApiFor] = useState("");
-  const [buscarFor, setBuscarFor] = useState("");
-
-  const [agrupamento, setAgrupamento] = useState("");
-  const [chkAno, setChkAno] = useState("");
-  const [chkUniMedida, setChkUniMedida] = useState("");
-  const [chkDescricao, setChkDescricao] = useState("");
-  const [chkGrupo, setChkGrupo] = useState("");
-  const [fornecedor, setFornecedor] = useState("");
-
-  const [cidade, setCidade] = useState("");
-  const [microregion, setMicroregiao] = useState("");
-  const [mesoregion, setMesoregiao] = useState("");
-  const [imediateRegion, setImediateRegion] = useState("");
-  const [interRegion, setInterRegion] = useState("");
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-
-  const [licitacaoModalidade, setLicitacaoModalidade] = useState("");
-  const [tipolici, setTipolici] = useState("");
-  const [nomeLicitante, setNomeLicitante] = useState("");
-  const [tipoLicitante, setTipoLicitante] = useState("");
-  const [cpfcnpj, setCpfcnpj] = useState("");
-  const [minItens, setMinItens] = useState("");
-  const [maxItens, setMaxItens] = useState("");
-  const [minPreco, setMinPreco] = useState("");
-  const [maxPreco, setMaxPreco] = useState("");
-  const [naturezaItem, setNaturezaItem] = useState("");
-  const [unidadeMedida, setUnidadeMedida] = useState("");
-
-  const [periodo, setPeriodo] = useState(false);
-
-  // Modal open state
-  const [modal, setModal] = React.useState(false);
-
-  // Toggle for Modal
-  const toggle = () => setModal(!modal);
-
-  const [inputs, setInputs] = useState({});
-  const [valuesCNPJ, setValuesCNPJ] = useState("");
-
-  // função para pegar os campos do form
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  // função para buscar os dados na api via filtragem do form
-  const buscarAPI = async (val, dataInicial, dataFinal) => {
-    setLoading(true);
-
-    let ano = inputs.anoMesExercicio.split("-")[0];
-    let mes = inputs.anoMesExercicio.split("-")[1];
-    let datIn = dateFormat(dataInicial);
-    let dataF = dateFormat(dataFinal);
-    let anoI = datIn.split("/")[0];
-    let exerPeriodoSele = "";
-
-    if (periodo) {
-      exerPeriodoSele = `before=${datIn}&after=${dataF}`;
-    } else {
-      exerPeriodoSele = `year=${ano}&month=${mes}`;
-    }
-    console.log(inputs.tipoLicitacao);
-
-    let url = "";
-    if (
-      chkDescricao == false &&
-      chkUniMedida == false &&
-      chkAno == false &&
-      chkGrupo == false
-    ) {
-      url = `http://127.0.0.1:8000/api/pricing/?limit=100&sort=count&order=desc&${exerPeriodoSele}&description=${val}&body=${
-        formRef.current.getData().orgao
-      }&modality=${licitacaoModalidade}&procurement_type=${
-        inputs.tipoLicitacao
-      }&bidder_name=${fornecedor}&bidder_type=${
-        inputs.tipoFornecedor
-      }&bidder_document=${inputs.cnpj}&min_amount=${
-        inputs.minQntComprada
-      }&max_amount=${inputs.maxQntComprada}&min_homolog_price=${
-        inputs.precoMin
-      }&max_homolog_price=${inputs.precoMax}&object_nature=${naturezaItem}`;
-    } else {
-      url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${chkGrupo}&group_by_unit_metric=${chkUniMedida}&group_by_year=${chkAno}&group_by_cluster=${chkGrupo}&limit=100&sort=count&order=desc&${exerPeriodoSele}&description=${val}&body=${
-        formRef.current.getData().orgao
-      }&modality=${licitacaoModalidade}&procurement_type=${
-        inputs.tipoLicitacao
-      }&bidder_name=${fornecedor}&bidder_type=${
-        inputs.tipoFornecedor
-      }&bidder_document=${inputs.cnpj}&min_amount=${
-        inputs.minQntComprada
-      }&max_amount=${inputs.maxQntComprada}&min_homolog_price=${
-        inputs.precoMin
-      }&max_homolog_price=${inputs.precoMax}&object_nature=${naturezaItem}`;
-    }
-    //const results = await search(url);
-    //setDadosApi(results);
-    setLoading(false);
-    console.log(url);
-  };
-
-  const dateFormatAux = (date) => {
-    var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    return `${year}/${day}/${month}`; ///[year, month, day].join("-");
-  };
-
-  const dateFormat = (date) => {
-    console.log(new Date(date));
-    let formatYearMonthDay = dateFormatAux(date);
-    return formatYearMonthDay;
-  };
-
-  function handleChangeCNPJ(event) {
-    setValuesCNPJ({
-      ...valuesCNPJ,
-      [event.target.name]: event.target.value,
-    });
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.toggleT = this.toggleT.bind(this);
   }
 
-  const onFormSubmitFilter = () => {
-    buscarAPI(descricao);
-    toggle();
+  state = {
+    dadosApi: null,
+    dadosApiDes: null,
+    dadosApiFor: null,
+    loading: false,
+    buscar: "",
+    modal: false,
+    qntMin: "",
+    qntMax: "",
+    precoMin: "",
+    precoMax: "",
+    nomeOrgao: "",
+    tipoOrgao: "",
+    nomeFornecedor: "",
+    tipoFornecedor: "",
+    modalidadeLicitacao: "",
+    tipoLicitacao: "",
+    naturezaObjeto: "",
+    chkDescricao: false,
+    chkUniMedida: false,
+    chkAno: false,
+    chkGrupo: false,
+    radioExercicio: false,
+    radioPeriodo: false,
+    status: 0,
+  };
+
+  search = async (val) => {
+    this.setState({ loading: true });
+    let url = "";
+    if (
+      this.state.chkDescricao == false &&
+      this.state.chkUniMedida == false &&
+      this.state.chkAno == false &&
+      this.state.chkGrupo == false
+    ) {
+      url = `http://127.0.0.1:8000/api/items/?limit=100&offset=0&order=desc&description=${val}`;
+    } else {
+      this.setState({ agrupamento: true });
+
+      url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${this.state.chkDescricao}&group_by_unit_metric=${this.state.chkUniMedida}&group_by_year=${this.state.chkAno}&group_by_cluster=${this.state.chkGrupo}&limit=100&offset=0&order=desc&description=${val}`;
+    }
+
+    const results = await search(url);
+    const dadosApi = results;
+    this.setState({ dadosApi, loading: false });
   };
 
   // função para autocomplete da descrição
-  const autocomplete = async (desc) => {
+  autocomplete = async (desc) => {
     const retdesc = await search(
       `http://localhost:8000/api/items/autocomplete/?desc=${desc}`
     );
-
-    setBuscar(retdesc);
-    //console.log({buscar});
-    // setDadosApiDes(retdesc)
-    //console.log(state.dadosApiDes);
-  };
-  const onChangeHandlerFornecedor = async (e) => {
-    autocompleteFornecedor(e.target.value);
-    setFornecedor(e.target.value);
+    const dadosApiDes = retdesc;
+    this.setState({ dadosApiDes });
   };
 
-  const onSuggestHandlerFornecedor = async (e) => {
-    setFornecedor(e);
-    setBuscarFor("");
+  onChangeHandler = async (e) => {
+    this.autocomplete(e.target.value);
+    this.setState({ value: e.target.value });
   };
 
-  function onChangeHandler(e) {
-    setDescricao(e.target.value);
-    autocomplete(e.target.value);
-  }
   // função para autocomplete do fornecedor
-  const autocompleteFornecedor = async (desc) => {
+  autocompleteFornecedor = async (desc) => {
     const retFor = await search(
       `http://127.0.0.1:8000/api/filters/autocomplete/?bidder_name=${desc}`
     );
-    console.log(retFor);
-    setBuscarFor(retFor);
+    const dadosApiFor = retFor;
+    this.setState({ dadosApiFor });
+    console.log(dadosApiFor);
   };
 
-  // if else
-  function renderDadosApi(dados) {
-    let dadosAp = <h1>{""}</h1>;
-    console.log(dados);
-    if (dados) {
-      dadosAp = (
+  onChangeHandlerFornecedor = async (e) => {
+    this.autocompleteFornecedor(e.target.value);
+    this.setState({ value: e.target.value });
+  };
+  onSuggestHandlerFornecedor = async (e) => {
+    this.setState({ nomeFornecedor: e });
+    this.setState({ dadosApiFor: "" });
+  };
+
+  get renderDadosApi() {
+    let dadosApi = <h1>{""}</h1>;
+
+    if (this.state.dadosApi) {
+      dadosApi = (
         <PropsAPI
-          dadosTabela={dadosApi}
-          agrupamento={agrupamento}
-          ano={chkAno}
-          grupo={chkUniMedida}
-          desc={chkDescricao}
-          unidade={chkUniMedida}
+          dadosTabela={this.state.dadosApi}
+          agrupamento={this.state.agrupamento}
+          ano={this.state.chkAno}
+          grupo={this.state.chkUniMedida}
+          desc={this.state.chkDescricao}
+          unidade={this.state.chkUniMedida}
         />
       );
     }
 
-    return dadosAp;
+    return dadosApi;
   }
 
-  //função para submissão do form
-  const handleSubmit = () => {
-    let dataInicial = formRef.current.getData().dataInicial;
-    let dataFinal = formRef.current.getData().dataFinal;
-    buscarAPI(descricao, dataInicial, dataFinal);
-
-    //console.log("teste" + formRef.current.getData().orgao);
-    //toggle();
+  reset = () => {
+    this.setState({ precoMax: "" });
+  };
+  onSuggestHandler = async (e) => {
+    this.setState({ buscar: e });
+    this.setState({ dadosApiDes: "" });
   };
 
-  const onSuggestHandler = async (e) => {
-    setDescricao(e);
-    setBuscar("");
+  // funções da busca avançada (filtro) modal
+  onFormSubmitFilter = async (e) => {
+    this.toggleT();
+    const stringBusca =
+      "QntMin:" +
+      this.state.qntMin +
+      "QntMax" +
+      this.state.qntMax +
+      "PrMIn" +
+      this.state.precoMin +
+      "precMax" +
+      this.state.precoMax;
+    // alert(stringBusca);
+
+    this.search(this.state.buscar);
   };
 
-  if (loading) {
+  onFormHandler = async (e) => {
+    this.setState({ qntMin: e.target.value });
+  };
+
+  toggle() {
+    this.setState({ collapse: !this.state.collapse });
+  }
+
+  onFormSubmit() {
+    this.search(this.state.buscar);
+  }
+  toggleT() {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  }
+
+  handleOptionChangeRadio = async (e) => {
+    alert(e);
+    this.setState({ status });
+  };
+
+  render() {
+    if (this.state.loading) {
+      return (
+        <div>
+          <ActivityIndicator size={80} style={{ flex: 1 }} />
+        </div>
+      );
+    }
+
     return (
       <div>
-        <ActivityIndicator size={80} style={{ flex: 1 }} />
+        <Form onSubmit={this.onFormSubmit}>
+          <Fragment>
+            <div className="bancoPrecoPai">
+              <div className="bancoPreco">
+                <h1>Banco de Preços</h1>
+              </div>
+              <div className="campoBuscar">
+                <Input
+                  bsSize="lg"
+                  placeholder="Digite uma descrição"
+                  value={this.state.buscar}
+                  onChange={(e) => {
+                    this.setState({ buscar: e.target.value });
+                    this.onChangeHandler(e);
+                  }}
+                />
+
+                {this.state.dadosApiDes &&
+                  this.state.dadosApiDes.map((dadosApiDes, i) => (
+                    <div
+                      key={i}
+                      className="sugestoes"
+                      onClick={(e) => this.onSuggestHandler(dadosApiDes.desc)}
+                    >
+                      {dadosApiDes.desc}
+                    </div>
+                  ))}
+              </div>
+              <div className="elementosCheck">
+                <Form>
+                  <FormGroup check inline>
+                    <div>
+                      <Button color="gray" onClick={this.toggleT}>
+                        <h4>
+                          {" "}
+                          <GrFilter /> Filtro{" "}
+                        </h4>
+                      </Button>
+
+                      <Modal
+                        isOpen={this.state.modal}
+                        toggle={this.toggleT}
+                        className={this.props.className}
+                      >
+                        <Form>
+                          <ModalHeader
+                            toggle={this.toggleT}
+                            cssModule={{ "modal-title": "w-100 text-center" }}
+                          >
+                            <h1>Busca Avançada</h1>
+                          </ModalHeader>
+                          <ModalBody>
+                            <Card>
+                              <CardBody>
+                                <CardTitle>Faixa</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label>Quantidade Comprada</Label>
+                                        <Input
+                                          type="number"
+                                          placeholder="min"
+                                          min="0"
+                                          name="qntMin"
+                                          value={this.state.qntMin}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              qntMin: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label> .</Label>
+
+                                        <Input
+                                          type="number"
+                                          placeholder="max"
+                                          min="0"
+                                          name="qntMax"
+                                          value={this.state.qntMax}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              qntMax: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                  <FormGroup>
+                                    <Row form>
+                                      <Col md={6}>
+                                        <FormGroup>
+                                          <Label>Preço Unitário</Label>
+                                          <Input
+                                            type="number"
+                                            placeholder="min"
+                                            min="0"
+                                            name="precoMin"
+                                            value={this.state.precoMin}
+                                            onChange={(e) => {
+                                              this.setState({
+                                                precoMin: e.target.value,
+                                              });
+                                            }}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col md={6}>
+                                        <FormGroup>
+                                          <Label>.</Label>
+
+                                          <Input
+                                            type="number"
+                                            placeholder="max"
+                                            min="0"
+                                            name="precoMax"
+                                            value={this.state.precoMax}
+                                            onChange={(e) => {
+                                              this.setState({
+                                                precoMax: e.target.value,
+                                              });
+                                            }}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                    </Row>
+                                  </FormGroup>
+                                </Form>
+
+                                <CardTitle>Orgão</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Orgao />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+
+                                        <TipoOrgao></TipoOrgao>
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+
+                                <CardTitle>Fornecedor</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          className="fornecedorComp"
+                                          bsSize="lg"
+                                          placeholder="Fornecedor"
+                                          value={this.state.nomeFornecedor}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              nomeFornecedor: e.target.value,
+                                            });
+                                            this.onChangeHandlerFornecedor(e);
+                                          }}
+                                        />
+
+                                        {this.state.dadosApiFor &&
+                                          this.state.dadosApiFor.map(
+                                            (dadosApiFor, i) => (
+                                              <div
+                                                key={i}
+                                                className="fornecedorComp"
+                                                onClick={(e) =>
+                                                  this.onSuggestHandlerFornecedor(
+                                                    dadosApiFor.bidder_name
+                                                  )
+                                                }
+                                              >
+                                                {dadosApiFor.bidder_name}
+                                              </div>
+                                            )
+                                          )}
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <MaskCnpj />
+                                        {/* <Input
+                                        type="text"
+                                        name="state"
+                                        id="exampleState"
+                                        placeholder="CNPJ"
+                                      /> */}
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <select name="tipoFornecedor">
+                                          <option value="st">
+                                            Tipo Fornecedor{" "}
+                                          </option>
+
+                                          <option value="j">Jurídica</option>
+                                          <option value="f">Física</option>
+                                        </select>
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+                                <CardTitle>Licitação</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <LicitacaoModalidade />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <TipoLicitacao />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+
+                                        <NaturezaObjeto />
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+                                <hr />
+
+                                <CardTitle>
+                                  Critério de Agregação de Resultados
+                                  <span
+                                    style={{ color: "black" }}
+                                    href="#"
+                                    id="UncontrolledTooltipExample"
+                                  >
+                                    {""}
+                                    {""} ?
+                                  </span>
+                                  <UncontrolledTooltip
+                                    placement="right"
+                                    target="UncontrolledTooltipExample"
+                                  >
+                                    Agrupar os dados de acordo com um ou mais
+                                    atributos relacionados ao objeto de forma a
+                                    obter estatísticas de preço, tais como
+                                    média, máximo e mínimo. Esse agrupamento
+                                    pode levar tempo extra em processamento.
+                                  </UncontrolledTooltip>
+                                </CardTitle>
+                                <Form>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkDescricao"
+                                        checked={this.state.chkDescricao}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkDescricao: e.target.checked,
+                                          });
+                                        }}
+                                      />
+                                      Descrição
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkUniMedida"
+                                        checked={this.state.chkUniMedida}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkUniMedida: e.target.checked,
+                                          });
+                                        }}
+                                      />{" "}
+                                      Unidade de Medida
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkAno"
+                                        checked={this.state.chkAno}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkAno: e.target.checked,
+                                          });
+                                        }}
+                                      />
+                                      Ano
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkGrupo"
+                                        checked={this.state.chkGrupo}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkGrupo: e.target.checked,
+                                          });
+                                        }}
+                                      />{" "}
+                                      Grupo do Item
+                                    </Label>
+                                  </FormGroup>
+                                </Form>
+                              </CardBody>
+                            </Card>
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button
+                              color="primary"
+                              onClick={this.onFormSubmitFilter}
+                            >
+                              Buscar
+                            </Button>
+                            <Button
+                              color="default"
+                              onClick={() => this.reset()}
+                            >
+                              Resetar
+                            </Button>
+                            <Button color="secondary" onClick={this.toggleT}>
+                              Cancelar
+                            </Button>
+                          </ModalFooter>
+                        </Form>
+                      </Modal>
+                    </div>
+                  </FormGroup>
+                </Form>
+              </div>
+            </div>
+          </Fragment>
+          <Button color="primary" className="btnBuscar" type="submit">
+            Buscar
+          </Button>
+        </Form>
+
+        {
+          //para desenhar a tabela
+        }
+        <div>{this.renderDadosApi}</div>
       </div>
     );
   }
-
-  return (
-    <div className="App">
-      <Form ref={formRef} onSubmit={handleSubmit}>
-        <Fragment>
-          <div className="bancoPrecoPai">
-            <div className="bancoPreco">
-              <h1>Banco de Preços</h1>
-            </div>
-            <div className="campoBuscar">
-              <Input
-                bsSize="lg"
-                placeholder="Digite uma descrição"
-                value={descricao}
-                onChange={(e) => {
-                  onChangeHandler(e);
-                }}
-                name="descricao"
-              />
-
-              {buscar &&
-                buscar.map((buscar, i) => (
-                  <div
-                    key={i}
-                    className="sugestoes"
-                    onClick={(e) => onSuggestHandler(buscar.desc)}
-                  >
-                    {buscar.desc}
-                  </div>
-                ))}
-            </div>
-            <div className="elementosCheck">
-              <FormGroup check inline>
-                <Input type="radio" name="radio1" defaultChecked />
-                <Label check>Exercício</Label>
-                <Input
-                  id="month"
-                  type="month"
-                  pattern="[0-9]{4}/[0-9]{2}"
-                  name="anoMesExercicio"
-                  className="arredondadoDataExer"
-                  value={inputs.anoMesExercicio || ""}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="radio"
-                  name="radio1"
-                  onChange={(e) => {
-                    setPeriodo(e.target.checked);
-                  }}
-                />
-                <Label check>Período</Label>
-                {""}
-                <DatePickerInput
-                  name="dataInicial"
-                  label="Data Inicial"
-                  className="arredondadoData"
-                />
-                <DatePickerInput
-                  name="dataFinal"
-                  label="Data Final"
-                  className="arredondadoData"
-                />
-              </FormGroup>
-              <FormGroup check inline>
-                <Meses></Meses>
-              </FormGroup>
-              <FormGroup check inline>
-                <Cidades></Cidades>
-              </FormGroup>
-
-              <FormGroup check inline>
-                <div>
-                  <Button color="gray" onClick={toggle}>
-                    <h4>
-                      {" "}
-                      <GrFilter /> Filtro{" "}
-                    </h4>
-                  </Button>
-                  <Modal
-                    isOpen={modal}
-                    toggle={toggle}
-                    // modalTransition={{ timeout: 2000 }}
-                  >
-                    <ModalHeader
-                      cssModule={{ "modal-title": "w-100 text-center" }}
-                    >
-                      <h1>Busca Avançada</h1>
-                    </ModalHeader>
-                    <ModalBody>
-                      <Card>
-                        <CardBody>
-                          <CardTitle>Faixa</CardTitle>
-
-                          <Row form>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Label>Quantidade Comprada</Label>
-                                <Input
-                                  type="number"
-                                  placeholder="min"
-                                  min="0"
-                                  name="minQntComprada"
-                                  value={inputs.minQntComprada || ""}
-                                  onChange={handleChange}
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Label> .</Label>
-
-                                <Input
-                                  type="number"
-                                  placeholder="max"
-                                  min="0"
-                                  name="maxQntComprada"
-                                  value={inputs.maxQntComprada || ""}
-                                  onChange={handleChange}
-                                />
-                              </FormGroup>
-                            </Col>
-                          </Row>
-                          <FormGroup>
-                            <Row form>
-                              <Col md={6}>
-                                <FormGroup>
-                                  <Label>Preço Unitário</Label>
-                                  <Input
-                                    type="number"
-                                    placeholder="min"
-                                    min="0"
-                                    name="precoMin"
-                                    value={inputs.precoMin || ""}
-                                    onChange={handleChange}
-                                  />
-                                </FormGroup>
-                              </Col>
-                              <Col md={6}>
-                                <FormGroup>
-                                  <Label>.</Label>
-
-                                  <Input
-                                    type="number"
-                                    placeholder="max"
-                                    min="0"
-                                    name="precoMax"
-                                    value={inputs.precoMax || ""}
-                                    onChange={handleChange}
-                                  />
-                                </FormGroup>
-                              </Col>
-                            </Row>
-                          </FormGroup>
-
-                          <CardTitle>Orgão</CardTitle>
-                          <Row form>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Label></Label>
-                                <AutoCompleteInputOrgao
-                                  name="orgao"
-                                  label="Orgão"
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Label></Label>
-
-                                <TipoOrgao></TipoOrgao>
-                              </FormGroup>
-                            </Col>
-                          </Row>
-
-                          <CardTitle>Fornecedor</CardTitle>
-
-                          <Row form>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Label></Label>
-                                <Input
-                                  bsSize="lg"
-                                  placeholder="Fornecedor"
-                                  value={fornecedor}
-                                  onChange={(e) => {
-                                    onChangeHandlerFornecedor(e);
-                                  }}
-                                  className="fornecedorComp"
-                                />
-
-                                {buscarFor &&
-                                  buscarFor.map((buscarFor, i) => (
-                                    <div
-                                      key={i}
-                                      className="fornecedorComp"
-                                      onClick={(e) =>
-                                        onSuggestHandlerFornecedor(
-                                          buscarFor.bidder_name
-                                        )
-                                      }
-                                    >
-                                      {buscarFor.bidder_name}
-                                    </div>
-                                  ))}
-                              </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                              <FormGroup>
-                                <Label></Label>
-                                <MaskedInput
-                                  name="cnpj"
-                                  mask="99.999.999/9999-99"
-                                  value={inputs.cnpj || ""}
-                                  onChange={handleChange}
-                                  className="fornecedorComp"
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                              <FormGroup>
-                                <Label></Label>
-                                <select
-                                  name="tipoFornecedor"
-                                  value={inputs.tipoFornecedor || ""}
-                                  onChange={handleChange}
-                                >
-                                  <option value="st">Tipo Fornecedor </option>
-
-                                  <option value="j">Jurídica</option>
-                                  <option value="f">Física</option>
-                                </select>
-                              </FormGroup>
-                            </Col>
-                          </Row>
-
-                          <CardTitle>Licitação</CardTitle>
-
-                          <Row form>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Label></Label>
-                                <AutoCompleteInputLicitacaoMod
-                                  name="licitacaoMdalidade"
-                                  label="Modalidade"
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                              <FormGroup>
-                                <Label></Label>
-                                <select
-                                  name="tipoLicitacao"
-                                  value={inputs.tipoLicitacao || ""}
-                                  onChange={handleChange}
-                                >
-                                  <option value="tl">Tipo Licitacao </option>
-
-                                  <option value="MAIOR LANCE OU OFERTA">
-                                    MAIOR LANCE OU OFERTA
-                                  </option>
-                                  <option value="MELHOR TECNICA">
-                                    MELHOR TECNICA
-                                  </option>
-                                  <option value="MENOR PRECO">
-                                    MENOR PRECO
-                                  </option>
-
-                                  <option value="TECNICA E PRECO">
-                                    TECNICA E PRECO
-                                  </option>
-                                </select>
-                              </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                              <FormGroup>
-                                <Label></Label>
-
-                                <NaturezaObjeto />
-                              </FormGroup>
-                            </Col>
-                          </Row>
-
-                          <hr />
-
-                          <CardTitle>
-                            Critério de Agregação de Resultados
-                            <span
-                              style={{ color: "black" }}
-                              href="#"
-                              id="UncontrolledTooltipExample"
-                            >
-                              {""}
-                              {""} ?
-                            </span>
-                            <UncontrolledTooltip
-                              placement="right"
-                              target="UncontrolledTooltipExample"
-                            >
-                              Agrupar os dados de acordo com um ou mais
-                              atributos relacionados ao objeto de forma a obter
-                              estatísticas de preço, tais como média, máximo e
-                              mínimo. Esse agrupamento pode levar tempo extra em
-                              processamento.
-                            </UncontrolledTooltip>
-                          </CardTitle>
-
-                          <FormGroup check inline>
-                            <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkDescricao"
-                                checked={chkDescricao}
-                                onChange={(e) => {
-                                  setChkDescricao(e.target.checked);
-                                }}
-                              />
-                              Descrição
-                            </Label>
-                          </FormGroup>
-                          <FormGroup check inline>
-                            <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkUniMedida"
-                                checked={chkUniMedida}
-                                onChange={(e) => {
-                                  setChkUniMedida(e.target.checked);
-                                }}
-                              />
-                              Unidade de Medida
-                            </Label>
-                          </FormGroup>
-                          <FormGroup check inline>
-                            <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkAno"
-                                checked={chkAno}
-                                onChange={(e) => {
-                                  setChkAno(e.target.checked);
-                                }}
-                              />
-                              Ano
-                            </Label>
-                          </FormGroup>
-                          <FormGroup check inline>
-                            <Label check>
-                              <Input
-                                type="checkbox"
-                                id="chkGrupo"
-                                checked={chkGrupo}
-                                onChange={(e) => {
-                                  setChkGrupo(e.target.checked);
-                                }}
-                              />{" "}
-                              Grupo do Item
-                            </Label>
-                          </FormGroup>
-                        </CardBody>
-                      </Card>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="primary" onClick={onFormSubmitFilter}>
-                        Buscar
-                      </Button>
-                      <Button color="default">Resetar</Button>
-                      <Button color="secondary" onClick={toggle}>
-                        Cancelar
-                      </Button>
-                    </ModalFooter>
-                  </Modal>
-                </div>
-              </FormGroup>
-            </div>
-          </div>
-        </Fragment>
-
-        <Button color="primary" className="btnBuscar" type="submit">
-          Buscar
-        </Button>
-      </Form>
-
-      {
-        //para desenhar a tabela
-      }
-      <div>{renderDadosApi(dadosApi)}</div>
-    </div>
-  );
 }

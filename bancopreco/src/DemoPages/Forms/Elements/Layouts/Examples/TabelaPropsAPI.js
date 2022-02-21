@@ -19,6 +19,8 @@ import { Button, Modal, ModalFooter, ModalHeader, ModalBody } from "reactstrap";
 import Charts from "./Charts";
 import "./Charts.css";
 
+import "./FormGridFormRow.css";
+
 const Retornoapi = (props) => {
   const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
@@ -178,7 +180,7 @@ const Retornoapi = (props) => {
             justifyContent: "center", // border: "3px solid black",
           },
           cellStyle: {
-            maxWidth: 50, // <--- ADD THIS AND IT WILL WORK
+            maxWidth: 80, // <--- ADD THIS AND IT WILL WORK
             height: 2,
             maxHeight: 3,
           },
