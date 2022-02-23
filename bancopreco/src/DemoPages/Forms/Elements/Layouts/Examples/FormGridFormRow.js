@@ -244,7 +244,8 @@ export default class FormGridFormRow extends React.Component {
               </div>
               <div className="elementosCheck">
                 <FormGroup check inline>
-                  <Label check>Exercício</Label>
+                  
+                  {/* <Label check>Exercício</Label> */}
 
                   <Exercicio className="selectExercicio"></Exercicio>
                 </FormGroup>
