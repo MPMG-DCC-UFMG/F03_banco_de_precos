@@ -57,7 +57,7 @@ export default class javascriptMap extends Component {
 
     axios
       .get(
-        `http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
+        `http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
         var data = res.data;
@@ -82,8 +82,8 @@ export default class javascriptMap extends Component {
     console.log(data.sort((a, b) => (a.mes > b.mes ? 1 : -1)));
 
     let monthNames = [
-      "Jan",
-      "Feb",
+      "Jan", 
+      "Feb", 
       "Mar",
       "Abr",
       "Mai",
@@ -144,8 +144,8 @@ export default class javascriptMap extends Component {
                           .toLocaleString("pt-br", {
                             style: "currency",
                             currency: "BRL",
-                          })
-                          .replace(".", ",")}
+                          })}
+                          
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Médio</h1>
@@ -163,7 +163,7 @@ export default class javascriptMap extends Component {
                             style: "currency",
                             currency: "BRL",
                           })
-                          .replace(".", ",")}
+                         }
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Mínimo </h1>
@@ -182,7 +182,7 @@ export default class javascriptMap extends Component {
                             style: "currency",
                             currency: "BRL",
                           })
-                          .replace(".", ",")}
+                         }
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Máximo</h1>
@@ -221,8 +221,7 @@ export default class javascriptMap extends Component {
                             }}
                           >
                             <XAxis
-                              dataKey={getXValueData2}
-                              label={{ value: "Meses", dy: 15 }}
+                              dataKey="data"
                             />
                             <YAxis
                               label={{
@@ -269,8 +268,9 @@ export default class javascriptMap extends Component {
                           >
                             {" "}
                             <XAxis
-                              dataKey={getXValueData2}
-                              label={{ value: "Meses", dy: 15 }}
+                            dataKey="data"
+                              //dataKey={getXValueData2}
+                              //label={{ value: "Meses", dy: 15 }}
                             />
                             <YAxis
                               label={{
@@ -280,7 +280,7 @@ export default class javascriptMap extends Component {
                               }}
                             />
                             <Tooltip />
-                            <Bar dataKey="preco" fill="#ffa500" />
+                            <Bar dataKey="mean_preco" fill="#ffa500" />
                           </BarChart>
                         </Col>
                       </Row>

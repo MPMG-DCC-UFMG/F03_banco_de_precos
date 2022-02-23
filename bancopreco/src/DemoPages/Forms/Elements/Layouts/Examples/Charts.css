@@ -6,8 +6,6 @@
 }
 
 .chartsPrincipal {
-  margin-top: 105px;
-  margin: auto;
   width: 95%;
   padding: 10px;
 }
@@ -32,36 +30,43 @@
 }
 
 th.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-13.MuiTableCell-paddingCheckbox {
-    width: 0% !important;
+  width: 0% !important;
 }
 
-.borda1{
+.borda1 {
   width: 100%;
   height: 10%;
-   border-bottom-style: solid;
+  border-bottom-style: solid;
   border-bottom-color: coral;
 }
 
-
-.borda2{
+.borda2 {
   width: 100%;
   height: 10%;
-   border-bottom-style: solid;
+  border-bottom-style: solid;
   border-bottom-color: blue;
 }
 
-
-.borda3{
+.borda3 {
   width: 100%;
   height: 10%;
-   border-bottom-style: solid;
+  border-bottom-style: solid;
   border-bottom-color: green;
 }
 
-
-.borda4{
+.borda4 {
   width: 100%;
   height: 10%;
-   border-bottom-style: solid;
+  border-bottom-style: solid;
   border-bottom-color: gold;
 }
+
+h1.headerCHart {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+

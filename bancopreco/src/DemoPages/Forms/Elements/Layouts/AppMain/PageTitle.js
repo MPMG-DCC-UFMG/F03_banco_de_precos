@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
+import "../Examples/Charts.css";
+
 
 import TitleComponent2 from "./PageTitleExamples/Variation2";
 
@@ -36,7 +38,7 @@ class PageTitle extends Component {
                   "d-none": !enablePageTitleSubheading,
                 })}
               >
-                 {subheading}
+                <h1 className="headerCHart"> {subheading}</h1>
                 <h4>Descrição de Medida: {subheading2}</h4>
                 <h4>Ano: {subheading3}</h4>
                 <h4>Grupo: {subheading4}</h4>
