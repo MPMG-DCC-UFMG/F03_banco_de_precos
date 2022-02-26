@@ -69,6 +69,7 @@ button.btnBuscar.btn.btn-primary {
   display: inline-block;
   font-size: 16px;
   width: 180px;
+
 }
 
 .arredondado,
@@ -286,22 +287,25 @@ button.css-1r4vtzz {
 }
 
 .sugestoes {
-  width: 100%;
   height: 30px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
   font-size: 16px;
   border-radius: 4px;
-
-  /* width: 100%;
-  height: 50px;
-  overflow: auto; */
+  z-index: 100000;
+  width: 40%;
+  height: 60%;
+  overflow: auto;
+  position: absolute;
+  background: #FFFFFF;
 }
 
 .sugestoesclick:hover {
-  background-color: #ffffff;
   font-weight: bold;
   font-size: x-large;
   border-radius: 50px;
+}
+.askHelp {
+  margin-left: 3px;
 }

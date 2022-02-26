@@ -38,7 +38,7 @@ import NaturezaObjeto from "./NaturezaObjeto";
 import TipoLicitacao from "./TipoLicitacao";
 
 const nomeOr = [
-  { label: "default", value: "Nome do Orgão" },
+  { label: "Nome do Orgão", value: "nomeOrgao" },
   { label: "ADM INDIRETA", value: "ADM INDIRETA" },
   { label: "ADMINISTRACAO DIRETA", value: "ADMINISTRACAO DIRETA" },
   {
@@ -7246,7 +7246,7 @@ const nomeOr = [
   },
 ];
 const liciModal = [
-  { value: "default", label: "Modalidade da Licitação" },
+  { value: "Modalidade da Licitação", label: "	modalidadeLicitacao	" },
 
   { value: "CONCORRENCIA", label: "	CONCORRENCIA	" },
   { value: "CONCURSO", label: "	CONCURSO	" },
@@ -7330,16 +7330,16 @@ export default class FormGridFormRow extends React.Component {
       buscar: "",
       modal: false,
       qntMin: false,
-      qntMax: false,
-      precoMin: false,
-      precoMax: false,
-      nomeOrgao: false,
-      tipoOrgao: false,
-      nomeFornecedor: false,
-      tipoFornecedor: false,
-      modalidadeLicitacao: false,
-      tipoLicitacao: false,
-      naturezaObjeto: false,
+      qntMax: "",
+      precoMin: "",
+      precoMax: "",
+      nomeOrgao: "",
+      tipoOrgao: "",
+      nomeFornecedor: "",
+      tipoFornecedor: "",
+      modalidadeLicitacao: "",
+      tipoLicitacao: "",
+      naturezaObjeto: "",
       chkDescricao: false,
       chkUniMedida: false,
       chkAno: false,
@@ -7347,9 +7347,8 @@ export default class FormGridFormRow extends React.Component {
       radioExercicio: false,
       radioPeriodo: false,
       status: 0,
-      cnpj: false,
-      anoExercicio: false,
-      divSugestao: "",
+      cnpj: "",
+      anoExercicio: "",
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -7445,6 +7444,8 @@ export default class FormGridFormRow extends React.Component {
       url += `&object_nature=${this.state.naturezaObjeto}`;
     }
 
+    if (this.state.anoExercicio) {
+    }
     console.log(url);
 
     const results = await search(url);
@@ -7485,28 +7486,6 @@ export default class FormGridFormRow extends React.Component {
     this.setState({ dadosApiFor: "" });
   };
 
-  get renderDivSugestao() {
-    let dadosApiSugestao = <h1>{""}</h1>;
-
-    if (this.state.dadosApiDes) {
-      dadosApiSugestao = (
-        <div className="sugestoes">
-          {this.state.dadosApiDes &&
-            this.state.dadosApiDes.map((dadosApiDes, i) => (
-              <div
-                key={i}
-                onClick={(e) => this.onSuggestHandler(dadosApiDes.desc)}
-                className="sugestoesclick"
-              >
-                {dadosApiDes.desc}
-              </div>
-            ))}
-        </div>
-      );
-    }
-    return dadosApiSugestao;
-  }
-
   get renderDadosApi() {
     let dadosApi = <h1>{""}</h1>;
 
@@ -7545,6 +7524,16 @@ export default class FormGridFormRow extends React.Component {
   // funções da busca avançada (filtro) modal
   onFormSubmitFilter = async (e) => {
     this.toggleT();
+    const stringBusca =
+      "QntMin:" +
+      this.state.qntMin +
+      "QntMax" +
+      this.state.qntMax +
+      "PrMIn" +
+      this.state.precoMin +
+      "precMax" +
+      this.state.precoMax;
+    alert("Orgao " + this.state.nomeOrgao);
 
     this.search(this.state.buscar);
   };
@@ -7565,6 +7554,11 @@ export default class FormGridFormRow extends React.Component {
       modal: !this.state.modal,
     });
   }
+
+  handleOptionChangeRadio = async (e) => {
+    alert(e);
+    this.setState({ status });
+  };
 
   render() {
     if (this.state.loading) {
@@ -7593,10 +7587,34 @@ export default class FormGridFormRow extends React.Component {
                     this.onChangeHandler(e);
                   }}
                 />
-
-                {this.renderDivSugestao}
+                <div className="sugestoes">
+                  {this.state.dadosApiDes &&
+                    this.state.dadosApiDes.map((dadosApiDes, i) => (
+                      <div
+                        key={i}
+                        onClick={(e) => this.onSuggestHandler(dadosApiDes.desc)}
+                        className="sugestoesclick"
+                      >
+                        {dadosApiDes.desc}
+                      </div>
+                    ))}
+                </div>
               </div>
               <div className="elementosCheck">
+                <FormGroup check inline>
+                  {/* <Label check>Exercício</Label> */}
+
+                  {/* <Exercicio className="selectExercicio"></Exercicio> */}
+                </FormGroup>
+                <FormGroup check inline>
+                  <FormGroup check inline>
+                    {/* <Meses /> */}
+                  </FormGroup>
+                </FormGroup>
+                <FormGroup check inline>
+                  {/* <Cidades></Cidades> */}
+                </FormGroup>
+
                 <FormGroup check inline>
                   <div>
                     <Button color="gray" onClick={this.toggleT}>

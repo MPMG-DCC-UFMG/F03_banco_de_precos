@@ -57,16 +57,19 @@ export default class javascriptMap extends Component {
 
     axios
       .get(
-        `http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
+        //`http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
+        `http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
         var data = res.data;
         this.setState({ data: data });
         this.setState({ loading: false });
       });
+      console.log("teste "+this.props.data)
   }
   componentDidMount() {
     //console.log("test" + this.props.data.ano);
+   
     this.getData();
   }
   render() {
@@ -103,7 +106,6 @@ export default class javascriptMap extends Component {
       return index;
     };
 
-
     return (
       <div>
         <Fragment>
@@ -122,8 +124,8 @@ export default class javascriptMap extends Component {
                 subheading2={this.props.data.dsc_unidade_medida}
                 subheading3={this.props.data.ano}
                 subheading4={this.props.data.grupo}
+                
               />
-
               <Row>
                 <Col md="4">
                   <div className="card mb-3 widget-chart">
@@ -142,10 +144,7 @@ export default class javascriptMap extends Component {
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
-                        {this.props.data.mean.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
+                        {this.props.data.mean}
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Médio</h1>
@@ -158,10 +157,7 @@ export default class javascriptMap extends Component {
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
-                        {this.props.data.min.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
+                        {this.props.data.min}
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Mínimo </h1>
@@ -175,10 +171,7 @@ export default class javascriptMap extends Component {
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
                         {" "}
-                        {this.props.data.max.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
+                        {this.props.data.max}
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Máximo</h1>

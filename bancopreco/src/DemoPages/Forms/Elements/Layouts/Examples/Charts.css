@@ -62,10 +62,8 @@ th.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-13.MuiTableCell-paddi
 }
 
 h1.headerCHart {
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    line-clamp: 2 !important;
-    -webkit-box-orient: vertical  !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
 }
