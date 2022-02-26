@@ -199,8 +199,6 @@ div#rdts1 {
   margin-top: 100px;
 }
 
-
-
 .suggest-with-trap .dropdown-menu {
   width: 100%;
 }
@@ -266,12 +264,7 @@ input.fornecedorComp.form-control-lg.form-control {
 }
 
 .MuiTableCell-alignLeft:hover {
-  overflow: visible !important;
   max-width: 1000px !important;
-  line-height: 16px; /* fallback */
-  max-height: 32px; /* fallback */
-  -webkit-line-clamp: 2; /* number of lines to show */
-  -webkit-box-orient: vertical;
   font-weight: bolder !important;
   font-size: 16px !important;
 }
@@ -306,11 +299,9 @@ button.css-1r4vtzz {
   overflow: auto; */
 }
 
-
 .sugestoesclick:hover {
   background-color: #ffffff;
   font-weight: bold;
   font-size: x-large;
-    border-radius: 50px;
-
+  border-radius: 50px;
 }

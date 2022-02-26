@@ -2,7 +2,6 @@ import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import options from "./Anos.js";
 import React, { useState, useEffect } from "react";
 
-import "./FormGridFormRow.css"
 
 const MultiSelectAll = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);

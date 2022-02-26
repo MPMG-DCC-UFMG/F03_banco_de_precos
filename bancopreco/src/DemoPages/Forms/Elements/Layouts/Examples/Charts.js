@@ -82,8 +82,8 @@ export default class javascriptMap extends Component {
     console.log(data.sort((a, b) => (a.mes > b.mes ? 1 : -1)));
 
     let monthNames = [
-      "Jan", 
-      "Feb", 
+      "Jan",
+      "Feb",
       "Mar",
       "Abr",
       "Mai",
@@ -96,11 +96,13 @@ export default class javascriptMap extends Component {
       "Dez",
     ];
 
+    // função para converter a data de numero para texto, ou seja, recebe 1 e converte para jan
     const getXValueData2 = (data) => {
       const index = monthNames[data["mes"]];
 
       return index;
     };
+
 
     return (
       <div>
@@ -140,12 +142,10 @@ export default class javascriptMap extends Component {
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
-                        {this.props.data.mean
-                          .toLocaleString("pt-br", {
-                            style: "currency",
-                            currency: "BRL",
-                          })}
-                          
+                        {this.props.data.mean.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Médio</h1>
@@ -158,12 +158,10 @@ export default class javascriptMap extends Component {
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
-                        {this.props.data.min
-                          .toLocaleString("pt-br", {
-                            style: "currency",
-                            currency: "BRL",
-                          })
-                         }
+                        {this.props.data.min.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Mínimo </h1>
@@ -177,12 +175,10 @@ export default class javascriptMap extends Component {
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
                         {" "}
-                        {this.props.data.max
-                          .toLocaleString("pt-br", {
-                            style: "currency",
-                            currency: "BRL",
-                          })
-                         }
+                        {this.props.data.max.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
                       </div>
                       <div className="widget-subheading">
                         <h1>Preço Máximo</h1>
@@ -220,9 +216,7 @@ export default class javascriptMap extends Component {
                               bottom: 5,
                             }}
                           >
-                            <XAxis
-                              dataKey="data"
-                            />
+                            <XAxis dataKey="data" />
                             <YAxis
                               label={{
                                 value: "Quantidade de Itens",
@@ -268,7 +262,7 @@ export default class javascriptMap extends Component {
                           >
                             {" "}
                             <XAxis
-                            dataKey="data"
+                              dataKey="data"
                               //dataKey={getXValueData2}
                               //label={{ value: "Meses", dy: 15 }}
                             />

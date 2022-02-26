@@ -1,7 +1,5 @@
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
-
 import options from "./MesesData.js";
-
 import React, { useState, useEffect } from "react";
 
 const MultiSelectAll = () => {
@@ -43,8 +41,8 @@ const MultiSelectAll = () => {
       value={selectedOptions}
       onChange={onChange}
       setState={setSelectedOptions}
-      placeholderButtonLabel="Meses"
-      className="selectMeses"
+      placeholderButtonLabel="Mese(s)"
+      className="selectExercicio"
     />
   );
 };
