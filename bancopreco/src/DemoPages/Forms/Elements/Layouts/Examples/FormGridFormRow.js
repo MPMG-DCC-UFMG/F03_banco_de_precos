@@ -7382,30 +7382,34 @@ export default class FormGridFormRow extends React.Component {
 
     let url = `http://127.0.0.1:8000/api/items/?limit=100&offset=0&order=desc&description=${val}`;
 
-    this.state.chkDescricao == false &&
-      this.state.chkUniMedida == false &&
-      this.state.chkAno == false &&
-      this.state.chkGrupo == false;
+    
 
     if (this.state.chkDescricao == false) {
       url += `&group_by_description=${this.state.chkDescricao}`;
     } else {
       url += `&group_by_description=${this.state.chkDescricao}`;
+       this.state.agrupamento=true 
     }
     if (this.state.chkUniMedida == false) {
       url += `&group_by_unit_metric=${this.state.chkUniMedida}`;
     } else {
       url += `&group_by_unit_metric=${this.state.chkUniMedida}`;
+             this.state.agrupamento=true 
+
     }
     if (this.state.chkAno == false) {
       url += `&group_by_year=${this.state.chkAno}`;
     } else {
       url += `&group_by_year=${this.state.chkAno}`;
+             this.state.agrupamento=true 
+
     }
     if (this.state.chkGrupo == false) {
       url += `&group_by_cluster=${this.state.chkGrupo}`;
     } else {
       url += `&group_by_cluster=${this.state.chkGrupo}`;
+             this.state.agrupamento=true 
+
     }
 
     if (this.state.qntMin != false) {

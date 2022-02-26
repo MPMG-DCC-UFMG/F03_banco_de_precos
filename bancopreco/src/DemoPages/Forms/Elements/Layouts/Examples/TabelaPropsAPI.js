@@ -44,8 +44,18 @@ const Retornoapi = (props) => {
   };
 
   let columns = [];
-
+  let acaoTab = [];
   if (props.agrupamento) {
+    acaoTab = [
+          {
+            icon: () => <Equalizer />,
+            tooltip: "Detalhes",
+            onClick: (evt, selectedRow) => alertMyRow(selectedRow),
+          },
+        ];
+
+        alert(acaoTab)
+
     if (props.desc) {
       columns.push({ title: "Descrição", field: "original", align: "left" });
     }
@@ -166,13 +176,7 @@ const Retornoapi = (props) => {
         icons={tableIcons}
         columns={columns}
         data={props.dadosTabela}
-        actions={[
-          {
-            icon: () => <Equalizer />,
-            tooltip: "Detalhes",
-            onClick: (evt, selectedRow) => alertMyRow(selectedRow),
-          },
-        ]}
+        actions={acaoTab}
         options={{
           actionsCellStyle: {
             backgroundColor: "#f2f2f2",
