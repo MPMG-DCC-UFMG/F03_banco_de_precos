@@ -57,18 +57,16 @@ export default class javascriptMap extends Component {
 
     axios
       .get(
-        //`http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
-        `http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
+        `http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
+        //`http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
         var data = res.data;
         this.setState({ data: data });
         this.setState({ loading: false });
       });
-      console.log("teste "+this.props.data)
   }
   componentDidMount() {
-    //console.log("test" + this.props.data.ano);
    
     this.getData();
   }
@@ -134,7 +132,7 @@ export default class javascriptMap extends Component {
                         {this.props.data.count}
                       </div>
                       <div className="widget-subheading">
-                        <h1>Qnt de Itens </h1>
+                        <h1 className="titleField">Qnt de Itens </h1>
                         <div className="borda1"></div>
                       </div>
                     </div>
@@ -147,7 +145,7 @@ export default class javascriptMap extends Component {
                         {this.props.data.mean}
                       </div>
                       <div className="widget-subheading">
-                        <h1>Preço Médio</h1>
+                        <h1 className="titleField">Preço Médio</h1>
                         <div className="borda2"></div>
                       </div>
                     </div>
@@ -160,7 +158,7 @@ export default class javascriptMap extends Component {
                         {this.props.data.min}
                       </div>
                       <div className="widget-subheading">
-                        <h1>Preço Mínimo </h1>
+                        <h1 className="titleField">Preço Mínimo </h1>
                         <div className="borda3"></div>
                       </div>
                     </div>
@@ -174,7 +172,7 @@ export default class javascriptMap extends Component {
                         {this.props.data.max}
                       </div>
                       <div className="widget-subheading">
-                        <h1>Preço Máximo</h1>
+                        <h1 className="titleField">Preço Máximo</h1>
                         <div className="borda4"></div>
                       </div>
                     </div>

@@ -67,3 +67,8 @@ h1.headerCHart {
   -webkit-line-clamp: 1 !important;
   -webkit-box-orient: vertical !important;
 }
+
+
+h1.titleField{
+  font-size: medium;
+}

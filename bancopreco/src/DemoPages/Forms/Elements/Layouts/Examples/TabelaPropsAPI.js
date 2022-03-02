@@ -1,7 +1,5 @@
-import { truncStr } from "./Utils";
-import React, { useState, useEffect, Component } from "react";
+import React, { useState } from "react";
 
-import { search } from "./Utils";
 import { forwardRef } from "react";
 import MaterialTable from "material-table";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -15,7 +13,7 @@ import Search from "@material-ui/icons/Search";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Equalizer from "@material-ui/icons/Equalizer";
-import { Button, Modal, ModalFooter, ModalHeader, ModalBody } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import Charts from "./Charts";
 import "./Charts.css";
 
@@ -47,14 +45,12 @@ const Retornoapi = (props) => {
   let acaoTab = [];
   if (props.agrupamento) {
     acaoTab = [
-          {
-            icon: () => <Equalizer />,
-            tooltip: "Detalhes",
-            onClick: (evt, selectedRow) => alertMyRow(selectedRow),
-          },
-        ];
-
-        alert(acaoTab)
+      {
+        icon: () => <Equalizer />,
+        tooltip: "Detalhes",
+        onClick: (evt, selectedRow) => alertMyRow(selectedRow),
+      },
+    ];
 
     if (props.desc) {
       columns.push({ title: "Descrição", field: "original", align: "left" });

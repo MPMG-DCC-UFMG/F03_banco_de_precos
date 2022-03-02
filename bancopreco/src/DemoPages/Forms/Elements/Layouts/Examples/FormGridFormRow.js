@@ -38,7 +38,7 @@ import NaturezaObjeto from "./NaturezaObjeto";
 import TipoLicitacao from "./TipoLicitacao";
 
 const nomeOr = [
-  { label: "default", value: "Nome do Orgão" },
+  { label: "Nome do Orgão", value: "default" },
   { label: "ADM INDIRETA", value: "ADM INDIRETA" },
   { label: "ADMINISTRACAO DIRETA", value: "ADMINISTRACAO DIRETA" },
   {
@@ -7335,7 +7335,7 @@ export default class FormGridFormRow extends React.Component {
       precoMax: false,
       nomeOrgao: false,
       tipoOrgao: false,
-      nomeFornecedor: false,
+      nomeFornecedor: "",
       tipoFornecedor: false,
       modalidadeLicitacao: false,
       tipoLicitacao: false,
@@ -7380,36 +7380,33 @@ export default class FormGridFormRow extends React.Component {
   search = async (val) => {
     this.setState({ loading: true });
 
-    let url = `http://127.0.0.1:8000/api/items/?limit=100&offset=0&order=desc&description=${val}`;
+    let url = `http://127.0.0.1:8000/api/items/sample/?limit=100&offset=0&order=desc&description=${val}`;
 
-    
+    let url2 = `http://127.0.0.1:8000/api/pricing/?description=${val}`;
 
     if (this.state.chkDescricao == false) {
-      url += `&group_by_description=${this.state.chkDescricao}`;
+      url2 += `&group_by_description=${this.state.chkDescricao}`;
     } else {
-      url += `&group_by_description=${this.state.chkDescricao}`;
-       this.state.agrupamento=true 
+      url2 += `&group_by_description=${this.state.chkDescricao}`;
+      this.state.agrupamento = true;
     }
     if (this.state.chkUniMedida == false) {
-      url += `&group_by_unit_metric=${this.state.chkUniMedida}`;
+      url2 += `&group_by_unit_metric=${this.state.chkUniMedida}`;
     } else {
-      url += `&group_by_unit_metric=${this.state.chkUniMedida}`;
-             this.state.agrupamento=true 
-
+      url2 += `&group_by_unit_metric=${this.state.chkUniMedida}`;
+      this.state.agrupamento = true;
     }
     if (this.state.chkAno == false) {
-      url += `&group_by_year=${this.state.chkAno}`;
+      url2 += `&group_by_year=${this.state.chkAno}`;
     } else {
-      url += `&group_by_year=${this.state.chkAno}`;
-             this.state.agrupamento=true 
-
+      url2 += `&group_by_year=${this.state.chkAno}`;
+      this.state.agrupamento = true;
     }
     if (this.state.chkGrupo == false) {
-      url += `&group_by_cluster=${this.state.chkGrupo}`;
+      url2 += `&group_by_cluster=${this.state.chkGrupo}`;
     } else {
-      url += `&group_by_cluster=${this.state.chkGrupo}`;
-             this.state.agrupamento=true 
-
+      url2 += `&group_by_cluster=${this.state.chkGrupo}`;
+      this.state.agrupamento = true;
     }
 
     if (this.state.qntMin != false) {
@@ -7430,7 +7427,7 @@ export default class FormGridFormRow extends React.Component {
     if (this.state.tipoOrgao != false) {
       url += `&body_type=${this.state.tipoOrgao}`;
     }
-    if (this.state.nomeFornecedor != false) {
+    if (this.state.nomeFornecedor != "") {
       url += `&bidder_name=${this.state.nomeFornecedor}`;
     }
     if (this.state.cnpj != false) {
@@ -7450,6 +7447,13 @@ export default class FormGridFormRow extends React.Component {
     }
 
     console.log(url);
+
+    if (this.state.agrupamento) {
+      url = url2;
+      
+
+    }
+
 
     const results = await search(url);
     const dadosApi = results;
@@ -7529,14 +7533,6 @@ export default class FormGridFormRow extends React.Component {
 
     return dadosApi;
   }
-
-  // função para pegar os campos do form
-  handleChange = async (event) => {
-    // alert(event.target.value)
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
 
   reset = () => {
     this.setState({ precoMax: "" });
