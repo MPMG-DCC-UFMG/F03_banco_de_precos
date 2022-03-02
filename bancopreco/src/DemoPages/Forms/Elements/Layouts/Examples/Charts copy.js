@@ -1,22 +1,8 @@
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import classnames from "classnames";
-import { NavLink } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Button,
-  CardHeader,
-  Card,
-  CardBody,
-  Progress,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { Row, Col, CardHeader, Card, CardBody } from "reactstrap";
 
 import PageTitle from "../AppMain/PageTitle";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -57,7 +43,7 @@ export default class javascriptMap extends Component {
 
     axios
       .get(
-        `http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}`
+        `http://127.0.0.1:8000/api/charts/?limit=10&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
         //`http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
@@ -120,7 +106,7 @@ export default class javascriptMap extends Component {
                 icon="pe-7s-graph1"
                 subheading2={this.props.data.dsc_unidade_medida}
                 subheading3={this.props.data.ano}
-                // subheading4={this.props.data.grupo}
+                subheading4={this.props.data.grupo}
               />
               <Row>
                 <Col md="4">
@@ -140,10 +126,7 @@ export default class javascriptMap extends Component {
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
-                        {this.props.data.mean.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
+                        {this.props.data.mean}
                       </div>
                       <div className="widget-subheading">
                         <h1 className="titleField">Preço Médio</h1>
@@ -156,10 +139,7 @@ export default class javascriptMap extends Component {
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
-                        {this.props.data.min.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
+                        {this.props.data.min}
                       </div>
                       <div className="widget-subheading">
                         <h1 className="titleField">Preço Mínimo </h1>
@@ -173,10 +153,7 @@ export default class javascriptMap extends Component {
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
                         {" "}
-                        {this.props.data.max.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
+                        {this.props.data.max}
                       </div>
                       <div className="widget-subheading">
                         <h1 className="titleField">Preço Máximo</h1>
@@ -203,28 +180,30 @@ export default class javascriptMap extends Component {
                       <Row className="mt-3">
                         <Col md="6">
                           {/* <h2 className="tituloGrafico">Média de preços</h2> */}
-                          <BarChart
-                            width={600}
-                            height={300}
-                            data={data}
-                            margin={{
-                              top: 5,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
-                            <XAxis dataKey="data" />
-                            <YAxis
-                              label={{
-                                value: "Quantidade de Itens",
-                                angle: -90,
-                                dx: -30,
+                          <ResponsiveContainer>
+                            <BarChart
+                              width={600}
+                              height={300}
+                              data={data}
+                              margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
                               }}
-                            />
-                            <Tooltip />
-                            <Bar dataKey="qtde_item" fill="#82ca9d" />
-                          </BarChart>
+                            >
+                              <XAxis dataKey="data" />
+                              <YAxis
+                                label={{
+                                  value: "Quantidade de Itens",
+                                  angle: -90,
+                                  dx: -60,
+                                }}
+                              />
+                              <Tooltip />
+                              <Bar dataKey="qtde_item" fill="#82ca9d" />
+                            </BarChart>
+                          </ResponsiveContainer>
                         </Col>
                       </Row>
                       <div className="divider mt-4" />
@@ -247,6 +226,7 @@ export default class javascriptMap extends Component {
                       <Row className="mt-3">
                         <Col md="6">
                           {/* <h2 className="tituloGrafico">Preços </h2> */}
+
                           <BarChart
                             width={600}
                             height={300}

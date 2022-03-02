@@ -41,7 +41,7 @@ class PageTitle extends Component {
                 <h1 className="headerCHart"> {subheading}</h1>
                 <h4>Descrição de Medida: {subheading2}</h4>
                 <h4>Ano: {subheading3}</h4>
-                <h4>Grupo: {subheading4}</h4>
+                {/* <h4>Grupo: {subheading4}</h4> */}
               </div>
             </div>
           </div>

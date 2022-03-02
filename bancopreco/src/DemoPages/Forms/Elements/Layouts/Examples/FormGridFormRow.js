@@ -7343,7 +7343,7 @@ export default class FormGridFormRow extends React.Component {
       chkDescricao: false,
       chkUniMedida: false,
       chkAno: false,
-      chkGrupo: false,
+      chkGrupo: true,
       radioExercicio: false,
       radioPeriodo: false,
       status: 0,
@@ -7386,28 +7386,34 @@ export default class FormGridFormRow extends React.Component {
 
     if (this.state.chkDescricao == false) {
       url2 += `&group_by_description=${this.state.chkDescricao}`;
+      url2 += `&group_by_cluster=false`;
     } else {
       url2 += `&group_by_description=${this.state.chkDescricao}`;
       this.state.agrupamento = true;
+      url2 += `&group_by_cluster=false`;
     }
     if (this.state.chkUniMedida == false) {
       url2 += `&group_by_unit_metric=${this.state.chkUniMedida}`;
+      url2 += `&group_by_cluster=false`;
     } else {
       url2 += `&group_by_unit_metric=${this.state.chkUniMedida}`;
       this.state.agrupamento = true;
+      url2 += `&group_by_cluster=false`;
     }
     if (this.state.chkAno == false) {
       url2 += `&group_by_year=${this.state.chkAno}`;
+      url2 += `&group_by_cluster=false`;
     } else {
       url2 += `&group_by_year=${this.state.chkAno}`;
       this.state.agrupamento = true;
+      url2 += `&group_by_cluster=false`;
     }
-    if (this.state.chkGrupo == false) {
+    /*  if (this.state.chkGrupo == false) {
       url2 += `&group_by_cluster=${this.state.chkGrupo}`;
     } else {
       url2 += `&group_by_cluster=${this.state.chkGrupo}`;
       this.state.agrupamento = true;
-    }
+    } */
 
     if (this.state.qntMin != false) {
       url += `&min_amount=${this.state.qntMin}`;
@@ -7446,14 +7452,11 @@ export default class FormGridFormRow extends React.Component {
       url += `&object_nature=${this.state.naturezaObjeto}`;
     }
 
-    console.log(url);
+    //console.log(url);
 
     if (this.state.agrupamento) {
       url = url2;
-      
-
     }
-
 
     const results = await search(url);
     const dadosApi = results;
@@ -7967,21 +7970,6 @@ export default class FormGridFormRow extends React.Component {
                                       }}
                                     />
                                     Ano
-                                  </Label>
-                                </FormGroup>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input
-                                      type="checkbox"
-                                      id="chkGrupo"
-                                      checked={this.state.chkGrupo}
-                                      onChange={(e) => {
-                                        this.setState({
-                                          chkGrupo: e.target.checked,
-                                        });
-                                      }}
-                                    />{" "}
-                                    Grupo do Item
                                   </Label>
                                 </FormGroup>
                               </Form>
