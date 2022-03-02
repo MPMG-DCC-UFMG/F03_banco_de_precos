@@ -24,6 +24,11 @@
   max-width: 25% !important;
 }
 
+.col-md-6 {
+  max-width: 99% !important;
+  flex: none !important
+}
+
 .custom-modal-style {
   width: 3000px;
   height: 802px;

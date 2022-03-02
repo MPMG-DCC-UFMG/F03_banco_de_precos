@@ -203,28 +203,46 @@ export default class javascriptMap extends Component {
                       <Row className="mt-3">
                         <Col md="6">
                           {/* <h2 className="tituloGrafico">Média de preços</h2> */}
-                          <BarChart
-                            width={600}
-                            height={300}
-                            data={data}
-                            margin={{
-                              top: 5,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
+                          <div
+                            style={{
+                              paddingBottom: "56.25%" /* 16:9 */,
+                              position: "relative",
+                              height: 0,
                             }}
                           >
-                            <XAxis dataKey="data" />
-                            <YAxis
-                              label={{
-                                value: "Quantidade de Itens",
-                                angle: -90,
-                                dx: -30,
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "0",
+                                left: "0",
+                                width: "100%",
+                                height: "100%",
                               }}
-                            />
-                            <Tooltip />
-                            <Bar dataKey="qtde_item" fill="#82ca9d" />
-                          </BarChart>
+                            >
+                              <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                  data={data}
+                                  margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 50,
+                                  }}
+                                >
+                                  <XAxis dataKey="data" angle={-90} dx={5} textAnchor="end" />
+                                  <YAxis
+                                    label={{
+                                      value: "Quantidade de Itens",
+                                      angle: -90,
+                                      dx: -45,
+                                    }}
+                                  />
+                                  <Tooltip />
+                                  <Bar dataKey="qtde_item" fill="#82ca9d" />
+                                </BarChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </div>
                         </Col>
                       </Row>
                       <div className="divider mt-4" />
@@ -247,33 +265,48 @@ export default class javascriptMap extends Component {
                       <Row className="mt-3">
                         <Col md="6">
                           {/* <h2 className="tituloGrafico">Preços </h2> */}
-                          <BarChart
-                            width={600}
-                            height={300}
-                            data={data}
-                            margin={{
-                              top: 5,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
+
+                          <div
+                            style={{
+                              paddingBottom: "56.25%" /* 16:9 */,
+                              position: "relative",
+                              height: 0,
                             }}
                           >
-                            {" "}
-                            <XAxis
-                              dataKey="data"
-                              //dataKey={getXValueData2}
-                              //label={{ value: "Meses", dy: 15 }}
-                            />
-                            <YAxis
-                              label={{
-                                value: "Preço",
-                                angle: -90,
-                                dx: -12,
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "0",
+                                left: "0",
+                                width: "100%",
+                                height: "100%",
                               }}
-                            />
-                            <Tooltip />
-                            <Bar dataKey="mean_preco" fill="#ffa500" />
-                          </BarChart>
+                            >
+                              <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                  data={data}
+                                  margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 50,
+                                  }}
+                                >
+                                  {" "}
+                                  <XAxis dataKey="data" angle={-90} dx={5} textAnchor="end" />
+                                  <YAxis
+                                    label={{
+                                      value: "Preço",
+                                      angle: -90,
+                                      dx: -45,
+                                    }}
+                                  />
+                                  <Tooltip />
+                                  <Bar dataKey="mean_preco" fill="#ffa500" />
+                                </BarChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </div>
                         </Col>
                       </Row>
                       <div className="divider mt-4" />
