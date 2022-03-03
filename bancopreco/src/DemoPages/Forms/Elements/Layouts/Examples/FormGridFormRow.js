@@ -1,6 +1,8 @@
 import React, { Fragment, useState, Component } from "react";
 import Orgao from "./Orgao";
 import Exercicio from "./Exercicio";
+import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
+import Periodo from "./Periodo.js";
 
 import {
   Col,
@@ -36,6 +38,9 @@ import { ActivityIndicator } from "react-native";
 import TipoOrgao from "./TipoOrgao";
 import NaturezaObjeto from "./NaturezaObjeto";
 import TipoLicitacao from "./TipoLicitacao";
+
+import anos from "./Anos";
+import meses from "./MesesData";
 
 const nomeOr = [
   { label: "Nome do Orgão", value: "default" },
@@ -7349,33 +7354,14 @@ export default class FormGridFormRow extends React.Component {
       status: 0,
       cnpj: false,
       anoExercicio: false,
+      selectedOptions: null,
+
       divSugestao: "",
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.toggleT = this.toggleT.bind(this);
   }
-
-  /*   search = async (val) => {
-    this.setState({ loading: true });
-    let url = "";
-    if (
-      this.state.chkDescricao == false &&
-      this.state.chkUniMedida == false &&
-      this.state.chkAno == false &&
-      this.state.chkGrupo == false
-    ) {
-      url = `http://127.0.0.1:8000/api/items/?limit=100&offset=0&order=desc&description=${val}`;
-    } else {
-      this.setState({ agrupamento: true });
-
-      url = `http://127.0.0.1:8000/api/pricing/?group_by_description=${this.state.chkDescricao}&group_by_unit_metric=${this.state.chkUniMedida}&group_by_year=${this.state.chkAno}&group_by_cluster=${this.state.chkGrupo}&limit=100&offset=0&order=desc&description=${val}`;
-    }
-
-    const results = await search(url);
-    const dadosApi = results;
-    this.setState({ dadosApi, loading: false });
-  }; */
 
   search = async (val) => {
     this.setState({ loading: true });
@@ -7452,12 +7438,29 @@ export default class FormGridFormRow extends React.Component {
       url += `&object_nature=${this.state.naturezaObjeto}`;
     }
 
+    for (
+      var i = 0, iLen = this.state.selectedOptionMeses.length;
+      i < iLen;
+      i++
+    ) {
+      url += `&month=${this.state.selectedOptionMeses[i].value}`;
+    }
+
+    for (var i = 0, iLen = this.state.selectedOptionY.length; i < iLen; i++) {
+      url += `&year=${this.state.selectedOptionY[i].value}`;
+    }
+
+    //  this.state.selectedOptionMeses
+    //
+
     //console.log(url);
 
+    //  alert(url);
+    //
     if (this.state.agrupamento) {
       url = url2;
     }
-
+    console.log(url);
     const results = await search(url);
     const dadosApi = results;
     this.setState({ dadosApi, loading: false });
@@ -7494,6 +7497,12 @@ export default class FormGridFormRow extends React.Component {
   onSuggestHandlerFornecedor = async (e) => {
     this.setState({ nomeFornecedor: e });
     this.setState({ dadosApiFor: "" });
+  };
+
+  onChangeMeses = async (event) => {
+    this.setState({ mesesPer: event.target.value });
+    alert(event.target.value);
+    //this.setState({ mesesPer: e.target.value });
   };
 
   get renderDivSugestao() {
@@ -7569,6 +7578,18 @@ export default class FormGridFormRow extends React.Component {
     });
   }
 
+  handleChangeM = (selectedOptionMeses) => {
+    this.setState({ selectedOptionMeses }, () =>
+      console.log(`MES`, this.state.selectedOptionMeses)
+    );
+  };
+
+  handleChangeY = (selectedOptionY) => {
+    this.setState({ selectedOptionY }, () =>
+      console.log(`ANO`, this.state.selectedOptionY)
+    );
+  };
+
   render() {
     if (this.state.loading) {
       return (
@@ -7577,6 +7598,8 @@ export default class FormGridFormRow extends React.Component {
         </div>
       );
     }
+    const { selectedOptionM } = this.state;
+    const { selectedOptionY } = this.state;
 
     return (
       <div>
@@ -7600,83 +7623,62 @@ export default class FormGridFormRow extends React.Component {
                 {this.renderDivSugestao}
               </div>
               <div className="elementosCheck">
-                <FormGroup check inline>
-                  <div>
-                    <Button color="gray" onClick={this.toggleT}>
-                      <h4>
-                        {" "}
-                        <GrFilter /> Filtro{" "}
-                      </h4>
-                    </Button>
+                <Form>
+                  <FormGroup check inline>
+                    <ReactMultiSelectCheckboxes
+                      options={anos}
+                      placeholderButtonLabel="Ano(s)"
+                      value={selectedOptionY}
+                      onChange={this.handleChangeY}
+                    />
+                  </FormGroup>
+                  <FormGroup check inline>
+                    <ReactMultiSelectCheckboxes
+                      options={meses}
+                      placeholderButtonLabel="Mese(s)"
+                      value={selectedOptionM}
+                      onChange={this.handleChangeM}
+                    />
+                  </FormGroup>
+                  <FormGroup check inline>
+                    <div>
+                      <Button color="gray" onClick={this.toggleT}>
+                        <h4>
+                          {" "}
+                          <GrFilter /> Filtro{" "}
+                        </h4>
+                      </Button>
 
-                    <Modal
-                      isOpen={this.state.modal}
-                      toggle={this.toggleT}
-                      className={this.props.className}
-                    >
-                      <Form>
-                        <ModalHeader
-                          toggle={this.toggleT}
-                          cssModule={{ "modal-title": "w-100 text-center" }}
-                        >
-                          <h1>Busca Avançada</h1>
-                        </ModalHeader>
-                        <ModalBody>
-                          <Card>
-                            <CardBody>
-                              <CardTitle>Faixa</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label>Quantidade Comprada</Label>
-                                      <Input
-                                        type="number"
-                                        placeholder="min"
-                                        min="0"
-                                        name="qntMin"
-                                        value={this.state.qntMin}
-                                        onChange={(e) => {
-                                          this.setState({
-                                            qntMin: e.target.value,
-                                          });
-                                        }}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label> .</Label>
-
-                                      <Input
-                                        type="number"
-                                        placeholder="max"
-                                        min="0"
-                                        name="qntMax"
-                                        value={this.state.qntMax}
-                                        onChange={(e) => {
-                                          this.setState({
-                                            qntMax: e.target.value,
-                                          });
-                                        }}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                                <FormGroup>
+                      <Modal
+                        isOpen={this.state.modal}
+                        toggle={this.toggleT}
+                        className={this.props.className}
+                      >
+                        <Form>
+                          <ModalHeader
+                            toggle={this.toggleT}
+                            cssModule={{ "modal-title": "w-100 text-center" }}
+                          >
+                            <h1>Busca Avançada</h1>
+                          </ModalHeader>
+                          <ModalBody>
+                            <Card>
+                              <CardBody>
+                                <CardTitle>Faixa</CardTitle>
+                                <Form>
                                   <Row form>
                                     <Col md={6}>
                                       <FormGroup>
-                                        <Label>Preço Unitário</Label>
+                                        <Label>Quantidade Comprada</Label>
                                         <Input
                                           type="number"
                                           placeholder="min"
                                           min="0"
-                                          name="precoMin"
-                                          value={this.state.precoMin}
+                                          name="qntMin"
+                                          value={this.state.qntMin}
                                           onChange={(e) => {
                                             this.setState({
-                                              precoMin: e.target.value,
+                                              qntMin: e.target.value,
                                             });
                                           }}
                                         />
@@ -7684,316 +7686,358 @@ export default class FormGridFormRow extends React.Component {
                                     </Col>
                                     <Col md={6}>
                                       <FormGroup>
-                                        <Label>.</Label>
+                                        <Label> .</Label>
+
                                         <Input
                                           type="number"
                                           placeholder="max"
                                           min="0"
-                                          name="precoMax"
-                                          value={this.state.precoMax}
+                                          name="qntMax"
+                                          value={this.state.qntMax}
                                           onChange={(e) => {
                                             this.setState({
-                                              precoMax: e.target.value,
+                                              qntMax: e.target.value,
                                             });
                                           }}
                                         />
                                       </FormGroup>
                                     </Col>
                                   </Row>
-                                </FormGroup>
-                              </Form>
-                              <CardTitle>Orgão</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label></Label>
-                                      <div>
-                                        <select
-                                          className="tipoorgao"
-                                          onChange={(e) => {
-                                            this.setState({
-                                              nomeOrgao: e.target.value,
-                                            });
-                                            this.handleChange(e);
-                                          }}
-                                        >
-                                          {nomeOr.map((option) => (
-                                            <option value={option.value}>
-                                              {option.label}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label></Label>
-                                      <div>
-                                        <select
-                                          className="tipoorgao"
-                                          onChange={(e) => {
-                                            this.setState({
-                                              tipoOrgao: e.target.value,
-                                            });
-                                            this.handleChange(e);
-                                          }}
-                                        >
-                                          {tipLic.map((option) => (
-                                            <option value={option.value}>
-                                              {option.label}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                              </Form>
+                                  <FormGroup>
+                                    <Row form>
+                                      <Col md={6}>
+                                        <FormGroup>
+                                          <Label>Preço Unitário</Label>
+                                          <Input
+                                            type="number"
+                                            placeholder="min"
+                                            min="0"
+                                            name="precoMin"
+                                            value={this.state.precoMin}
+                                            onChange={(e) => {
+                                              this.setState({
+                                                precoMin: e.target.value,
+                                              });
+                                            }}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col md={6}>
+                                        <FormGroup>
+                                          <Label>.</Label>
+                                          <Input
+                                            type="number"
+                                            placeholder="max"
+                                            min="0"
+                                            name="precoMax"
+                                            value={this.state.precoMax}
+                                            onChange={(e) => {
+                                              this.setState({
+                                                precoMax: e.target.value,
+                                              });
+                                            }}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                    </Row>
+                                  </FormGroup>
+                                </Form>
+                                <CardTitle>Orgão</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <div>
+                                          <select
+                                            className="tipoorgao"
+                                            onChange={(e) => {
+                                              this.setState({
+                                                nomeOrgao: e.target.value,
+                                              });
+                                              this.handleChange(e);
+                                            }}
+                                          >
+                                            {nomeOr.map((option) => (
+                                              <option value={option.value}>
+                                                {option.label}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <div>
+                                          <select
+                                            className="tipoorgao"
+                                            onChange={(e) => {
+                                              this.setState({
+                                                tipoOrgao: e.target.value,
+                                              });
+                                              this.handleChange(e);
+                                            }}
+                                          >
+                                            {tipLic.map((option) => (
+                                              <option value={option.value}>
+                                                {option.label}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
 
-                              <CardTitle>Fornecedor</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label></Label>
+                                <CardTitle>Fornecedor</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <Input
+                                          className="fornecedorComp"
+                                          bsSize="lg"
+                                          placeholder="Fornecedor"
+                                          value={this.state.nomeFornecedor}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              nomeFornecedor: e.target.value,
+                                            });
+                                            this.onChangeHandlerFornecedor(e);
+                                          }}
+                                        />
+
+                                        {this.state.dadosApiFor &&
+                                          this.state.dadosApiFor.map(
+                                            (dadosApiFor, i) => (
+                                              <div
+                                                key={i}
+                                                className="fornecedorComp"
+                                                onClick={(e) =>
+                                                  this.onSuggestHandlerFornecedor(
+                                                    dadosApiFor.bidder_name
+                                                  )
+                                                }
+                                              >
+                                                {dadosApiFor.bidder_name}
+                                              </div>
+                                            )
+                                          )}
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <MaskedInput
+                                          name="cnpj"
+                                          mask="99.999.999/9999-99"
+                                          value={this.state.cnpj}
+                                          onChange={(e) => {
+                                            this.setState({
+                                              cnpj: e.target.value,
+                                            });
+                                            this.handleChange(e);
+                                          }}
+                                        />
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+                                        <select
+                                          name="tipoFornecedor"
+                                          onChange={(e) => {
+                                            this.setState({
+                                              tipoFornecedor: e.target.value,
+                                            });
+                                            this.handleChange(e);
+                                          }}
+                                        >
+                                          <option value="st">
+                                            Tipo Fornecedor{" "}
+                                          </option>
+
+                                          <option value="j">Jurídica</option>
+                                          <option value="f">Física</option>
+                                        </select>
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+                                <CardTitle>Licitação</CardTitle>
+                                <Form>
+                                  <Row form>
+                                    <Col md={6}>
+                                      <FormGroup>
+                                        <Label></Label>
+
+                                        <div>
+                                          <select
+                                            className="tipoorgao"
+                                            onChange={(e) => {
+                                              this.setState({
+                                                tipoLicitacao: e.target.value,
+                                              });
+                                              this.handleChange(e);
+                                            }}
+                                          >
+                                            {tipLic.map((option) => (
+                                              <option value={option.value}>
+                                                {option.label}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+
+                                        <div>
+                                          <select
+                                            className="tipoorgao"
+                                            onChange={(e) => {
+                                              this.setState({
+                                                modalidadeLicitacao:
+                                                  e.target.value,
+                                              });
+                                              this.handleChange(e);
+                                            }}
+                                          >
+                                            {liciModal.map((option) => (
+                                              <option value={option.value}>
+                                                {option.label}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                      <FormGroup>
+                                        <Label></Label>
+
+                                        <div>
+                                          <select
+                                            className="tipoorgao"
+                                            onChange={(e) => {
+                                              this.setState({
+                                                naturezaObjeto: e.target.value,
+                                              });
+                                              this.handleChange(e);
+                                            }}
+                                          >
+                                            {natObj.map((option) => (
+                                              <option value={option.value}>
+                                                {option.label}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </FormGroup>
+                                    </Col>
+                                  </Row>
+                                </Form>
+                                <hr />
+
+                                <CardTitle>
+                                  Critério de Agregação de Resultados
+                                  <span
+                                    style={{ color: "black" }}
+                                    href="#"
+                                    id="UncontrolledTooltipExample"
+                                  >
+                                    {""}
+                                    {""} ?
+                                  </span>
+                                  <UncontrolledTooltip
+                                    placement="right"
+                                    target="UncontrolledTooltipExample"
+                                  >
+                                    Agrupar os dados de acordo com um ou mais
+                                    atributos relacionados ao objeto de forma a
+                                    obter estatísticas de preço, tais como
+                                    média, máximo e mínimo. Esse agrupamento
+                                    pode levar tempo extra em processamento.
+                                  </UncontrolledTooltip>
+                                </CardTitle>
+                                <Form>
+                                  <FormGroup check inline>
+                                    <Label check>
                                       <Input
-                                        className="fornecedorComp"
-                                        bsSize="lg"
-                                        placeholder="Fornecedor"
-                                        value={this.state.nomeFornecedor}
+                                        type="checkbox"
+                                        id="chkDescricao"
+                                        checked={this.state.chkDescricao}
                                         onChange={(e) => {
                                           this.setState({
-                                            nomeFornecedor: e.target.value,
+                                            chkDescricao: e.target.checked,
                                           });
-                                          this.onChangeHandlerFornecedor(e);
                                         }}
                                       />
-
-                                      {this.state.dadosApiFor &&
-                                        this.state.dadosApiFor.map(
-                                          (dadosApiFor, i) => (
-                                            <div
-                                              key={i}
-                                              className="fornecedorComp"
-                                              onClick={(e) =>
-                                                this.onSuggestHandlerFornecedor(
-                                                  dadosApiFor.bidder_name
-                                                )
-                                              }
-                                            >
-                                              {dadosApiFor.bidder_name}
-                                            </div>
-                                          )
-                                        )}
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={4}>
-                                    <FormGroup>
-                                      <Label></Label>
-                                      <MaskedInput
-                                        name="cnpj"
-                                        mask="99.999.999/9999-99"
-                                        value={this.state.cnpj}
+                                      Descrição
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkUniMedida"
+                                        checked={this.state.chkUniMedida}
                                         onChange={(e) => {
                                           this.setState({
-                                            cnpj: e.target.value,
+                                            chkUniMedida: e.target.checked,
                                           });
-                                          this.handleChange(e);
+                                        }}
+                                      />{" "}
+                                      Unidade de Medida
+                                    </Label>
+                                  </FormGroup>
+                                  <FormGroup check inline>
+                                    <Label check>
+                                      <Input
+                                        type="checkbox"
+                                        id="chkAno"
+                                        checked={this.state.chkAno}
+                                        onChange={(e) => {
+                                          this.setState({
+                                            chkAno: e.target.checked,
+                                          });
                                         }}
                                       />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={4}>
-                                    <FormGroup>
-                                      <Label></Label>
-                                      <select
-                                        name="tipoFornecedor"
-                                        onChange={(e) => {
-                                          this.setState({
-                                            tipoFornecedor: e.target.value,
-                                          });
-                                          this.handleChange(e);
-                                        }}
-                                      >
-                                        <option value="st">
-                                          Tipo Fornecedor{" "}
-                                        </option>
-
-                                        <option value="j">Jurídica</option>
-                                        <option value="f">Física</option>
-                                      </select>
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                              </Form>
-                              <CardTitle>Licitação</CardTitle>
-                              <Form>
-                                <Row form>
-                                  <Col md={6}>
-                                    <FormGroup>
-                                      <Label></Label>
-
-                                      <div>
-                                        <select
-                                          className="tipoorgao"
-                                          onChange={(e) => {
-                                            this.setState({
-                                              tipoLicitacao: e.target.value,
-                                            });
-                                            this.handleChange(e);
-                                          }}
-                                        >
-                                          {tipLic.map((option) => (
-                                            <option value={option.value}>
-                                              {option.label}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={4}>
-                                    <FormGroup>
-                                      <Label></Label>
-
-                                      <div>
-                                        <select
-                                          className="tipoorgao"
-                                          onChange={(e) => {
-                                            this.setState({
-                                              modalidadeLicitacao:
-                                                e.target.value,
-                                            });
-                                            this.handleChange(e);
-                                          }}
-                                        >
-                                          {liciModal.map((option) => (
-                                            <option value={option.value}>
-                                              {option.label}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </FormGroup>
-                                  </Col>
-                                  <Col md={4}>
-                                    <FormGroup>
-                                      <Label></Label>
-
-                                      <div>
-                                        <select
-                                          className="tipoorgao"
-                                          onChange={(e) => {
-                                            this.setState({
-                                              naturezaObjeto: e.target.value,
-                                            });
-                                            this.handleChange(e);
-                                          }}
-                                        >
-                                          {natObj.map((option) => (
-                                            <option value={option.value}>
-                                              {option.label}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </FormGroup>
-                                  </Col>
-                                </Row>
-                              </Form>
-                              <hr />
-
-                              <CardTitle>
-                                Critério de Agregação de Resultados
-                                <span
-                                  style={{ color: "black" }}
-                                  href="#"
-                                  id="UncontrolledTooltipExample"
-                                >
-                                  {""}
-                                  {""} ?
-                                </span>
-                                <UncontrolledTooltip
-                                  placement="right"
-                                  target="UncontrolledTooltipExample"
-                                >
-                                  Agrupar os dados de acordo com um ou mais
-                                  atributos relacionados ao objeto de forma a
-                                  obter estatísticas de preço, tais como média,
-                                  máximo e mínimo. Esse agrupamento pode levar
-                                  tempo extra em processamento.
-                                </UncontrolledTooltip>
-                              </CardTitle>
-                              <Form>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input
-                                      type="checkbox"
-                                      id="chkDescricao"
-                                      checked={this.state.chkDescricao}
-                                      onChange={(e) => {
-                                        this.setState({
-                                          chkDescricao: e.target.checked,
-                                        });
-                                      }}
-                                    />
-                                    Descrição
-                                  </Label>
-                                </FormGroup>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input
-                                      type="checkbox"
-                                      id="chkUniMedida"
-                                      checked={this.state.chkUniMedida}
-                                      onChange={(e) => {
-                                        this.setState({
-                                          chkUniMedida: e.target.checked,
-                                        });
-                                      }}
-                                    />{" "}
-                                    Unidade de Medida
-                                  </Label>
-                                </FormGroup>
-                                <FormGroup check inline>
-                                  <Label check>
-                                    <Input
-                                      type="checkbox"
-                                      id="chkAno"
-                                      checked={this.state.chkAno}
-                                      onChange={(e) => {
-                                        this.setState({
-                                          chkAno: e.target.checked,
-                                        });
-                                      }}
-                                    />
-                                    Ano
-                                  </Label>
-                                </FormGroup>
-                              </Form>
-                            </CardBody>
-                          </Card>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button
-                            color="primary"
-                            onClick={this.onFormSubmitFilter}
-                          >
-                            Buscar
-                          </Button>
-                          <Button color="default" onClick={() => this.reset()}>
-                            Resetar
-                          </Button>
-                          <Button color="secondary" onClick={this.toggleT}>
-                            Cancelar
-                          </Button>
-                        </ModalFooter>
-                      </Form>
-                    </Modal>
-                  </div>
-                </FormGroup>
+                                      Ano
+                                    </Label>
+                                  </FormGroup>
+                                </Form>
+                              </CardBody>
+                            </Card>
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button
+                              color="primary"
+                              onClick={this.onFormSubmitFilter}
+                            >
+                              Buscar
+                            </Button>
+                            <Button
+                              color="default"
+                              onClick={() => this.reset()}
+                            >
+                              Resetar
+                            </Button>
+                            <Button color="secondary" onClick={this.toggleT}>
+                              Cancelar
+                            </Button>
+                          </ModalFooter>
+                        </Form>
+                      </Modal>
+                    </div>
+                  </FormGroup>
+                </Form>
               </div>
             </div>
           </Fragment>
