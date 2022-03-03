@@ -24,10 +24,17 @@
   max-width: 25% !important;
 }
 
-.col-md-6 {
+/* .col-md-6 {
   max-width: 99% !important;
   flex: none !important
 }
+ */
+
+ .md6Chart{
+  max-width: 99% !important;
+  flex: none !important
+ }
+
 
 .custom-modal-style {
   width: 3000px;
@@ -66,12 +73,15 @@ th.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-13.MuiTableCell-paddi
   border-bottom-color: gold;
 }
 
-h1.headerCHart {
-  overflow: hidden !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 1 !important;
-  -webkit-box-orient: vertical !important;
-}
+/* h1.headerCHart {
+  position: relative;
+  display: inline-block;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 1.6em; /* (Number of lines you want visible) * (line-height) */
+  /*line-height: 1.2em;
+  text-align:justify;
+} */
 
 
 h1.titleField{

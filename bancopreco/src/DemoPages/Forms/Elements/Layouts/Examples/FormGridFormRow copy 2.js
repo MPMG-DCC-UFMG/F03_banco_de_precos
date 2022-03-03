@@ -7467,7 +7467,7 @@ export default class FormGridFormRow extends React.Component {
     if (this.state.agrupamento) {
       url = url2;
     }
-    //alert(url);
+    alert(url);
 
     console.log(url);
     const results = await search(url);

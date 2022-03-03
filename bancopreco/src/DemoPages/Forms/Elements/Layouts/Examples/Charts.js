@@ -54,10 +54,24 @@ export default class javascriptMap extends Component {
 
   getData() {
     this.setState({ loading: true });
+    let url=`http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc`
+
+    if(this.props.data.ano){
+      url+=`&year=${this.props.data.ano}`
+    }
+    if(this.props.data.original){
+      url+=`&description=${this.props.data.original}`
+    }
+
+    if(this.props.data.dsc_unidade_medida){
+      url+=`&unit_measure=${this.props.data.dsc_unidade_medida}`
+    }
+    //alert(url)
 
     axios
       .get(
-        `http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}`
+        url
+        //`http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}`
         //`http://127.0.0.1:8000/api/items/match/?limit=100&offset=0&order=desc&year=${this.props.data.ano}&description=${this.props.data.original}&unit_measure=${this.props.data.dsc_unidade_medida}&group=${this.props.data.grupo}`
       )
       .then((res) => {
@@ -116,14 +130,14 @@ export default class javascriptMap extends Component {
           >
             <div className="chartsPrincipal">
               <PageTitle
-                subheading={this.props.data.original}
+                subheading={this.props.data.original.substring(0, 30)}
                 icon="pe-7s-graph1"
                 subheading2={this.props.data.dsc_unidade_medida}
                 subheading3={this.props.data.ano}
                 // subheading4={this.props.data.grupo}
               />
               <Row>
-                <Col md="4">
+                <Col md="3">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
@@ -136,7 +150,7 @@ export default class javascriptMap extends Component {
                     </div>
                   </div>
                 </Col>
-                <Col md="4">
+                <Col md="3">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
@@ -152,7 +166,7 @@ export default class javascriptMap extends Component {
                     </div>
                   </div>
                 </Col>
-                <Col md="4">
+                <Col md="3">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
@@ -168,7 +182,7 @@ export default class javascriptMap extends Component {
                     </div>
                   </div>
                 </Col>
-                <Col md="4">
+                <Col md="3  ">
                   <div className="card mb-3 widget-chart">
                     <div className="widget-chart-content">
                       <div className="widget-numbers">
@@ -201,7 +215,7 @@ export default class javascriptMap extends Component {
 
                     <CardBody className="pt-2">
                       <Row className="mt-3">
-                        <Col md="6">
+                        <Col md="6" className="md6Chart">
                           {/* <h2 className="tituloGrafico">Média de preços</h2> */}
                           <div
                             style={{
@@ -263,7 +277,7 @@ export default class javascriptMap extends Component {
 
                     <CardBody className="pt-2">
                       <Row className="mt-3">
-                        <Col md="6">
+                        <Col md="6" className="md6Chart">
                           {/* <h2 className="tituloGrafico">Preços </h2> */}
 
                           <div
