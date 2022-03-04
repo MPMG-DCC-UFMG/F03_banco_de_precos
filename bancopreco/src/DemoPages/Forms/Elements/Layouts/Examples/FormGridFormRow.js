@@ -7357,7 +7357,6 @@ export default class FormGridFormRow extends React.Component {
       selectedOptions: null,
       selectedOptionMeses: false,
       selectedOptionY: false,
-
       divSugestao: "",
     };
 
@@ -7469,7 +7468,7 @@ export default class FormGridFormRow extends React.Component {
     }
     //alert(url);
 
-    console.log(url);
+    //console.log(url);
     const results = await search(url);
     const dadosApi = results;
     this.setState({ dadosApi, loading: false });
@@ -7510,7 +7509,7 @@ export default class FormGridFormRow extends React.Component {
 
   onChangeMeses = async (event) => {
     this.setState({ mesesPer: event.target.value });
-    alert(event.target.value);
+    // alert(event.target.value);
     //this.setState({ mesesPer: e.target.value });
   };
 

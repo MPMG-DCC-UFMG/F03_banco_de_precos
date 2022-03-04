@@ -164,6 +164,7 @@ const Retornoapi = (props) => {
           </ModalHeader>
           <ModalBody>
             <Charts data={state.data} />
+            
           </ModalBody>
         </Modal>
       </div>

@@ -1,50 +1,19 @@
+import axios from "axios";
+import React, { Component, Fragment } from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import classnames from "classnames";
-import { NavLink } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Button,
-  CardHeader,
-  Card,
-  CardBody,
-  Progress,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { ActivityIndicator } from "react-native";
+import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 
-import PageTitle from "../AppMain/PageTitle";
 import {
-  LineChart,
-  Line,
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ComposedChart,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Cell,
-  AreaChart,
-  Area,
 } from "recharts";
-
-import {
-  faAngleUp,
-  faArrowRight,
-  faArrowUp,
-  faArrowLeft,
-  faAngleDown,
-} from "@fortawesome/free-solid-svg-icons";
+import PageTitle from "../AppMain/PageTitle";
 import "./Charts.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AppHeader from "../../../../../Layout/AppHeader";
-import { search } from "./Utils";
-import { ActivityIndicator } from "react-native";
-import React, { useState, useEffect, Component, Fragment } from "react";
-import axios from "axios";
 
 export default class javascriptMap extends Component {
   state = {
@@ -54,17 +23,17 @@ export default class javascriptMap extends Component {
 
   getData() {
     this.setState({ loading: true });
-    let url=`http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc`
+    let url = `http://127.0.0.1:8000/api/charts/?limit=100&offset=0&order=desc`;
 
-    if(this.props.data.ano){
-      url+=`&year=${this.props.data.ano}`
+    if (this.props.data.ano) {
+      url += `&year=${this.props.data.ano}`;
     }
-    if(this.props.data.original){
-      url+=`&description=${this.props.data.original}`
+    if (this.props.data.original) {
+      url += `&description=${this.props.data.original}`;
     }
 
-    if(this.props.data.dsc_unidade_medida){
-      url+=`&unit_measure=${this.props.data.dsc_unidade_medida}`
+    if (this.props.data.dsc_unidade_medida) {
+      url += `&unit_measure=${this.props.data.dsc_unidade_medida}`;
     }
     //alert(url)
 
@@ -117,6 +86,15 @@ export default class javascriptMap extends Component {
       return index;
     };
 
+    let desc = "";
+
+    try {
+      desc = this.props.data.original.substring(0, 30);
+    } catch (error) {
+      desc = "";
+    }
+
+
     return (
       <div>
         <Fragment>
@@ -130,7 +108,7 @@ export default class javascriptMap extends Component {
           >
             <div className="chartsPrincipal">
               <PageTitle
-                subheading={this.props.data.original.substring(0, 30)}
+                subheading={desc}
                 icon="pe-7s-graph1"
                 subheading2={this.props.data.dsc_unidade_medida}
                 subheading3={this.props.data.ano}
@@ -243,7 +221,12 @@ export default class javascriptMap extends Component {
                                     bottom: 50,
                                   }}
                                 >
-                                  <XAxis dataKey="data" angle={-90} dx={5} textAnchor="end" />
+                                  <XAxis
+                                    dataKey="data"
+                                    angle={-90}
+                                    dx={5}
+                                    textAnchor="end"
+                                  />
                                   <YAxis
                                     label={{
                                       value: "Quantidade de Itens",
@@ -307,7 +290,12 @@ export default class javascriptMap extends Component {
                                   }}
                                 >
                                   {" "}
-                                  <XAxis dataKey="data" angle={-90} dx={5} textAnchor="end" />
+                                  <XAxis
+                                    dataKey="data"
+                                    angle={-90}
+                                    dx={5}
+                                    textAnchor="end"
+                                  />
                                   <YAxis
                                     label={{
                                       value: "Preço",
