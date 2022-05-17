@@ -1,18 +1,25 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import endpoints from '../constants/endpoints';
 import useFetch from '../hooks/useFetch';
 import { queryStringConverter } from '../services/apiRequest';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
 
 
-function SearchInput() {
-    const { description, setDescription } = useContext(GlobalStateContext)
-    const { data, error, loading } = useFetch(endpoints.AUTOCOMPLETE, queryStringConverter({ desc: description }));
+function BidderNameInput() {
+    const { filters, setFilters } = useContext(GlobalStateContext)
+    const { data, error, loading } = useFetch(endpoints.BIDDER, queryStringConverter({ bidder_name: filters.bidder_name }));
+
+    const handleChange = (value: string) => {
+        setFilters({
+            ...filters,
+            bidder_name: value
+        });
+    };
 
     const options = () => {
         if (data) {
-            return data.map((d: any) => d.desc)
+            return data.map((d: any) => d.bidder_name)
         } else {
             return [];
         }
@@ -21,16 +28,16 @@ function SearchInput() {
     return (<>
         <Autocomplete
             options={options()}
+            value={filters.bidder_name}
             onInputChange={(event, newInputValue) => {
-                setDescription(newInputValue);
+                handleChange(newInputValue)
             }}
-            value={description}
             loading={loading}
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    onChange={(ev) => setDescription(ev.target.value)}
-                    label="Digite uma descrição"
+                    onChange={(event) => handleChange(event.target.value)}
+                    label="Fornecedor"
                     required
                     InputProps={{
                         ...params.InputProps,
@@ -40,4 +47,4 @@ function SearchInput() {
         /></>);
 }
 
-export default SearchInput;
+export default BidderNameInput;

@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import endpoints from '../constants/endpoints';
 import useFetch from '../hooks/useFetch';
 import { queryStringConverter } from '../services/apiRequest';
+import { toCurrency } from '../utils/helpers';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
 import Chart from './Chart';
 import DetailInfo from './DetailInfo';
@@ -13,8 +14,6 @@ type Props = {
     selectedData: any,
     onClose: (() => void)
 }
-
-const toCurrency = (num: number) => num.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" });
 
 function Detail({ open, onClose, selectedData }: Props) {
     const { description } = useContext(GlobalStateContext);
@@ -52,15 +51,15 @@ function Detail({ open, onClose, selectedData }: Props) {
                             </div>
 
                             <div className="my-4 grid grid-cols-4 gap-4">
-                                <DetailInfo number={selectedData.count} label='Qtd de itens' color="bg-orange-500" />
-                                <DetailInfo number={toCurrency(selectedData.mean)} label='Preço Médio' color="bg-purple-500" />
-                                <DetailInfo number={toCurrency(selectedData.min)} label='Preço Mínimo' color="bg-green-500" />
-                                <DetailInfo number={toCurrency(selectedData.max)} label='Preço Máximo' color="bg-yellow-500" />
+                                <DetailInfo number={selectedData.count} label='Qtd de itens' color="bg-[#30638E]" />
+                                <DetailInfo number={toCurrency(selectedData.min)} label='Preço Mínimo' color="bg-[#6A994E]" />
+                                <DetailInfo number={toCurrency(selectedData.mean)} label='Preço Médio' color="bg-[#EDAE49]" />
+                                <DetailInfo number={toCurrency(selectedData.max)} label='Preço Máximo' color="bg-[#D1495B]" />
                             </div>
 
                             <div className="my-4 grid grid-cols-2 gap-4">
-                                <Chart field="qtde_item" type='sum' color="#22C55E" label="Relação de Itens" axisName='Qtd. de Itens' data={data} />
-                                <Chart field="mean_preco" type="avg" color="#EAB308" label="Relação de Preços" axisName='Preço' data={data} />
+                                <Chart field="qtde_item" type='sum' color="#386641" label="Relação de Itens" axisName='Qtd. de Itens' data={data} />
+                                <Chart field="mean_preco" type="avg" color="#003D5B" label="Relação de Preços" axisName='Preço' data={data} />
                             </div>
                         </>
                     }

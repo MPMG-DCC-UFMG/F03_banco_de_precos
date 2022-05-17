@@ -1,0 +1,16 @@
+{
+	"label": "Tipo de Licitação",
+	"children": [
+		{
+			"label" : "MAIOR LANCE OU OFERTA"
+		},
+		{
+			"label" : "MELHOR TECNICA"
+		},
+		{
+			"label" : "MENOR PRECO"
+		},
+		{
+			"label" : "TECNICA E PRECO"
+		}
+]}

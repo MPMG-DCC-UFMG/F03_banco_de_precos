@@ -7,6 +7,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import Detail from './Detail';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
 import { queryStringConverter } from '../services/apiRequest';
+import { toCurrency, toFormatedNumber } from '../utils/helpers';
 
 function ResultsAggregatedTable() {
     const { description, filters } = useContext(GlobalStateContext);
@@ -49,12 +50,20 @@ function ResultsAggregatedTable() {
         return columns;
     };
 
+    const formatedData = () => data.map((d: any) => ({
+        ...d,
+        mean: toCurrency(d.mean),
+        min: toCurrency(d.min),
+        max: toCurrency(d.max),
+        count: toFormatedNumber(d.count),
+    }))
+
     return (<div className='bg-white h-result'>
         {showModal ? <Detail open onClose={() => setShowModal(null)} selectedData={showModal} /> : null}
         {loading || !data
             ? <CircularProgress />
             : <DataGrid
-                rows={data}
+                rows={formatedData()}
                 columns={columns()}
                 getRowId={generateId}
             />

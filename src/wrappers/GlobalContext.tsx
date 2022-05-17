@@ -17,6 +17,8 @@ export interface IFilters {
     modality?: string,
     object_nature?: string,
     city?: string[],
+    imediate_region?: string[],
+    inter_region?: string[],
     year?: string[],
     month?: string[],
     isPeriod?: boolean,

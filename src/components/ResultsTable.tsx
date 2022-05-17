@@ -4,6 +4,7 @@ import endpoints from '../constants/endpoints';
 import useFetch from '../hooks/useFetch';
 import { CircularProgress } from '@mui/material';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
+import { toCurrency, toFormatedNumber } from '../utils/helpers';
 
 function ResultsTable() {
     const { description, filters } = useContext(GlobalStateContext);
@@ -22,11 +23,17 @@ function ResultsTable() {
         { field: 'data', headerName: 'Data', flex: 1 },
     ];
 
+    const formatedData = () => data.map((d: any) => ({
+        ...d,
+        preco: toCurrency(d.preco),
+        qtde_item: toFormatedNumber(d.qtde_item),
+    }))
+
     return (<div className='bg-white h-result'>
         {loading || !data
             ? <CircularProgress />
             : <DataGrid
-                rows={data}
+                rows={formatedData()}
                 columns={columns}
                 getRowId={(e: any) => e.id_item}
             />

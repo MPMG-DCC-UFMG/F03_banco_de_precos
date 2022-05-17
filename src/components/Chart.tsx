@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { toCurrency, toFormatedNumber } from '../utils/helpers';
 var _ = require('lodash');
 
 type ChartData = {
@@ -80,7 +81,7 @@ function Chart({ axisName, label, data, color, type, field }: Props) {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="label" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip formatter={(value: number, name: string, props: any) => type === "sum" ? toFormatedNumber(value) : toCurrency(value)} />
                 <Legend />
                 <Bar dataKey="value" fill={color} name={axisName} />
             </BarChart>

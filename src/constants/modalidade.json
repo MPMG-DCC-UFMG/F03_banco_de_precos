@@ -1,0 +1,25 @@
+{
+	"label": "Modalidade",
+	"children": [
+		{
+			"label" : "CONCORRENCIA"
+		},
+		{
+			"label" : "CONVITE"
+		},
+		{
+			"label" : "LEILAO"
+		},
+		{
+			"label" : "PREGAO ELETRONICO"
+		},
+		{
+			"label" : "CONCURSO"
+		},
+		{
+			"label" : "PREGAO PRESENCIAL"
+		},
+		{
+			"label" : "TOMADA DE PRECOS"
+		}
+]}

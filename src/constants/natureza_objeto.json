@@ -1,0 +1,25 @@
+{
+	"label": "Natureza do Objeto",
+	"children": [
+		{
+			"label" : "ALIENACAO DE BENS"
+		},
+		{
+			"label" : "COMPRAS E OUTROS SERVICOS"
+		},
+		{
+			"label" : "COMPRAS PARA OBRAS E\/OU SERVICOS DE ENGENHARIA"
+		},
+		{
+			"label" : "OBRAS E SERVICOS DE ENGENHARIA"
+		},
+		{
+			"label" : "PERMISSAO"
+		},
+		{
+			"label" : "CONCESSAO"
+		},
+		{
+			"label" : "LOCACAO DE IMOVEIS"
+		}
+]}

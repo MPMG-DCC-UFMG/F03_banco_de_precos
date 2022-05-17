@@ -1,0 +1,13 @@
+{
+	"label": "Tipo do Fornecedor",
+	"children": [
+		{
+			"key": "J",
+			"label": "Jurídica"
+		},
+		{
+			"key": "F",
+			"label": "Física"
+		}
+	]
+}

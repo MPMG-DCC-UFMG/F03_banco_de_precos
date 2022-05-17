@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseUrl = `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/api/`
 
-const queryStringConverter = (params) => params ? '?' + Object.keys(params).map(key => key + '=' + params[key]).join('&') : '';
+const queryStringConverter = (params) => params ? '?' + Object.keys(params).filter(key => !!params[key]).map(key => key + '=' + params[key]).join('&') : '';
 
 const get = async (endpoint, params) => {
     try {

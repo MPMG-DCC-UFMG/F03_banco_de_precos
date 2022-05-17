@@ -1,0 +1,25 @@
+{
+	"label": "Tipo do Órgão",
+	"children": [
+		{
+			"label" : "EMPRESA PUBLICA (APENAS AS DEPENDENTES)"
+		},
+		{
+			"label" : "FUNDACAO"
+		},
+		{
+			"label" : "RPPS (REGIME PROPRIO DE PREVIDENCIA SOCIAL)"
+		},
+		{
+			"label" : "SOCIEDADE DE ECONOMIA MISTA (APENAS AS DEPENDENTES)"
+		},
+		{
+			"label" : "AUTARQUIA (EXCETO RPPS)"
+		},
+		{
+			"label" : "CAMARA MUNICIPAL"
+		},
+		{
+			"label" : "PREFEITURA MUNICIPAL"
+		}
+]}

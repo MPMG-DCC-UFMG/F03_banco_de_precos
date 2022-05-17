@@ -1,7 +1,19 @@
 import { Close, FilterSharp } from '@mui/icons-material';
-import { Button, Card, CardActions, CardContent, Checkbox, FormControlLabel, IconButton, Modal, TextField, Typography } from '@mui/material';
+import { Button, Card, CardHeader, CardActions, CardContent, Checkbox, FormControlLabel, IconButton, Modal, TextField, Typography, Tooltip } from '@mui/material';
 import React, { useContext } from 'react';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
+import SelectSingle from './SelectSingle';
+import CnpjInput from './CnpjInput';
+import object_nature from '../constants/natureza_objeto.json';
+import body_name from '../constants/nome_orgao.json';
+import body_type from '../constants/tipo_orgao.json';
+import procurement_type from '../constants/tipo_licitacao.json';
+import bidder_type from '../constants/tipo_vencedor.json';
+import modality from '../constants/modalidade.json';
+import cities from '../constants/cities.json';
+import BidderNameInput from './BidderNameInput';
+import SelectMultiple from './SelectMultiple';
+import HelpIcon from '@mui/icons-material/Help';
 
 type Props = {
     open: boolean,
@@ -22,96 +34,132 @@ function AdvancedFilter({ open, onClose }: Props) {
 
     return (<Modal open={open} onClose={() => onClose()}>
         <div className="w-full h-full flex items-center justify-center">
-            <Card className='w-full max-w-2xl'>
-                <CardContent>
-                    <div className="flex">
-                        <div className="flex-1">
-                            <Typography variant='h4'>Busca Avançada</Typography>
-                        </div>
-                        <div className="flex-1 text-right">
-                            <IconButton onClick={(ev) => onClose()}>
-                                <Close />
-                            </IconButton>
-                        </div>
-                    </div>
+            <Card className='w-full max-w-3xl relative'>
+                <CardHeader
+                    title="Busca Avançada"
+                    action={
+                        <IconButton onClick={(ev) => onClose()}>
+                            <Close />
+                        </IconButton>
+                    }>
+                </CardHeader>
+                <div className="h-[80vh] overflow-auto">
+                    <CardContent>
+                        <div className="mb-8">
+                            <Typography variant='h5'>Faixa</Typography>
 
-                    <div className="my-8">
-                        <Typography variant='h5'>Faixa</Typography>
+                            <div className="my-4">
+                                <Typography variant='subtitle2'>Quantidade Comprada</Typography>
+                                <div className="flex gap-4 my-2">
+                                    <div className='flex-1'><TextField name="min_amount" value={filters.min_amount} onChange={handleChange} className='w-full' label="Min." variant="outlined" /></div>
+                                    <div className='flex-1'><TextField name="max_amount" value={filters.max_amount} onChange={handleChange} className='w-full' label="Máx." variant="outlined" /></div>
+                                </div>
+                            </div>
 
-                        <div className="my-4">
-                            <Typography variant='subtitle2'>Quantidade Comprada</Typography>
+                            <div className="my-4">
+                                <Typography variant='subtitle2'>Preço Unitário</Typography>
+                                <div className="flex gap-4 my-2">
+                                    <div className='flex-1'><TextField name="min_homolog_price" value={filters.min_homolog_price} onChange={handleChange} className='w-full' label="Min." variant="outlined" /></div>
+                                    <div className='flex-1'><TextField name="max_homolog_price" value={filters.max_homolog_price} onChange={handleChange} className='w-full' label="Máx." variant="outlined" /></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className="my-8">
+                            <Typography variant='h5'>Órgão</Typography>
                             <div className="flex gap-4 my-2">
-                                <div className='flex-1'><TextField name="min_amount" value={filters.min_amount} onChange={handleChange} className='w-full' label="Min." variant="outlined" size='small' /></div>
-                                <div className='flex-1'><TextField name="max_amount" value={filters.max_amount} onChange={handleChange} className='w-full' label="Máx." variant="outlined" size='small' /></div>
+                                <div className='flex-1'>
+                                    <SelectSingle filterKey='body' label='Nome do Órgão' options={body_name.children} />
+                                </div>
+                                <div className='flex-1'>
+                                    <SelectSingle filterKey='body_type' label='Tipo de Órgão' options={body_type.children} />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="my-4">
-                            <Typography variant='subtitle2'>Preço Unitário</Typography>
+                        <div className="my-8">
+                            <Typography variant='h5'>Fornecedor</Typography>
                             <div className="flex gap-4 my-2">
-                                <div className='flex-1'><TextField name="min_homolog_price" value={filters.min_homolog_price} onChange={handleChange} className='w-full' label="Min." variant="outlined" size='small' /></div>
-                                <div className='flex-1'><TextField name="max_homolog_price" value={filters.max_homolog_price} onChange={handleChange} className='w-full' label="Máx." variant="outlined" size='small' /></div>
+                                <div className='w-1/4'>
+                                    <SelectSingle filterKey='bidder_type' label='Tipo' options={bidder_type.children} />
+                                </div>
+                                <div className='flex-1'>
+                                    <BidderNameInput />
+                                </div>
+                                {filters.bidder_type === 'J' ?
+                                    <div className='w-1/4'>
+                                        <CnpjInput />
+                                    </div>
+                                    : null
+                                }
                             </div>
                         </div>
 
-                    </div>
-
-                    <div className="my-8">
-                        <Typography variant='h5'>Órgão</Typography>
-                        <div className="flex gap-4 my-2">
-                            <div className='flex-1'><TextField name="body" value={filters.body} onChange={handleChange} className='w-full' label="Nome do Órgão" variant="outlined" size='small' /></div>
-                            <div className='flex-1'><TextField name="body_type" value={filters.body_type} onChange={handleChange} className='w-full' label="Tipo de Licitação" variant="outlined" size='small' /></div>
+                        <div className="my-8">
+                            <Typography variant='h5'>Licitação</Typography>
+                            <div className="flex gap-4 my-2">
+                                <div className='w-2/4'>
+                                    <SelectSingle filterKey='procurement_type' label='Tipo de Licitação' options={procurement_type.children} />
+                                </div>
+                                <div className='flex-1'>
+                                    <SelectSingle filterKey='modality' label='Modalidade' options={modality.children} />
+                                </div>
+                                <div className='flex-1'>
+                                    <SelectSingle filterKey='object_nature' label='Natureza' options={object_nature.children} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="my-8">
-                        <Typography variant='h5'>Fornecedor</Typography>
-                        <div className="flex gap-4 my-2">
-                            <div className='flex-1'><TextField name="bidder_type" value={filters.bidder_type} onChange={handleChange} className='w-full' label="Tipo" variant="outlined" size='small' /></div>
-                            <div className='w-2/4'><TextField name="bidder_name" value={filters.bidder_name} onChange={handleChange} className='w-full' label="Fornecedor" variant="outlined" size='small' /></div>
-                            <div className='flex-1'><TextField name="bidder_document" value={filters.bidder_document} onChange={handleChange} className='w-full' label="CNPJ/CPF" variant="outlined" size='small' /></div>
+                        <div className="my-8">
+                            <Typography variant='h5'>Região</Typography>
+                            <div className="my-4">
+                                <SelectMultiple filterKey='city' label='Municipios' options={cities[0].children.map(opt => opt.label)} />
+                            </div>
+                            <div className="my-4">
+                                <SelectMultiple filterKey='imediate_region' label='Região Imediata' options={cities[4].children.map(opt => opt.label)} />
+                            </div>
+                            <div className="my-4">
+                                <SelectMultiple filterKey='inter_region' label='Região Intermediária' options={cities[5].children.map(opt => opt.label)} />
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="my-8">
-                        <Typography variant='h5'>Licitação</Typography>
-                        <div className="flex gap-4 my-2">
-                            <div className='w-2/4'><TextField name="procurement_type" value={filters.procurement_type} onChange={handleChange} className='w-full' label="Tipo de Licitação" variant="outlined" size='small' /></div>
-                            <div className='flex-1'><TextField name="modality" value={filters.modality} onChange={handleChange} className='w-full' label="Modalidade" variant="outlined" size='small' /></div>
-                            <div className='flex-1'><TextField name="object_nature" value={filters.object_nature} onChange={handleChange} className='w-full' label="Natureza" variant="outlined" size='small' /></div>
+                        <div className="mt-8">
+                            <Typography variant='h5'>
+                                Critérios de Agregação de Resultados 
+                                <Tooltip title="Agrupar os dados de acordo com um ou mais atributos relacionados ao objeto de forma a obter estatísticas de preço, tais como média, máximo e mínimo. Esse agrupamento pode levar alguns minutos para processar.">
+                                    <HelpIcon fontSize="small" color="disabled" />
+                                </Tooltip>
+                            </Typography>
+                            <div className="my-2">
+                                <FormControlLabel
+                                    label="Descrição"
+                                    control={
+                                        <Checkbox name='group_by_description' checked={filters.group_by_description} onChange={handleChangeCheck} aria-label='Descrição' />
+                                    }
+                                />
+                                <FormControlLabel
+                                    label="Unidade de Medida"
+                                    control={
+                                        <Checkbox name='group_by_unit_metric' checked={filters.group_by_unit_metric} onChange={handleChangeCheck} aria-label='Unidade de Medida' />
+                                    }
+                                />
+                                <FormControlLabel
+                                    label="Ano"
+                                    control={
+                                        <Checkbox name='group_by_year' checked={filters.group_by_year} onChange={handleChangeCheck} aria-label='Ano' />
+                                    }
+                                />
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="mt-8">
-                        <Typography variant='h5'>Critérios de Agregação de Resultados</Typography>
-                        <div className="my-2">
-                            <FormControlLabel
-                                label="Descrição"
-                                control={
-                                    <Checkbox name='group_by_description' checked={filters.group_by_description} onChange={handleChangeCheck} aria-label='Descrição' />
-                                }
-                            />
-                            <FormControlLabel
-                                label="Unidade de Medida"
-                                control={
-                                    <Checkbox name='group_by_unit_metric' checked={filters.group_by_unit_metric} onChange={handleChangeCheck} aria-label='Unidade de Medida' />
-                                }
-                            />
-                            <FormControlLabel
-                                label="Ano"
-                                control={
-                                    <Checkbox name='group_by_year' checked={filters.group_by_year} onChange={handleChangeCheck} aria-label='Ano' />
-                                }
-                            />
-                        </div>
-                    </div>
-                </CardContent>
+                    </CardContent>
+                </div>
                 <CardActions className='justify-end'>
                     <Button onClick={(ev) => onClose()} variant='contained'>Ok</Button>
                 </CardActions>
             </Card>
         </div>
-    </Modal>);
+    </Modal >);
 }
 
 export default AdvancedFilter;
