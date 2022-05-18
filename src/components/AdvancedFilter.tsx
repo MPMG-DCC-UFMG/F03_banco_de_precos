@@ -22,7 +22,7 @@ type Props = {
 
 function AdvancedFilter({ open, onClose }: Props) {
 
-    const { filters, setFilters } = useContext(GlobalStateContext);
+    const { filters, setFilters, cleanFilters } = useContext(GlobalStateContext);
 
     const handleChangeCheck = (ev: React.ChangeEvent<HTMLInputElement>) => {
         setFilters({ ...filters, ...{ [ev.target.name]: ev.target.checked } });
@@ -124,9 +124,11 @@ function AdvancedFilter({ open, onClose }: Props) {
                             </div>
                         </div>
 
+                        <hr />
+
                         <div className="mt-8">
                             <Typography variant='h5'>
-                                Critérios de Agregação de Resultados 
+                                Critérios de Agregação de Resultados
                                 <Tooltip title="Agrupar os dados de acordo com um ou mais atributos relacionados ao objeto de forma a obter estatísticas de preço, tais como média, máximo e mínimo. Esse agrupamento pode levar alguns minutos para processar.">
                                     <HelpIcon fontSize="small" color="disabled" />
                                 </Tooltip>
@@ -154,7 +156,8 @@ function AdvancedFilter({ open, onClose }: Props) {
                         </div>
                     </CardContent>
                 </div>
-                <CardActions className='justify-end'>
+                <CardActions className='justify-end gap-2'>
+                    <Button onClick={(ev) => cleanFilters()} variant='text'>Resetar</Button>
                     <Button onClick={(ev) => onClose()} variant='contained'>Ok</Button>
                 </CardActions>
             </Card>

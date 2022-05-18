@@ -30,7 +30,7 @@ function Result() {
                     <div className="flex-1">
                         <SearchInput />
                     </div>
-                    <div className='flex gap-4 items-center w-[550px] '>
+                    <div className='flex gap-4 items-center w-[650px] '>
                         <PeriodSelector />
                     </div>
                     <div>

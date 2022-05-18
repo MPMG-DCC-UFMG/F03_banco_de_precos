@@ -35,7 +35,7 @@ function PeriodSelector() {
     }
 
     return (<>
-        <div className="w-1/3">
+        <div className="w-[155px]">
             <ToggleButtonGroup
                 value={filters.isPeriod ? "period" : "exercise"}
                 exclusive
@@ -48,17 +48,27 @@ function PeriodSelector() {
         </div>
 
         {filters.isPeriod ? <>
-            <div className="w-1/3">
-                <TextField onChange={(ev) => setAfter(ev)} value={filters.after?.substring(0, 7)} name="after" className='w-full' type="month" variant="outlined" />
+            <div className="flex-1 flex gap-2 items-center">
+                <div>
+                    de
+                </div>
+                <div className="flex-1">
+                    <TextField onChange={(ev) => setAfter(ev)} value={filters.after?.substring(0, 7)} name="after" className='w-full' type="month" variant="outlined" />
+                </div>
             </div>
-            <div className="w-1/3">
-                <TextField onChange={(ev) => setBefore(ev)} value={filters.before?.substring(0, 7)} name="before" className='w-full' type="month" variant="outlined" />
+            <div className="flex-1 flex gap-2 items-center">
+                <div>
+                    até
+                </div>
+                <div className="flex-1">
+                    <TextField onChange={(ev) => setBefore(ev)} value={filters.before?.substring(0, 7)} name="before" className='w-full' type="month" variant="outlined" />
+                </div>
             </div>
         </> : <>
-            <div className="w-1/3">
+            <div className="flex-1">
                 <SelectMultiple options={years} label="Ano(s)" filterKey='year' />
             </div>
-            <div className="w-1/3">
+            <div className="flex-1">
                 <SelectMultiple options={months} label="Meses(s)" filterKey='month' />
             </div>
         </>}

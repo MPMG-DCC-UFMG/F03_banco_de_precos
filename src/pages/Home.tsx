@@ -22,7 +22,7 @@ function Home() {
     return (<HeaderMainFooter>
         <div className='min-h-main w-full flex items-center justify-center'>
             <AdvancedFilter open={showModal} onClose={() => setShowModal(false)} />
-            <div className="w-full max-w-xl text-center">
+            <div className="w-full max-w-2xl text-center">
                 <div className="mb-8">
                     <Typography variant='h3'>Banco de Preços</Typography>
                 </div>
