@@ -8,7 +8,7 @@ import { toCurrency, toFormatedNumber } from '../utils/helpers';
 
 function ResultsTable() {
     const { description, filters } = useContext(GlobalStateContext);
-    const { data, error, loading } = useFetch(endpoints.ITEMS, JSON.stringify({ description, ...filters, limit: 1000 }), "POST")
+    const { data, error, loading } = useFetch(endpoints.ITEMS, JSON.stringify({ description, ...filters, page: 0, size: 15 }), "POST")
 
     const columns: GridColDef[] = [
         { field: 'original_dsc', headerName: 'Descrição', flex: 1 },
