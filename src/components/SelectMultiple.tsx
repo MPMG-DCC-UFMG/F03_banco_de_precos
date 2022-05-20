@@ -1,14 +1,16 @@
-import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
-import React, { useContext } from 'react';
+import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, SelectChangeEvent, TextField } from '@mui/material';
+import React, { useContext, useState } from 'react';
 import { GlobalStateContext, IFilters } from '../wrappers/GlobalContext';
 
 type Props = {
   options: string[],
   label: string,
   filterKey: string,
+  searchable?: boolean
 }
 
-function SelectMultiple({ options, label, filterKey }: Props) {
+function SelectMultiple({ options, label, filterKey, searchable }: Props) {
+  const [search, setSearch] = useState<string>("");
   const { filters, setFilters } = useContext(GlobalStateContext);
 
   const handleChange = (event: SelectChangeEvent<string | number | true | string[]>) => {
@@ -23,6 +25,7 @@ function SelectMultiple({ options, label, filterKey }: Props) {
 
   const value = () => filters[filterKey as keyof IFilters] || [];
   const isChecked = (option: string): boolean => Array.isArray(value()) ? (value() as string[]).includes(option) : false;
+  const filteredOptions = () => search ? options.filter(opt => opt.toLowerCase().includes(search.toLowerCase())) : options;
 
   return (
     <FormControl className='w-full'>
@@ -36,7 +39,21 @@ function SelectMultiple({ options, label, filterKey }: Props) {
         renderValue={(selected: any) => selected.join(', ')}
         onChange={handleChange}
       >
-        {options.map((option) => (
+        {searchable ?
+          <div className='p-2'>
+            <TextField
+              className='w-full'
+              variant='outlined'
+              size='small'
+              placeholder='Buscar...'
+              value={search}
+              type="search"
+              onKeyDown={(e) => { e.stopPropagation(); }}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          : null}
+        {filteredOptions().map((option) => (
           <MenuItem key={option} value={option}>
             <Checkbox checked={isChecked(option)} />
             <ListItemText primary={option} />

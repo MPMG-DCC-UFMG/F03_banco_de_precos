@@ -70,7 +70,7 @@ function AdvancedFilter({ open, onClose }: Props) {
                             <Typography variant='h5'>Órgão</Typography>
                             <div className="flex gap-4 my-2">
                                 <div className='flex-1'>
-                                    <SelectSingle filterKey='body' label='Nome do Órgão' options={body_name.children} />
+                                    <SelectSingle filterKey='body' label='Nome do Órgão' options={body_name.children} searchable />
                                 </div>
                                 <div className='flex-1'>
                                     <SelectSingle filterKey='body_type' label='Tipo de Órgão' options={body_type.children} />
@@ -114,13 +114,13 @@ function AdvancedFilter({ open, onClose }: Props) {
                         <div className="my-8">
                             <Typography variant='h5'>Região</Typography>
                             <div className="my-4">
-                                <SelectMultiple filterKey='city' label='Municipios' options={cities[0].children.map(opt => opt.label)} />
+                                <SelectMultiple searchable filterKey='city' label='Municipios' options={cities[0].children.map(opt => opt.label)} />
                             </div>
                             <div className="my-4">
-                                <SelectMultiple filterKey='imediate_region' label='Região Imediata' options={cities[4].children.map(opt => opt.label)} />
+                                <SelectMultiple searchable filterKey='imediate_region' label='Região Imediata' options={cities[4].children.map(opt => opt.label)} />
                             </div>
                             <div className="my-4">
-                                <SelectMultiple filterKey='inter_region' label='Região Intermediária' options={cities[5].children.map(opt => opt.label)} />
+                                <SelectMultiple searchable filterKey='inter_region' label='Região Intermediária' options={cities[5].children.map(opt => opt.label)} />
                             </div>
                         </div>
 
