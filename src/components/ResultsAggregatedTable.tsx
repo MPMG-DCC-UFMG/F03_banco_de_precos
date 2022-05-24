@@ -10,15 +10,17 @@ import { queryStringConverter } from '../services/apiRequest';
 import { toCurrency, toFormatedNumber } from '../utils/helpers';
 
 function ResultsAggregatedTable() {
+    const [pageSize, setPageSize] = useState<number>(100);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const { description, filters } = useContext(GlobalStateContext);
-    const { data, error, loading } = useFetch(endpoints.PRICING, JSON.stringify({ description, ...filters }), "POST")
+    const { data, error, loading } = useFetch(`${endpoints.PRICING}${queryStringConverter({ page: currentPage - 1, size: pageSize })}`, JSON.stringify({ description, ...filters }), "POST")
     const [showModal, setShowModal] = useState<any>(null);
 
     const generateId = (data: any) => {
         const id = [];
-        if (data.original) id.push(data.original);
-        if (data.dsc_unidade_medida) id.push(data.dsc_unidade_medida);
-        if (data.ano) id.push(data.ano);
+        if (data.group_by_description) id.push(data.group_by_description);
+        if (data.group_by_unit_metric) id.push(data.group_by_unit_metric);
+        if (data.group_by_year) id.push(data.group_by_year);
 
         return id.join("_");
     }
@@ -32,13 +34,13 @@ function ResultsAggregatedTable() {
             }];
 
         if (filters.group_by_description)
-            columns.push({ field: 'original', headerName: 'Descrição', flex: 1 });
+            columns.push({ field: 'group_by_description', headerName: 'Descrição', flex: 1 });
 
         if (filters.group_by_unit_metric)
-            columns.push({ field: 'dsc_unidade_medida', headerName: 'Unidade de Medida', flex: 1 });
+            columns.push({ field: 'group_by_unit_metric', headerName: 'Unidade de Medida', flex: 1 });
 
         if (filters.group_by_year)
-            columns.push({ field: 'ano', headerName: 'Ano', flex: 1 });
+            columns.push({ field: 'group_by_year', headerName: 'Ano', flex: 1 });
 
         columns = [...columns, ...[
             { field: 'mean', headerName: 'Preço médio (R$)', flex: 1 },
@@ -50,12 +52,12 @@ function ResultsAggregatedTable() {
         return columns;
     };
 
-    const formatedData = () => data.map((d: any) => ({
+    const formatedData = () => data.data.map((d: any) => ({
         ...d,
-        mean: toCurrency(d.mean),
-        min: toCurrency(d.min),
-        max: toCurrency(d.max),
-        count: toFormatedNumber(d.count),
+        mean: toCurrency(d.avg_preco),
+        min: toCurrency(d.min_preco),
+        max: toCurrency(d.max_preco),
+        count: toFormatedNumber(d.sum_qtde_item),
     }))
 
     return (<div className='bg-white h-result'>
@@ -63,6 +65,12 @@ function ResultsAggregatedTable() {
         {loading || !data
             ? <CircularProgress />
             : <DataGrid
+                paginationMode='server'
+                pageSize={pageSize}
+                rowCount={data.total}
+                page={currentPage}
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                onPageChange={(newPage) => { if (newPage > 0) setCurrentPage(newPage) }}
                 rows={formatedData()}
                 columns={columns()}
                 getRowId={generateId}
