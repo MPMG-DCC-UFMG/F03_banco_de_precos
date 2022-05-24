@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import endpoints from '../constants/endpoints';
 import useFetch from '../hooks/useFetch';
 import { CircularProgress } from '@mui/material';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
 import { toCurrency, toFormatedNumber } from '../utils/helpers';
+import { queryStringConverter } from '../services/apiRequest';
 
 function ResultsTable() {
+    const [pageSize, setPageSize] = useState<number>(100);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const { description, filters } = useContext(GlobalStateContext);
-    const { data, error, loading } = useFetch(endpoints.ITEMS, JSON.stringify({ description, ...filters, page: 0, size: 15 }), "POST")
+    const { data, error, loading } = useFetch(`${endpoints.ITEMS}${queryStringConverter({ page: currentPage - 1, size: pageSize })}`, JSON.stringify({ description, ...filters }), "POST")
 
     const columns: GridColDef[] = [
         { field: 'original_dsc', headerName: 'Descrição', flex: 1 },
@@ -23,7 +26,7 @@ function ResultsTable() {
         { field: 'data', headerName: 'Data', flex: 1 },
     ];
 
-    const formatedData = () => data.map((d: any) => ({
+    const formatedData = () => data.data.map((d: any) => ({
         ...d,
         preco: toCurrency(d.preco),
         qtde_item: toFormatedNumber(d.qtde_item),
@@ -33,7 +36,13 @@ function ResultsTable() {
         {loading || !data
             ? <CircularProgress />
             : <DataGrid
+                paginationMode='server'
+                pageSize={pageSize}
                 rows={formatedData()}
+                rowCount={data.total}
+                page={currentPage}
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                onPageChange={(newPage) => setCurrentPage(newPage)}
                 columns={columns}
                 getRowId={(e: any) => e.id_item}
             />
