@@ -157,7 +157,7 @@ function AdvancedFilter({ open, onClose }: Props) {
                     </CardContent>
                 </div>
                 <CardActions className='justify-end gap-2'>
-                    <Button onClick={(ev) => cleanFilters()} variant='text'>Resetar</Button>
+                    <Button onClick={(ev) => { cleanFilters(); onClose(); }} variant='text'>Resetar</Button>
                     <Button onClick={(ev) => onClose()} variant='contained'>Ok</Button>
                 </CardActions>
             </Card>

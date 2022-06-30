@@ -9,9 +9,9 @@ import { queryStringConverter } from '../services/apiRequest';
 
 function ResultsTable() {
     const [pageSize, setPageSize] = useState<number>(100);
-    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [currentPage, setCurrentPage] = useState<number>(0);
     const { description, filters } = useContext(GlobalStateContext);
-    const { data, error, loading } = useFetch(`${endpoints.ITEMS}${queryStringConverter({ page: currentPage - 1, size: pageSize })}`, JSON.stringify({ description, ...filters }), "POST")
+    const { data, error, loading } = useFetch(`${endpoints.ITEMS}${queryStringConverter({ page: currentPage, size: pageSize })}`, JSON.stringify({ description, ...filters }), "POST")
 
     const columns: GridColDef[] = [
         { field: 'original_dsc', headerName: 'Descrição', flex: 1 },
@@ -30,6 +30,7 @@ function ResultsTable() {
         ...d,
         preco: toCurrency(d.preco),
         qtde_item: toFormatedNumber(d.qtde_item),
+        data: new Date(d.data).toLocaleDateString('pt-br')
     }))
 
     return (<div className='bg-white h-result'>

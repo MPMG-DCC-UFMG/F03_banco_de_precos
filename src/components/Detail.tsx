@@ -20,8 +20,8 @@ function Detail({ open, onClose, selectedData }: Props) {
 
     const { data, error, loading } = useFetch(endpoints.CHARTS, queryStringConverter({
         description: selectedData.original || description,
-        unit_measure: selectedData.dsc_unidade_medida,
-        year: selectedData.ano,
+        unit_measure: selectedData.group_by_unit_metric,
+        year: selectedData.group_by_year,
         limit: 1000
     }))
 
@@ -58,8 +58,8 @@ function Detail({ open, onClose, selectedData }: Props) {
                             </div>
 
                             <div className="my-4 grid grid-cols-2 gap-4">
-                                <Chart field="qtde_item" type='sum' color="#386641" label="Relação de Itens" axisName='Qtd. de Itens' data={data} />
-                                <Chart field="mean_preco" type="avg" color="#003D5B" label="Relação de Preços" axisName='Preço' data={data} />
+                                <Chart field="qtde_item" type='sum' color="#003D5B" label="Relação de Itens" axisName='Qtd. de Itens' data={data} />
+                                <Chart field="mean_preco" type="avg" color="#386641" label="Relação de Preços" axisName='Preço' data={data} />
                             </div>
                         </>
                     }
