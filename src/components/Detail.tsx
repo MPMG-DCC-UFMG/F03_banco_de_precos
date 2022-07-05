@@ -19,7 +19,7 @@ function Detail({ open, onClose, selectedData }: Props) {
     const { description } = useContext(GlobalStateContext);
 
     const { data, error, loading } = useFetch(endpoints.CHARTS, queryStringConverter({
-        description: selectedData.original || description,
+        description: selectedData.group_by_description || description,
         unit_measure: selectedData.group_by_unit_metric,
         year: selectedData.group_by_year,
         limit: 1000
