@@ -86,8 +86,11 @@ function GlobalContext({ children }: Props) {
     }
 
     const cleanFilters = () => {
-        console.log("TESTE CLENA")
-        setFilters(defaultValue);
+        setFilters({
+            group_by_description: false,
+            group_by_unit_metric: false,
+            group_by_year: false
+        });
     }
 
     return <GlobalStateContext.Provider value={{ description, setDescription, filters, setFilters, countFilters, cleanFilters }}>

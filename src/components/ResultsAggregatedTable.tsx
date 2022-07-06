@@ -25,6 +25,8 @@ function ResultsAggregatedTable() {
         return id.join("_");
     }
 
+    const renderCellAct = (params: GridRenderCellParams) => <span className='truncate' title={params.value}>{params.value}</span>;
+    
     const columns = (): GridColDef[] => {
         let columns: GridColDef[] = [
             {
@@ -34,19 +36,19 @@ function ResultsAggregatedTable() {
             }];
 
         if (filters.group_by_description)
-            columns.push({ field: 'group_by_description', headerName: 'Descrição', flex: 1 });
+            columns.push({ field: 'group_by_description', headerName: 'Descrição', flex: 1, renderCell: renderCellAct });
 
         if (filters.group_by_unit_metric)
-            columns.push({ field: 'group_by_unit_metric', headerName: 'Unidade de Medida', flex: 1 });
+            columns.push({ field: 'group_by_unit_metric', headerName: 'Unidade de Medida', flex: .3, renderCell: renderCellAct });
 
         if (filters.group_by_year)
-            columns.push({ field: 'group_by_year', headerName: 'Ano', flex: 1 });
+            columns.push({ field: 'group_by_year', headerName: 'Ano', flex: .3, renderCell: renderCellAct });
 
         columns = [...columns, ...[
-            { field: 'mean', headerName: 'Preço médio (R$)', flex: 1 },
-            { field: 'min', headerName: 'Preço mínimo (R$)', flex: 1 },
-            { field: 'max', headerName: 'Preço máximo (R$)', flex: 1 },
-            { field: 'count', headerName: 'Quantidade total', flex: 1 }
+            { field: 'mean', headerName: 'Preço médio (R$)', flex: .3, renderCell: renderCellAct },
+            { field: 'min', headerName: 'Preço mínimo (R$)', flex: .3, renderCell: renderCellAct },
+            { field: 'max', headerName: 'Preço máximo (R$)', flex: .3, renderCell: renderCellAct },
+            { field: 'count', headerName: 'Quantidade total', flex: .3, renderCell: renderCellAct }
         ]]
 
         return columns;

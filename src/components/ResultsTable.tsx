@@ -16,7 +16,7 @@ function ResultsTable() {
     const renderCellAct = (params: GridRenderCellParams) => <span className='truncate' title={params.value}>{params.value}</span>;
 
     const columns: GridColDef[] = [
-        { field: 'original_dsc', headerName: 'Descrição', flex: 1, renderCell: renderCellAct },
+        { field: 'original_dsc', headerName: 'Descrição', flex: 1, minWidth: 300, renderCell: renderCellAct },
         { field: 'dsc_unidade_medida', headerName: 'Unid. Medida', flex: 1 },
         { field: 'preco', headerName: 'Preço unitário (R$)', flex: 1 },
         { field: 'qtde_item', headerName: 'Quantidade' },

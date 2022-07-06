@@ -21,3 +21,11 @@ npm install --global npm@latest
 ### `npm run start`
 
 7) Abra http://localhost:3000 para visualizar no navegador.
+
+## Exportar imagem docker
+
+Build do projeto
+`docker build -t banco-preco-front .`
+
+Salvar a imagem para arquivo
+`docker save -o banco-preco-front.tar banco-preco-front`

@@ -46,8 +46,8 @@ function Detail({ open, onClose, selectedData }: Props) {
                         : <>
                             <div className="my-4">
                                 <Typography variant='h5'>{selectedData.original || description}</Typography>
-                                {selectedData.dsc_unidade_medida ? <Typography variant='subtitle1'>Descrição de medida: {selectedData.dsc_unidade_medida}</Typography> : null}
-                                {selectedData.ano ? <Typography variant='subtitle1'>Ano: {selectedData.ano}</Typography> : null}
+                                {selectedData.group_by_unit_metric ? <Typography variant='subtitle1'>Descrição de medida: {selectedData.group_by_unit_metric}</Typography> : null}
+                                {selectedData.group_by_year ? <Typography variant='subtitle1'>Ano: {selectedData.group_by_year}</Typography> : null}
                             </div>
 
                             <div className="my-4 grid grid-cols-4 gap-4">
