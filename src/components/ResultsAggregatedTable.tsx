@@ -12,8 +12,8 @@ import { toCurrency, toFormatedNumber } from '../utils/helpers';
 function ResultsAggregatedTable() {
     const [pageSize, setPageSize] = useState<number>(100);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { description, filters } = useContext(GlobalStateContext);
-    const { data, error, loading } = useFetch(`${endpoints.PRICING}${queryStringConverter({ page: currentPage - 1, size: pageSize })}`, JSON.stringify({ description, ...filters }), "POST")
+    const { description, filters, searchType: search_type } = useContext(GlobalStateContext);
+    const { data, error, loading } = useFetch(`${endpoints.PRICING}${queryStringConverter({ page: currentPage - 1, size: pageSize, search_type })}`, JSON.stringify({ description, ...filters }), "POST")
     const [showModal, setShowModal] = useState<any>(null);
 
     const generateId = (data: any) => {
@@ -62,6 +62,10 @@ function ResultsAggregatedTable() {
         count: toFormatedNumber(d.sum_qtde_item),
     }))
 
+    const rowCount = () => {
+        return (currentPage+2)*pageSize;
+    }
+
     return (<div className='bg-white h-result'>
         {showModal ? <Detail open onClose={() => setShowModal(null)} selectedData={showModal} /> : null}
         {loading || !data
@@ -69,7 +73,7 @@ function ResultsAggregatedTable() {
             : <DataGrid
                 paginationMode='server'
                 pageSize={pageSize}
-                rowCount={data.total}
+                rowCount={rowCount()}
                 page={currentPage}
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                 onPageChange={(newPage) => { if (newPage > 0) setCurrentPage(newPage) }}

@@ -55,6 +55,8 @@ const defaultValue: IFilters = {
 interface globalContextInterface {
     description: null,
     setDescription: react.Dispatch<any>
+    searchType: string,
+    setSearchType: react.Dispatch<any>
     filters: IFilters,
     setFilters: react.Dispatch<IFilters>
     countFilters: () => number
@@ -69,6 +71,7 @@ type Props = {
 
 function GlobalContext({ children }: Props) {
     const [description, setDescription] = useState<any>(null);
+    const [searchType, setSearchType] = useState<string>("smart");
     const [filters, setFilters] = useState<IFilters>({
         group_by_description: false,
         group_by_unit_metric: false,
@@ -93,7 +96,7 @@ function GlobalContext({ children }: Props) {
         });
     }
 
-    return <GlobalStateContext.Provider value={{ description, setDescription, filters, setFilters, countFilters, cleanFilters }}>
+    return <GlobalStateContext.Provider value={{ description, setDescription, searchType, setSearchType, filters, setFilters, countFilters, cleanFilters }}>
         {children}
     </GlobalStateContext.Provider>
 }

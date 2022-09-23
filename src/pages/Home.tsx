@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import HeaderMainFooter from '../templates/HeaderMainFooter';
 import { Button, Typography, Badge } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { GlobalStateContext } from '../wrappers/GlobalContext';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AdvancedFilter from '../components/AdvancedFilter';
 import PeriodSelector from '../components/PeriodSelector';
+import SearchTypeSelector from '../components/SearchTypeSelector';
 
 
 function Home() {
@@ -27,7 +28,14 @@ function Home() {
                     <Typography variant='h3'>Banco de Preços</Typography>
                 </div>
                 <form onSubmit={onSearch}>
-                    <SearchInput />
+                    <div className="flex gap-2 items-center">
+                        <div className="">
+                            <SearchTypeSelector />
+                        </div>
+                        <div className="flex-1">
+                            <SearchInput />
+                        </div>
+                    </div>
 
                     <div className="my-4 flex gap-4 items-center">
                         <PeriodSelector />
