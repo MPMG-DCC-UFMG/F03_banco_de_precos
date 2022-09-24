@@ -45,7 +45,7 @@ function Detail({ open, onClose, selectedData }: Props) {
                         ? <CircularProgress />
                         : <>
                             <div className="my-4">
-                                <Typography variant='h5'>{selectedData.original || description}</Typography>
+                                <Typography variant='h5'>{selectedData.group_by_description || description}</Typography>
                                 {selectedData.group_by_unit_metric ? <Typography variant='subtitle1'>Descrição de medida: {selectedData.group_by_unit_metric}</Typography> : null}
                                 {selectedData.group_by_year ? <Typography variant='subtitle1'>Ano: {selectedData.group_by_year}</Typography> : null}
                             </div>
