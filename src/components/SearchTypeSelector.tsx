@@ -56,8 +56,7 @@ function SearchTypeSelector({ }: Props) {
       }}
     >
       {renderItem("Busca Inteligente", "smart")}
-      {renderItem("Busca Exata", "exact")}
-      {renderItem("Busca em qualquer parte", "anywhere")}
+      {renderItem("Busca Exata", "anywhere")}
 
     </Menu>
   </>);

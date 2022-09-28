@@ -10,11 +10,13 @@ import PeriodSelector from '../components/PeriodSelector';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AdvancedFilter from '../components/AdvancedFilter';
 import SearchTypeSelector from '../components/SearchTypeSelector';
+import ResultsClusterTable from '../components/ResultsClusterTable';
 
 const filterMap: any = {
-    group_by_description: "Agragação por Descrição",
-    group_by_unit_metric: "Agragação por Unidade de Medida",
-    group_by_year: "Agragação por ano",
+    group_by_description: "Agregação por Descrição",
+    group_by_unit_metric: "Agregação por Unidade de Medida",
+    group_by_year: "Agregação por ano",
+    group_by_cluster: "Efetuar cálculo de sobrepreço",
     min_amount: "Quantidade comprada mínima",
     max_amount: "Quantidade comprada máxima",
     min_homolog_price: "Preço unitário mínimo",
@@ -36,7 +38,7 @@ const filterMap: any = {
 
 function Result() {
     const [showModal, setShowModal] = useState<boolean>(false)
-    const { filters, countFilters } = useContext(GlobalStateContext)
+    const { filters, countFilters, onlyByCluster } = useContext(GlobalStateContext)
     const navigate = useNavigate();
 
     const onSearch = (ev: React.FormEvent<HTMLFormElement>) => {
@@ -44,13 +46,19 @@ function Result() {
         navigate(`/result`)
     }
 
-    const showTable = () => countFilters() === 0 ? <ResultsTable /> : <ResultsAggregatedTable />
+    const showTable = () => {
+        if (countFilters() === 0) {
+            return <ResultsTable />
+        } else {
+            return onlyByCluster() ? <ResultsClusterTable /> : <ResultsAggregatedTable />;
+        }
+    }
 
     const renderFilters = () => {
         const result: string[] = [];
         const filterArray = Object.entries(filters).filter(item => item[1])
-        for(const f of filterArray) {
-            const filterResult: string = filterMap[f[0]] +": "+ f[1];
+        for (const f of filterArray) {
+            const filterResult: string = filterMap[f[0]] + ": " + f[1];
             result.push(filterResult)
         }
 

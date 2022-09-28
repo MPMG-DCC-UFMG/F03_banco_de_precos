@@ -10,6 +10,7 @@
 
 # production
 /build
+banco-preco-front.tar
 
 # misc
 .DS_Store

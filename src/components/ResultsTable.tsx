@@ -16,7 +16,6 @@ function ResultsTable() {
 
     const renderCellAct = (params: GridRenderCellParams) => <span className='truncate' title={params.value}>{params.value}</span>;
     const renderCellLic = (params: GridRenderCellParams) => {
-        console.log(params);
         return <div>
             {params.value}
             <Tooltip title={<React.Fragment>

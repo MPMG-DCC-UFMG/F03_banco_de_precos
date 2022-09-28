@@ -4,6 +4,7 @@ export interface IFilters {
     group_by_description?: boolean,
     group_by_unit_metric?: boolean,
     group_by_year?: boolean,
+    group_by_cluster?: boolean,
     min_amount?: number,
     max_amount?: number,
     min_homolog_price?: number,
@@ -30,6 +31,7 @@ const defaultValue: IFilters = {
     group_by_description: false,
     group_by_unit_metric: false,
     group_by_year: false,
+    group_by_cluster: false,
     min_amount: undefined,
     max_amount: undefined,
     min_homolog_price: undefined,
@@ -60,6 +62,7 @@ interface globalContextInterface {
     filters: IFilters,
     setFilters: react.Dispatch<IFilters>
     countFilters: () => number
+    onlyByCluster: () => boolean | undefined
     cleanFilters: () => void
 };
 
@@ -75,7 +78,8 @@ function GlobalContext({ children }: Props) {
     const [filters, setFilters] = useState<IFilters>({
         group_by_description: false,
         group_by_unit_metric: false,
-        group_by_year: false
+        group_by_year: false,
+        group_by_cluster: false,
     });
 
     const countFilters = (): number => {
@@ -84,9 +88,12 @@ function GlobalContext({ children }: Props) {
         if (filters.group_by_description) count++;
         if (filters.group_by_unit_metric) count++;
         if (filters.group_by_year) count++;
+        if (filters.group_by_cluster) count++;
 
         return count;
     }
+
+    const onlyByCluster = () => filters.group_by_cluster && countFilters() === 1;
 
     const cleanFilters = () => {
         setFilters({
@@ -96,7 +103,7 @@ function GlobalContext({ children }: Props) {
         });
     }
 
-    return <GlobalStateContext.Provider value={{ description, setDescription, searchType, setSearchType, filters, setFilters, countFilters, cleanFilters }}>
+    return <GlobalStateContext.Provider value={{ description, setDescription, searchType, setSearchType, filters, setFilters, countFilters, onlyByCluster, cleanFilters }}>
         {children}
     </GlobalStateContext.Provider>
 }

@@ -9,6 +9,9 @@ module.exports = {
       },
       height: {
         result: 'calc(100vh - 185px)'
+      },
+      fontSize: {
+        smm: '0.6rem',
       }
     },
   },

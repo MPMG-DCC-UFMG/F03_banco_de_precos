@@ -153,6 +153,14 @@ function AdvancedFilter({ open, onClose }: Props) {
                                     }
                                 />
                             </div>
+                            <div className="my-2">
+                                <FormControlLabel
+                                    label="Efetuar Cálculo de Sobrepreço"
+                                    control={
+                                        <Checkbox name='group_by_cluster' checked={filters.group_by_cluster} onChange={handleChangeCheck} aria-label='Ano' />
+                                    }
+                                />
+                            </div>
                         </div>
                     </CardContent>
                 </div>
