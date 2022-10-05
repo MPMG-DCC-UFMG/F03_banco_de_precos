@@ -8,6 +8,7 @@ import { toCurrency } from '../utils/helpers';
 import { GlobalStateContext } from '../wrappers/GlobalContext';
 import Chart from './Chart';
 import DetailInfo from './DetailInfo';
+import OverpriceTable from './OverpriceTable';
 
 type Props = {
     open: boolean,
@@ -22,9 +23,24 @@ function Detail({ open, onClose, selectedData }: Props) {
         description: selectedData.group_by_description || description,
         unit_measure: selectedData.group_by_unit_metric,
         year: selectedData.group_by_year,
+        group: selectedData.group_by_cluster,
         limit: 1000
     }))
 
+    const { data: pricingData, loading: loadingData } = useFetch(endpoints.PRICING, queryStringConverter({
+        description: selectedData.group_by_description || description,
+        unit_measure: selectedData.group_by_unit_metric,
+        year: selectedData.group_by_year,
+        group: selectedData.group_by_cluster,
+        limit: 1000
+    }))
+
+    const getChartData = () => {
+        if (selectedData.group_by_cluster)
+            return data.charts;
+        else
+            return data;
+    }
 
     return (<Modal open={open} onClose={() => onClose()}>
         <div className="w-full h-full overflow-auto py-8 flex items-center justify-center">
@@ -58,9 +74,30 @@ function Detail({ open, onClose, selectedData }: Props) {
                             </div>
 
                             <div className="my-4 grid grid-cols-2 gap-4">
-                                <Chart field="qtde_item" type='sum' color="#003D5B" label="Relação de Itens" axisName='Qtd. de Itens' data={data} />
-                                <Chart field="mean_preco" type="avg" color="#386641" label="Relação de Preços" axisName='Preço' data={data} />
+                                <Chart field="qtde_item" type='sum' color="#003D5B" label="Relação de Itens" axisName='Qtd. de Itens' data={getChartData()} />
+                                <Chart field="mean_preco" type="avg" color="#386641" label="Relação de Preços" axisName='Preço' data={getChartData()} />
                             </div>
+
+                            {selectedData.group_by_cluster
+                                ?
+                                <div className="my-4">
+                                    <div className='rounded shadow p-2 max-h-64 overflow-auto'>
+                                        {data.items.length < 10
+                                            ? <div className='p-4 bg-red-100 border border-red-200 text-center my-4'>
+                                                O grupo é pequeno demais para gerar estatísticas de preço
+                                            </div>
+                                            :
+                                            <OverpriceTable
+                                                data={data.items}
+                                                avg_preco={selectedData.avg_preco}
+                                                max_preco={selectedData.max_preco}
+                                                min_preco={selectedData.min_preco}
+                                                std_preco={selectedData.std_preco}
+                                            />
+                                        }
+                                    </div>
+                                </div>
+                                : null}
                         </>
                     }
 

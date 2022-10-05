@@ -25,7 +25,7 @@ function OverpriceTable({ data, avg_preco, max_preco, min_preco, std_preco }: Pr
     const columns = (): GridColDef[] => {
         const columns = [
             { field: "id_licitacao", headerName: "Licitação" },
-            { field: "grupo", headerName: "Descrição", flex: 1 },
+            { field: "original", headerName: "Descrição", flex: 1 },
             { field: "dsc_unidade_medida", headerName: "Unid. Medida" },
             { field: "preco_formatted", headerName: "Preço unitário (R$)" },
             { field: "qtde_item", headerName: "Quantidade" },
