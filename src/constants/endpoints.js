@@ -3,7 +3,7 @@ const endpoints = {
     AUTOCOMPLETE: "items/autocomplete/",
     BIDDER: "filters/autocomplete/",
     ITEMS: "items/sample/",
-    OVERPRICE: "items/sample_overprice/",
+    OVERPRICE: "items/overprice/",
     PRICING: "pricing/",
     CHARTS: "charts/",
 }
