@@ -6,6 +6,7 @@ import Result from './pages/Results';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { ptBR } from '@mui/x-data-grid';
 import { ptBR as corePtBr } from '@mui/material/locale';
+import ReactTooltip from 'react-tooltip';
 
 const theme = createTheme(
   corePtBr,
