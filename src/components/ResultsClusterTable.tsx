@@ -11,14 +11,14 @@ import OverpriceDetail from './OverpriceDetail';
 import OverpriceChart from './OverpriceChart';
 
 function ResultsClusterTable() {
-    const [pageSize, setPageSize] = useState<number>(25);
+    const [pageSize, setPageSize] = useState<number>(15);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const { description, filters, searchType: search_type } = useContext(GlobalStateContext);
     const { data, error, loading } = useFetch(`${endpoints.OVERPRICE}${queryStringConverter({ page: currentPage - 1, size: pageSize, search_type })}`, JSON.stringify({ description, ...filters }), "POST")
     const [showModal, setShowModal] = useState<any>(null);
 
     const generateId = (data: any) => {
-        const id = [data.grupo_unidade_medida, data.group_size];
+        const id = [data.id_item, data.id_licitacao, data.grupo_unidade_medida, data.group_size];
         return id.join("_");
     }
 
