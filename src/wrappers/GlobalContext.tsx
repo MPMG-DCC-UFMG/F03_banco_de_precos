@@ -1,3 +1,4 @@
+import { User } from "oidc-client";
 import react, { useState } from "react";
 import ReactTooltip from 'react-tooltip';
 
@@ -65,6 +66,8 @@ interface globalContextInterface {
     countFilters: () => number
     onlyByCluster: () => boolean | undefined
     cleanFilters: () => void
+    currentUser: User | null,
+    setCurrentUser: react.Dispatch<react.SetStateAction<User | null>>
 };
 
 export const GlobalStateContext = react.createContext<globalContextInterface>({} as globalContextInterface);
@@ -76,6 +79,7 @@ type Props = {
 function GlobalContext({ children }: Props) {
     const [description, setDescription] = useState<any>(null);
     const [searchType, setSearchType] = useState<string>("smart");
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [filters, setFilters] = useState<IFilters>({
         group_by_description: false,
         group_by_unit_metric: false,
@@ -104,7 +108,7 @@ function GlobalContext({ children }: Props) {
         });
     }
 
-    return <GlobalStateContext.Provider value={{ description, setDescription, searchType, setSearchType, filters, setFilters, countFilters, onlyByCluster, cleanFilters }}>
+    return <GlobalStateContext.Provider value={{ description, setDescription, searchType, setSearchType, filters, setFilters, countFilters, onlyByCluster, cleanFilters, currentUser, setCurrentUser }}>
         {children}
     </GlobalStateContext.Provider>
 }

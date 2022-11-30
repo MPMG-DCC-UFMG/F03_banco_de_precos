@@ -81,7 +81,7 @@ function Chart({ axisName, label, data, color, type, field }: Props) {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="label" />
                 <YAxis />
-                <Tooltip formatter={(value: number, name: string, props: any) => type === "sum" ? toFormatedNumber(value) : toCurrency(value)} />
+                <Tooltip formatter={(value: any) => type === "sum" ? toFormatedNumber(value) : toCurrency(value)} />
                 <Legend />
                 <Bar dataKey="value" fill={color} name={axisName} />
             </BarChart>

@@ -6,7 +6,8 @@ import Result from './pages/Results';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { ptBR } from '@mui/x-data-grid';
 import { ptBR as corePtBr } from '@mui/material/locale';
-import ReactTooltip from 'react-tooltip';
+import PrivateRoute from './wrappers/PrivateRoute';
+import Login from './pages/Login';
 
 const theme = createTheme(
   corePtBr,
@@ -19,8 +20,9 @@ function App() {
       <GlobalContext>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/result" element={<Result />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/result" element={<PrivateRoute><Result /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </GlobalContext>
