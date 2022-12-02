@@ -9,9 +9,10 @@ import { Logout } from '@mui/icons-material';
 
 type Props = {
   children: JSX.Element
+  hideUser?: boolean;
 }
 
-function HeaderMainFooter({ children }: Props) {
+function HeaderMainFooter({ children, hideUser }: Props) {
   const [currentUser, setCurrentUser] = useState<User>();
   const { getUser, logout } = useAuth();
 
@@ -58,21 +59,23 @@ function HeaderMainFooter({ children }: Props) {
         <Typography variant='h6'>
           <Link to="/">Banco de Preços</Link>
         </Typography>
-        <div className="ml-12 mr-4 max-w-[180px] text-white font-normal text-sm flex items-center gap-2 cursor-pointer">
-          <Avatar
-            sx={{
-              bgcolor: stringToHslColor(30, 80),
-            }}
-          >
-            {firstLetters()}
-          </Avatar>
-          <span className="flex-1 truncate">
-            {getName()}
-          </span>
-        </div>
-        <div onClick={() => logout()} className="text-base font-normal text-white opacity-75 hover:opacity-100 cursor-pointer flex justify-end items-center pr-4">
-          <Logout /> &nbsp; Sair
-        </div>
+        {!hideUser && (<>
+          <div className="ml-12 mr-4 max-w-[180px] text-white font-normal text-sm flex items-center gap-2 cursor-pointer">
+            <Avatar
+              sx={{
+                bgcolor: stringToHslColor(30, 80),
+              }}
+            >
+              {firstLetters()}
+            </Avatar>
+            <span className="flex-1 truncate">
+              {getName()}
+            </span>
+          </div>
+          <div onClick={() => logout()} className="text-base font-normal text-white opacity-75 hover:opacity-100 cursor-pointer flex justify-end items-center pr-4">
+            <Logout /> &nbsp; Sair
+          </div>
+        </>)}
         <div className='flex flex-1 justify-end'>
           <img src={mpmg} style={{ height: "40px" }} />
           <img src={gsi} style={{ height: "40px" }} />

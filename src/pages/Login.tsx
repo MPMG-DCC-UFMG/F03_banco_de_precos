@@ -1,11 +1,12 @@
 import useAuth from "../hooks/useAuth";
 import { useContext, useEffect } from 'react';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalStateContext } from "../wrappers/GlobalContext";
 import { User } from "oidc-client";
 
 function Login() {
     let [searchParams] = useSearchParams();
+    const location = useLocation();
     const { setCurrentUser } = useContext(GlobalStateContext);
     const navigate = useNavigate();
     const { getUser } = useAuth();
@@ -34,7 +35,6 @@ function Login() {
 
     const loadUserInfo = async () => {
         const user = await getUser();
-        console.log(user);
         if (user) {
             setCurrentUser(user)
             navigate("/")
@@ -42,7 +42,9 @@ function Login() {
     }
 
     useEffect(() => {
-        if (process.env.REACT_APP_ALLOW_LOGIN
+        if (location.hash.includes("error")) {
+            navigate("/fail")
+        } else if (process.env.REACT_APP_ALLOW_LOGIN
             && process.env.REACT_APP_ALLOW_LOGIN === "true"
             && searchParams.get("noauth")
         ) {
